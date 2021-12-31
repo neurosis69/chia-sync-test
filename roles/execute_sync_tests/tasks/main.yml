@@ -1,0 +1,196 @@
+---
+- name: "Set Runtime (Testcase) Variables as fact"
+  set_fact:
+    ANSIBLE_SA_FILE_NAME: "{{ ansible_hostname }}_{{ ansible_date_time.epoch }}_{{ RUNID }}"
+    DESCRIPTION: "{{ BENCHMARK_CONFIG[RUNID].DESCRIPTION | default(BENCHMARK_CONFIG.DEFAULT.DESCRIPTION) }}"
+    BLOCKCHAIN_CONSENSUS_THREADS: "{{ BENCHMARK_CONFIG[RUNID].BLOCKCHAIN_CONSENSUS_THREADS | default(BENCHMARK_CONFIG.DEFAULT.BLOCKCHAIN_CONSENSUS_THREADS) }}"
+    BLOCK_STORE_FULL_BLOCK_HEIGHT_INDEX: "{{ BENCHMARK_CONFIG[RUNID].BLOCK_STORE_FULL_BLOCK_HEIGHT_INDEX | default(BENCHMARK_CONFIG.DEFAULT.BLOCK_STORE_FULL_BLOCK_HEIGHT_INDEX) }}"
+    BLOCK_STORE_IS_FULLY_COMPACTIFIED_INDEX: "{{ BENCHMARK_CONFIG[RUNID].BLOCK_STORE_IS_FULLY_COMPACTIFIED_INDEX | default(BENCHMARK_CONFIG.DEFAULT.BLOCK_STORE_IS_FULLY_COMPACTIFIED_INDEX) }}"
+    BLOCK_STORE_HEIGHT_INDEX: "{{ BENCHMARK_CONFIG[RUNID].BLOCK_STORE_HEIGHT_INDEX | default(BENCHMARK_CONFIG.DEFAULT.BLOCK_STORE_HEIGHT_INDEX) }}"
+    BLOCK_STORE_HH_INDEX: "{{ BENCHMARK_CONFIG[RUNID].BLOCK_STORE_HH_INDEX | default(BENCHMARK_CONFIG.DEFAULT.BLOCK_STORE_HH_INDEX) }}"
+    BLOCK_STORE_PEAK_INDEX: "{{ BENCHMARK_CONFIG[RUNID].BLOCK_STORE_PEAK_INDEX | default(BENCHMARK_CONFIG.DEFAULT.BLOCK_STORE_PEAK_INDEX) }}"
+    BLOCK_STORE_BLOCK_LRU_CACHE: "{{ BENCHMARK_CONFIG[RUNID].BLOCK_STORE_BLOCK_LRU_CACHE | default(BENCHMARK_CONFIG.DEFAULT.BLOCK_STORE_BLOCK_LRU_CACHE) }}"
+    BLOCK_STORE_SES_CHALLENGE_LRU_CACHE: "{{ BENCHMARK_CONFIG[RUNID].BLOCK_STORE_SES_CHALLENGE_LRU_CACHE | default(BENCHMARK_CONFIG.DEFAULT.BLOCK_STORE_SES_CHALLENGE_LRU_CACHE) }}"
+    COIN_STORE_COIN_CONFIRMED_INDEX: "{{ BENCHMARK_CONFIG[RUNID].COIN_STORE_COIN_CONFIRMED_INDEX | default (BENCHMARK_CONFIG.DEFAULT.COIN_STORE_COIN_CONFIRMED_INDEX) }}"
+    COIN_STORE_COIN_SPENT_INDEX: "{{ BENCHMARK_CONFIG[RUNID].COIN_STORE_COIN_SPENT_INDEX | default(BENCHMARK_CONFIG.DEFAULT.COIN_STORE_COIN_SPENT_INDEX) }}"
+    COIN_STORE_COIN_PUZZLE_HASH_INDEX: "{{ BENCHMARK_CONFIG[RUNID].COIN_STORE_COIN_PUZZLE_HASH_INDEX | default(BENCHMARK_CONFIG.DEFAULT.COIN_STORE_COIN_PUZZLE_HASH_INDEX) }}"
+    COIN_STORE_COIN_PARENT_INDEX: "{{ BENCHMARK_CONFIG[RUNID].COIN_STORE_COIN_PARENT_INDEX | default(BENCHMARK_CONFIG.DEFAULT.COIN_STORE_COIN_PARENT_INDEX) }}"
+    COIN_STORE_COIN_LRU_CACHE: "{{ BENCHMARK_CONFIG[RUNID].COIN_STORE_COIN_LRU_CACHE | default(BENCHMARK_CONFIG.DEFAULT.COIN_STORE_COIN_LRU_CACHE) }}"
+    MEMPOOL_MANAGER_THREADS: "{{ BENCHMARK_CONFIG[RUNID].MEMPOOL_MANAGER_THREADS | default(BENCHMARK_CONFIG.DEFAULT.MEMPOOL_MANAGER_THREADS) }}"
+    MEMPOOL_MANAGER_LRU_CACHE: "{{ BENCHMARK_CONFIG[RUNID].MEMPOOL_MANAGER_LRU_CACHE | default(BENCHMARK_CONFIG.DEFAULT.MEMPOOL_MANAGER_LRU_CACHE) }}"
+    FULL_NODE_SQLITE_PRAGMA_JOURNAL_MODE: "{{ BENCHMARK_CONFIG[RUNID].FULL_NODE_SQLITE_PRAGMA_JOURNAL_MODE | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_JOURNAL_MODE) }}"
+    FULL_NODE_SQLITE_PRAGMA_LOCKING_MODE: "{{ BENCHMARK_CONFIG[RUNID].FULL_NODE_SQLITE_PRAGMA_LOCKING_MODE | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_LOCKING_MODE) }}"
+    FULL_NODE_SQLITE_PRAGMA_CACHE_SPILL: "{{ BENCHMARK_CONFIG[RUNID].FULL_NODE_SQLITE_PRAGMA_CACHE_SPILL | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_CACHE_SPILL) }}"
+    FULL_NODE_SQLITE_PRAGMA_PAGE_SIZE: "{{ BENCHMARK_CONFIG[RUNID].FULL_NODE_SQLITE_PRAGMA_PAGE_SIZE | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_PAGE_SIZE) }}"
+    FULL_NODE_SQLITE_PRAGMA_SYNCHRONOUS: "{{ BENCHMARK_CONFIG[RUNID].FULL_NODE_SQLITE_PRAGMA_SYNCHRONOUS | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_SYNCHRONOUS) }}"
+    FULL_NODE_SQLITE_PRAGMA_MMAP_SIZE: "{{ BENCHMARK_CONFIG[RUNID].FULL_NODE_SQLITE_PRAGMA_MMAP_SIZE | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_MMAP_SIZE) }}"
+    FULL_NODE_SQLITE_PRAGMA_CACHE_SIZE: "{{ BENCHMARK_CONFIG[RUNID].FULL_NODE_SQLITE_PRAGMA_CACHE_SIZE | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_CACHE_SIZE) }}"
+    FULL_NODE_SQLITE_PRAGMA_UNCOMMITTED: "{{ BENCHMARK_CONFIG[RUNID].FULL_NODE_SQLITE_PRAGMA_UNCOMMITTED | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_UNCOMMITTED) }}"
+    FULL_NODE_SQLITE_PRAGMA_WAL_CHECKPOINT: "{{ BENCHMARK_CONFIG[RUNID].FULL_NODE_SQLITE_PRAGMA_WAL_CHECKPOINT | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_WAL_CHECKPOINT) }}"
+    PAGE_SIZE: "{{ BENCHMARK_CONFIG[RUNID].PAGE_SIZE | default(BENCHMARK_CONFIG.DEFAULT.PAGE_SIZE) }}"
+- name: "Test {{ RUNID }} start: {{ DESCRIPTION }}"
+  lineinfile:
+    path: "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
+    line: "{{ ansible_hostname }},{{ SCENARIO }},{{ RUNID }},{{ lookup('pipe', 'date +%Y-%m-%dT%H:%M:%S') }}"
+- name: "Start sadc data gathering for {{ RUNID }}"
+  become: yes
+  become_user: root
+  become_method: sudo
+  async: 86400
+  poll: 0
+  shell: |
+    {{ SADC_BIN_PATH }}/sadc 60 -L -S POWER -S XDISK {{ ANSIBLE_LOG_SA_PATH }}/{{ ANSIBLE_SA_FILE_NAME }}.sa.data
+  register: sar_data_gathering
+- name: "Stop all chia processes"
+  ignore_errors: yes
+  shell: |
+    . {{ CHIA_SW_PATH }}/activate && chia stop all -d
+- name: "Remove old sqlite db files (including shm + wal + journal)"
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - "{{ BLOCKCHAIN_DB_PATH }}/{{ BLOCKCHAIN_DB_NAME }}"
+    - "{{ BLOCKCHAIN_DB_PATH }}/{{ BLOCKCHAIN_DB_NAME }}-shm"
+    - "{{ BLOCKCHAIN_DB_PATH }}/{{ BLOCKCHAIN_DB_NAME }}-wal"
+    - "{{ BLOCKCHAIN_DB_PATH }}/{{ BLOCKCHAIN_DB_NAME }}-journal"
+- name: "Copy extracted sqlite db file {{ DB_BACKUP }} to {{ BLOCKCHAIN_DB_NAME }}"
+  command: "cp {{ BLOCKCHAIN_DB_PATH }}/{{ DB_BACKUP }} {{ BLOCKCHAIN_DB_PATH }}/{{ BLOCKCHAIN_DB_NAME }}"
+- name: "Change page_size if variable FULL_NODE_SQLITE_PRAGMA_PAGE_SIZE is not empty"
+  import_role:
+    name: change_sqlite_page_size
+  when: FULL_NODE_SQLITE_PRAGMA_PAGE_SIZE != ""
+- name: "Change files from {{ CHIA_SW_PATH }}/chia/util to match testcase {{ RUNID }}"
+  template:
+    src: "templates/{{ CHIA_BRANCH }}/{{ item }}"
+    dest: "{{ CHIA_SW_PATH }}/chia/util"
+    owner: "{{ CHIA_OS_USER }}"
+    group: "{{ CHIA_OS_GROUP }}"
+    mode: 0644
+  with_items:
+    - "chia_logging.py"
+- name: "Change files from {{ CHIA_SW_PATH }}/chia/consensus to match testcase {{ RUNID }}"
+  template:
+    src: "templates/{{ CHIA_BRANCH }}/{{ item }}"
+    dest: "{{ CHIA_SW_PATH }}/chia/consensus"
+    owner: "{{ CHIA_OS_USER }}"
+    group: "{{ CHIA_OS_GROUP }}"
+    mode: 0644
+  with_items:
+    - "blockchain.py"
+- name: "Change files from {{ CHIA_SW_PATH }}/chia/full_node to match testcase {{ RUNID }}"
+  template:
+    src: "templates/{{ CHIA_BRANCH }}/{{ item }}"
+    dest: "{{ CHIA_SW_PATH }}/chia/full_node"
+    owner: "{{ CHIA_OS_USER }}"
+    group: "{{ CHIA_OS_GROUP }}"
+    mode: 0644
+  with_items:
+    - "block_store.py"
+    - "coin_store.py"
+    - "full_node.py"
+    - "mempool_manager.py"
+- name: "Clear FS Caches to get comparable runtimes and prevent need of probably unreliable warmup run"
+  become: yes
+  become_user: root
+  become_method: sudo
+  shell: |
+    sync; echo 1 > /proc/sys/vm/drop_caches
+- name: "Write Log: {{ RUNID }} initiate sync"
+  lineinfile:
+    path: "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
+    regexp: "^({{ ansible_hostname }},{{ SCENARIO }},{{ RUNID }}.*)$"
+    line: "\\1,{{ lookup('pipe', 'date +%Y-%m-%dT%H:%M:%S') }}"
+    backrefs: yes
+- name: "Start chia full node"
+  shell: |
+    . {{ CHIA_SW_PATH }}/activate && chia start node
+- name: "Tail chia logfile to prevent trigger wait_for for old log entries"
+  shell: |
+    tail -n 1 {{ ANSIBLE_LOG_CHIA_PATH }}/{{ CHIA_LOG_FILE_NAME }}_{{ RUNID }}.log
+  register: tail_debug_log
+- name: "Set fact for tail"
+  set_fact:
+    debug_log_since_test_start: "{{ tail_debug_log.stdout }}"
+- name: "Wait for chia node on port 8444"
+  wait_for:
+    port: 8444
+    delay: 5
+    state: started
+- name: "Actively connect to random peers until a minimum of 15 connections is reached"
+  async: 86400
+  poll: 0
+  shell: |
+    . {{ CHIA_SW_PATH }}/activate 
+    while [[ `ps -eo pid,cmd | grep {{ ANSIBLE_SA_FILE_NAME }}.[s]a.data | wc -l` -ne 0 ]]
+    do
+      while [[ `chia show -cs | grep FULL_NODE | wc -l` -lt 15 ]]
+      do 
+        dig +short a dns-introducer.chia.net @one.one.one.one | head -15 | xargs -n1 -i chia show -a \{}:8444
+      done
+      sleep 120
+    done
+  register: keep_chia_connections
+- name: "Sync until Height {{ SYNC_START_HEIGHT }} is reached"
+  wait_for:
+    path: "{{ ANSIBLE_LOG_CHIA_PATH }}/{{ CHIA_LOG_FILE_NAME }}_{{ RUNID }}.log"
+    search_regex: "{{ debug_log_since_test_start }}\r(.*\r)*.*Added blocks {{ SYNC_START_HEIGHT }}.* to .*"
+    timeout: 86400
+- name: "Write Log: {{ RUNID }} start sync"
+  lineinfile:
+    path: "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
+    regexp: "^({{ ansible_hostname }},{{ SCENARIO }},{{ RUNID }}.*)$"
+    line: "\\1,{{ lookup('pipe', 'date +%Y-%m-%dT%H:%M:%S') }}"
+    backrefs: yes
+- name: "Sync until Height {{ DUST_START_HEIGHT }} is reached"
+  wait_for:
+    path: "{{ ANSIBLE_LOG_CHIA_PATH }}/{{ CHIA_LOG_FILE_NAME }}_{{ RUNID }}.log"
+    search_regex: "{{ debug_log_since_test_start }}\r(.*\r)*.*Added blocks .* to {{ DUST_START_HEIGHT }}.*"
+    timeout: 86400
+- name: "Write Log: {{ RUNID }} duststorm start"
+  lineinfile:
+    path: "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
+    regexp: "^({{ ansible_hostname }},{{ SCENARIO }},{{ RUNID }}.*)$"
+    line: "\\1,{{ lookup('pipe', 'date +%Y-%m-%dT%H:%M:%S') }}"
+    backrefs: yes
+- name: "Sync until Height {{ DUST_STOP_HEIGHT }} is reached"
+  wait_for:
+    path: "{{ ANSIBLE_LOG_CHIA_PATH }}/{{ CHIA_LOG_FILE_NAME }}_{{ RUNID }}.log"
+    search_regex: "{{ debug_log_since_test_start }}\r(.*\r)*.*Added blocks .* to {{ DUST_STOP_HEIGHT }}.*"
+    timeout: 86400
+- name: "Write Log: {{ RUNID }} duststorm end"
+  lineinfile:
+    path: "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
+    regexp: "^({{ ansible_hostname }},{{ SCENARIO }},{{ RUNID }}.*)$"
+    line: "\\1,{{ lookup('pipe', 'date +%Y-%m-%dT%H:%M:%S') }}"
+    backrefs: yes
+- name: "Stop chia processes"
+  shell: |
+    . {{ CHIA_SW_PATH }}/activate && chia stop all -d
+- name: "Get SQLITE DB size"
+  stat:
+    path: "{{ BLOCKCHAIN_DB_PATH }}/{{ BLOCKCHAIN_DB_NAME }}"
+    get_checksum: no
+    get_mime: no
+  register: sqlite_db_stats
+- name: "Write Log: {{ RUNID }} write sqlite db size"
+  lineinfile:
+    path: "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
+    regexp: "^({{ ansible_hostname }},{{ SCENARIO }},{{ RUNID }}.*)$"
+    line: "\\1,{{ sqlite_db_stats.stat.size }},\"{{ DESCRIPTION }}\""
+    backrefs: yes
+- name: "Cancel sadc data gathering and tail processes"
+  become: yes
+  become_user: root
+  become_method: sudo
+  ignore_errors: yes
+  shell: |
+    ps -eo pid,cmd|grep {{ ANSIBLE_SA_FILE_NAME }}.[s]a.data | sed -e 's/^[ ]*//' | cut -d" " -f1 | xargs -I {} kill -9 {}
+- name: "Get device from sqlite db on"
+  shell: |
+    findmnt -n -o SOURCE --target {{ BLOCKCHAIN_DB_PATH }}
+  register: sqlite_device
+- name: "Convert and write SA output"
+  shell: |
+    sadf -d -T  {{ ANSIBLE_LOG_SA_PATH }}/{{ ANSIBLE_SA_FILE_NAME }}.sa.data --fs={{ sqlite_device.stdout }} -- -F -m CPU -d -u -S -q -r -b -n DEV > {{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}_{{ RUNID }}.sa.csv
+    sadf -g -T -O autoscale,showinfo,showidle,showtoc,skipempty {{ ANSIBLE_LOG_SA_PATH }}/{{ ANSIBLE_SA_FILE_NAME }}.sa.data --fs={{ sqlite_device.stdout }} -- -F -m CPU -d -u -S -q -r -b -n DEV > {{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}_{{ RUNID }}.sa.svg

@@ -1,0 +1,9 @@
+---
+- name: Execute sync tests for all activated testcases
+  include_role: 
+    name: execute_sync_tests
+  vars:
+    RUNID: "{{ ACTIVE_TESTCASES }}"
+  loop: "{{ ACTIVE_TESTCASES }}"
+  loop_control:
+    loop_var: ACTIVE_TESTCASES

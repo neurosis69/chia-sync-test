@@ -1,0 +1,15 @@
+---
+- name: "Git checkout chia-blockchain branch {{ CHIA_BRANCH }}"
+  git:
+    repo: "{{ CHIA_GIT_REPO }}"
+    dest: "{{ CHIA_SW_PATH }}"
+    version: "{{ CHIA_BRANCH }}"
+    clone: yes
+    recursive: yes
+    update: no
+- name: "Install chia-blockchain"
+  shell: |
+    sh install.sh 
+  args: 
+    chdir: "{{ CHIA_SW_PATH }}"
+  register: install_chia
