@@ -1,18 +1,20 @@
 # CHIA - db sync performance tests
 
-(Local) ansible playbook to start a chia db `long sync` for given Scenarios (Heights).
+Ansible playbook (for local execution) to start a chia db `long sync` for some predefined Scenarios.
 
 The scenarios are chosen to reflect high transaction volumes like Transaction Start or Dust Storms.
 
+***Current Testcases are prepared for chia version 1.2.11 only.*** 
+
 ## SQLite Databases
 
-For every scenario one fresh synced chia db is prepared as follows:
+For every Scenario one initially fresh synced chia db is prepared as follows:
 * synced until mentioned "DB Height"
-* droped all indexes except:
+* droped all indexes, except the following:
   * peak on block_records(is_peak) where is_peak=1
   * full_block_height on full_blocks(height)
   * hint_index on hints(hint)
-* vacuumed
+* finally vacuumed the db
 
 ## Testcase/Scenario Configuration
 
@@ -20,11 +22,11 @@ All testcases are db related.
 
 Some of them are only as baseline or for fun (like drop ALL indexes, or certain obscure page sizes).
 
-The testcases for the current execution are configured in: `testcases.json`
+The testcases eligible for the current execution are configured in the `ACTIVE_TESTCASES` json Section in [testcases.json](https://github.com/neurosis69/chia-sync-test/blob/0e177a34ebddab7d1d3a56f7d6c00a2fe3c37275/testcases.json)
 
 #### Reasonable Testcases
 
-The following testcases 
+More reasonable testscases are limited to the following:
 
 ```json
   "ACTIVE_TESTCASES": [
@@ -45,42 +47,23 @@ The following testcases
 
 ## Scenarios
 
-* DUSTSTORM1
-  * DB Height: 1069664
-  * Start Height: 1070016
-  * End Height: 1080000
-
-* DUSTSTORM2 (currently not available)
-  * DB Height: 1303062
-  * Start Height: tbd
-  * End Height: tbd
-
-* TRANSACTION_START
-  * DB Height: 223648
-  * Start Height: 225696
-  * End Height: 228000
-
-* TRANSACTION_PEAK (currently not available)
-  * DB Height: 739202
-  * Start Height: tbd
-  * End Height: tbd
+ | Scenario | DB Height | Scenario Start Height | Scenario End Height | Description |
+ | --- | --- | --- | --- | --- |
+ | DUSTSTORM1 | 1069664 | 1070016 | 1080000 | First dust storm (end Oct 2021) |
+ | DUSTSTORM2 | 1303062 | tbd | tbd | Second dust storm (mid Dec 2021) |
+ | TRANSACTION_START | 223648 | 225696 | 228000 | Transaction start on mainnet |
+ | TRANSACTION_PEAK | 739202 | tbd | tbd | Some transactions peaks in (Aug 2021) |
 
 ## Variables
-#### run_synctest.sh
-
-* **ANSIBLE_LOG_FOLDER**: base path to the log directory
-
-* **ANSIBLE_REMOTE_TEMP**: path to ansible temp directory to stage files for downloads etc
-
-#### sycntest.yml
-
-* **CHIA_BRANCH**: 1.2.11 (dependency to role templates)
-
-* **SCENARIO**: TRANSACTION_START or DUSTSTORM1
-
-* **SADC_BIN_PATH**: 
-  * Clear Linux: /usr/lib64/sa
-  * Ubuntu: /usr/lib/sysstat
+ | Script | Parameter | Values | Description |
+ | --- | --- | --- | --- |
+ | [run_synctest.sh](https://github.com/neurosis69/chia-sync-test/blob/0e177a34ebddab7d1d3a56f7d6c00a2fe3c37275/run_synctest.sh) | ANSIBLE_LOG_FOLDER | _<custom_path>_ | base path to the log directory |
+ | [run_synctest.sh](https://github.com/neurosis69/chia-sync-test/blob/0e177a34ebddab7d1d3a56f7d6c00a2fe3c37275/run_synctest.sh) | ANSIBLE_REMOTE_TEMP | _<custom_path>_ | path to ansible temp directory to stage files for downloads etc |
+ | [synctest.yml](https://github.com/neurosis69/chia-sync-test/blob/0e177a34ebddab7d1d3a56f7d6c00a2fe3c37275/synctest.yml) | CHIA_BRANCH | 1.2.11 | dependency to role templates |
+ | [synctest.yml](https://github.com/neurosis69/chia-sync-test/blob/0e177a34ebddab7d1d3a56f7d6c00a2fe3c37275/synctest.yml) | SCENARIO | TRANSACTION_START | Testscenario covering the heights of first chia transactions |
+ | [synctest.yml](https://github.com/neurosis69/chia-sync-test/blob/0e177a34ebddab7d1d3a56f7d6c00a2fe3c37275/synctest.yml) | SCENARIO | DUSTSTORM1 | Testscenario covering the heights of first dust storms (end Oct 2020) |
+ | [synctest.yml](https://github.com/neurosis69/chia-sync-test/blob/0e177a34ebddab7d1d3a56f7d6c00a2fe3c37275/synctest.yml) | SADC_BIN_PATH | /usr/lib64/sa | for Clear Linux |
+ | [synctest.yml](https://github.com/neurosis69/chia-sync-test/blob/0e177a34ebddab7d1d3a56f7d6c00a2fe3c37275/synctest.yml) | SADC_BIN_PATH | /usr/lib/sysstat | for Ubuntu Linux |
 
 ## Dependencies/Prerequisites
 
