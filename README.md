@@ -6,8 +6,6 @@ The scenarios are chosen to reflect high transaction volumes like Transaction St
 
 ## SQLite Databases
 
-For every scenario, one chia db is synced until the mentioned "DB Height".
-
 For every scenario one fresh synced chia db is prepared as follows:
 * synced until mentioned "DB Height"
 * droped all indexes except:
