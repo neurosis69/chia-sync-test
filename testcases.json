@@ -1,19 +1,5 @@
 {
   "ACTIVE_TESTCASES": [
-      "AUTOTEST12",
-      "AUTOTEST13",
-      "AUTOTEST14",
-      "AUTOTEST15",
-      "AUTOTEST16",
-      "AUTOTEST17",
-      "AUTOTEST18",
-      "AUTOTEST19",
-      "AUTOTEST20",
-      "AUTOTEST21",
-      "AUTOTEST22",
-      "AUTOTEST23",
-      "AUTOTEST24",
-      "AUTOTEST25",
       "AUTOTEST26",
       "AUTOTEST27",
       "AUTOTEST28"
@@ -79,7 +65,8 @@
     "FULL_NODE_SQLITE_PRAGMA_CACHE_SIZE": "",
     "FULL_NODE_SQLITE_PRAGMA_UNCOMMITTED": "",
     "FULL_NODE_SQLITE_PRAGMA_WAL_CHECKPOINT": "",
-    "PAGE_SIZE": ""
+    "PAGE_SIZE": "",
+    "AUTO_VACUUM": ""
   },
   "AUTOTEST1": {
     "DESCRIPTION": "No Changes from branch",
@@ -386,7 +373,8 @@
     "COIN_STORE_COIN_SPENT_INDEX": "",
     "COIN_STORE_COIN_PUZZLE_HASH_INDEX": "",
     "COIN_STORE_COIN_PARENT_INDEX": "",
-    "FULL_NODE_SQLITE_PRAGMA_WAL_CHECKOINT": "await self.connection.execute(\"pragma auto_vacuum=full\")"
+    "FULL_NODE_SQLITE_PRAGMA_WAL_CHECKOINT": "await self.connection.execute(\"pragma auto_vacuum=FULL\")",
+    "AUTO_VACUUM": "FULL"
   },
   "AUTOTEST27": {
     "DESCRIPTION": "Only full blocks height + peak index; locking_mode=exclusive, cache_spill=false, synchronous=OFF, journal_mode=off, uncommitted=true",

@@ -28,6 +28,7 @@
     FULL_NODE_SQLITE_PRAGMA_UNCOMMITTED: "{{ BENCHMARK_CONFIG[RUNID].FULL_NODE_SQLITE_PRAGMA_UNCOMMITTED | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_UNCOMMITTED) }}"
     FULL_NODE_SQLITE_PRAGMA_WAL_CHECKPOINT: "{{ BENCHMARK_CONFIG[RUNID].FULL_NODE_SQLITE_PRAGMA_WAL_CHECKPOINT | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_WAL_CHECKPOINT) }}"
     PAGE_SIZE: "{{ BENCHMARK_CONFIG[RUNID].PAGE_SIZE | default(BENCHMARK_CONFIG.DEFAULT.PAGE_SIZE) }}"
+    AUTO_VACUUM: "{{ BENCHMARK_CONFIG[RUNID].AUTO_VACUUM | default(BENCHMARK_CONFIG.DEFAULT.AUTO_VACUUM) }}"
 - name: "Test {{ RUNID }} start: {{ DESCRIPTION }}"
   lineinfile:
     path: "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
@@ -60,6 +61,10 @@
   import_role:
     name: change_sqlite_page_size
   when: FULL_NODE_SQLITE_PRAGMA_PAGE_SIZE != ""
+- name: "Change auto_vacuum if variable AUTO_VACUUM is not empty"
+  import_role:
+    name:  change_sqlite_auto_vacuum
+  when: AUTO_VACUUM != ""
 - name: "Change files from {{ CHIA_SW_PATH }}/chia/util to match testcase {{ RUNID }}"
   template:
     src: "templates/{{ CHIA_BRANCH }}/{{ item }}"
