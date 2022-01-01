@@ -21,7 +21,8 @@
     BLOCKCHAIN_DB_NAME: "blockchain_v1_mainnet.sqlite"
     # Paths
     OS_USER_HOME: "/home/{{ CHIA_OS_USER }}"
-    BLOCKCHAIN_DB_PATH: "/chia_temp1/Blockchain_DB"
+      #BLOCKCHAIN_DB_PATH: "/chia_temp1/Blockchain_DB"
+    BLOCKCHAIN_DB_PATH: "/ramdisk"
     CHIA_SW_PATH: "{{ OS_USER_HOME }}/chia-blockchain"
     ANSIBLE_HOME_PATH: "{{ OS_USER_HOME }}/chia-sync-test"
     ANSIBLE_LOG_PATH: "{{ ANSIBLE_HOME_PATH }}/log"

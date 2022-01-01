@@ -1,8 +1,8 @@
 {
   "ACTIVE_TESTCASES": [
-      "AUTOTEST26",
-      "AUTOTEST27",
-      "AUTOTEST28"
+      "AUTOTEST37",
+      "AUTOTEST38",
+      "AUTOTEST39"
     ],
   "SCENARIO": {
     "DUSTSTORM1": {
@@ -128,7 +128,7 @@
     "MEMPOOL_MANAGER_THREADS": "multiprocessing.cpu_count()"
   },
   "AUTOTEST7": {
-    "DESCRIPTION": "Only full blocks height + peak index; increase coin_records lru cache",
+    "DESCRIPTION": "Only full blocks height + peak index; increase coin_records lru cache * 100",
     "RUNID": "7AUTOTEST",
     "BLOCK_STORE_IS_FULLY_COMPACTIFIED_INDEX": "",
     "BLOCK_STORE_HEIGHT_INDEX": "",
@@ -406,5 +406,153 @@
     "FULL_NODE_SQLITE_PRAGMA_CACHE_SPILL": "await self.connection.execute(\"pragma cache_spill=false\")",
     "FULL_NODE_SQLITE_PRAGMA_SYNCHRONOUS": "await self.connection.execute(\"pragma synchronous=OFF\")",
     "FULL_NODE_SQLITE_PRAGMA_JOURNAL_MODE": "await self.connection.execute(\"pragma journal_mode=off\")"
+  },
+  "AUTOTEST29": {
+    "DESCRIPTION": "Only full blocks height + peak index; increase coin_records lru cache * 1000",
+    "RUNID": "29AUTOTEST",
+    "BLOCK_STORE_IS_FULLY_COMPACTIFIED_INDEX": "",
+    "BLOCK_STORE_HEIGHT_INDEX": "",
+    "BLOCK_STORE_HH_INDEX": "",
+    "COIN_STORE_COIN_CONFIRMED_INDEX": "",
+    "COIN_STORE_COIN_SPENT_INDEX": "",
+    "COIN_STORE_COIN_PUZZLE_HASH_INDEX": "",
+    "COIN_STORE_COIN_PARENT_INDEX": "",
+    "COIN_STORE_COIN_LRU_CACHE": 60000000
+  },
+  "AUTOTEST30": {
+    "DESCRIPTION": "Only full blocks height + peak index; increase coin_records lru cache * 10",
+    "RUNID": "30AUTOTEST",
+    "BLOCK_STORE_IS_FULLY_COMPACTIFIED_INDEX": "",
+    "BLOCK_STORE_HEIGHT_INDEX": "",
+    "BLOCK_STORE_HH_INDEX": "",
+    "COIN_STORE_COIN_CONFIRMED_INDEX": "",
+    "COIN_STORE_COIN_SPENT_INDEX": "",
+    "COIN_STORE_COIN_PUZZLE_HASH_INDEX": "",
+    "COIN_STORE_COIN_PARENT_INDEX": "",
+    "COIN_STORE_COIN_LRU_CACHE": 600000
+  },
+  "AUTOTEST31": {
+    "DESCRIPTION": "Only full blocks height + peak index; cache_spill=false + increase coin_records lru cache * 100",
+    "RUNID": "31AUTOTEST",
+    "BLOCK_STORE_IS_FULLY_COMPACTIFIED_INDEX": "",
+    "BLOCK_STORE_HEIGHT_INDEX": "",
+    "BLOCK_STORE_HH_INDEX": "",
+    "COIN_STORE_COIN_CONFIRMED_INDEX": "",
+    "COIN_STORE_COIN_SPENT_INDEX": "",
+    "COIN_STORE_COIN_PUZZLE_HASH_INDEX": "",
+    "COIN_STORE_COIN_PARENT_INDEX": "",
+    "FULL_NODE_SQLITE_PRAGMA_CACHE_SPILL": "await self.connection.execute(\"pragma cache_spill=false\")",
+    "COIN_STORE_COIN_LRU_CACHE": 6000000
+  },
+  "AUTOTEST32": {
+    "DESCRIPTION": "Only full blocks height + peak index; increase coin_records lru cache * 500",
+    "RUNID": "32AUTOTEST",
+    "BLOCK_STORE_IS_FULLY_COMPACTIFIED_INDEX": "",
+    "BLOCK_STORE_HEIGHT_INDEX": "",
+    "BLOCK_STORE_HH_INDEX": "",
+    "COIN_STORE_COIN_CONFIRMED_INDEX": "",
+    "COIN_STORE_COIN_SPENT_INDEX": "",
+    "COIN_STORE_COIN_PUZZLE_HASH_INDEX": "",
+    "COIN_STORE_COIN_PARENT_INDEX": "",
+    "COIN_STORE_COIN_LRU_CACHE": 30000000
+  },
+    "AUTOTEST33": {
+    "DESCRIPTION": "Only full blocks height + peak index; locking_mode=exclusive, synchronous=OFF, journal_mode=off, uncommited=true, increase coin_records lru cache * 500",
+    "RUNID": "33AUTOTEST",
+    "BLOCK_STORE_IS_FULLY_COMPACTIFIED_INDEX": "",
+    "BLOCK_STORE_HEIGHT_INDEX": "",
+    "BLOCK_STORE_HH_INDEX": "",
+    "COIN_STORE_COIN_CONFIRMED_INDEX": "",
+    "COIN_STORE_COIN_SPENT_INDEX": "",
+    "COIN_STORE_COIN_PUZZLE_HASH_INDEX": "",
+    "COIN_STORE_COIN_PARENT_INDEX": "",
+    "FULL_NODE_SQLITE_PRAGMA_LOCKING_MODE": "await self.connection.execute(\"pragma locking_mode=exclusive\")",
+    "FULL_NODE_SQLITE_PRAGMA_SYNCHRONOUS": "await self.connection.execute(\"pragma synchronous=OFF\")",
+    "FULL_NODE_SQLITE_PRAGMA_JOURNAL_MODE": "await self.connection.execute(\"pragma journal_mode=off\")",
+    "FULL_NODE_SQLITE_PRAGMA_UNCOMMITTED": "await self.connection.execute(\"pragma uncommitted=true\")",
+    "COIN_STORE_COIN_LRU_CACHE": 30000000
+  },
+  "AUTOTEST34": {
+    "DESCRIPTION": "Only full blocks height + peak index; increase coin_records lru cache * 50",
+    "RUNID": "34AUTOTEST",
+    "BLOCK_STORE_IS_FULLY_COMPACTIFIED_INDEX": "",
+    "BLOCK_STORE_HEIGHT_INDEX": "",
+    "BLOCK_STORE_HH_INDEX": "",
+    "COIN_STORE_COIN_CONFIRMED_INDEX": "",
+    "COIN_STORE_COIN_SPENT_INDEX": "",
+    "COIN_STORE_COIN_PUZZLE_HASH_INDEX": "",
+    "COIN_STORE_COIN_PARENT_INDEX": "",
+    "COIN_STORE_COIN_LRU_CACHE": 3000000
+  },
+  "AUTOTEST35": {
+    "DESCRIPTION": "Only full blocks height + peak index; increase coin_records lru cache * 150",
+    "RUNID": "35AUTOTEST",
+    "BLOCK_STORE_IS_FULLY_COMPACTIFIED_INDEX": "",
+    "BLOCK_STORE_HEIGHT_INDEX": "",
+    "BLOCK_STORE_HH_INDEX": "",
+    "COIN_STORE_COIN_CONFIRMED_INDEX": "",
+    "COIN_STORE_COIN_SPENT_INDEX": "",
+    "COIN_STORE_COIN_PUZZLE_HASH_INDEX": "",
+    "COIN_STORE_COIN_PARENT_INDEX": "",
+    "COIN_STORE_COIN_LRU_CACHE": 9000000
+  },
+  "AUTOTEST36": {
+    "DESCRIPTION": "Only full blocks height + peak index; locking_mode=exclusive, cache_spill=false, synchronous=OFF, journal_mode=off, increase coin_records lru cache * 100",
+    "RUNID": "36AUTOTEST",
+    "BLOCK_STORE_IS_FULLY_COMPACTIFIED_INDEX": "",
+    "BLOCK_STORE_HEIGHT_INDEX": "",
+    "BLOCK_STORE_HH_INDEX": "",
+    "COIN_STORE_COIN_CONFIRMED_INDEX": "",
+    "COIN_STORE_COIN_SPENT_INDEX": "",
+    "COIN_STORE_COIN_PUZZLE_HASH_INDEX": "",
+    "COIN_STORE_COIN_PARENT_INDEX": "",
+    "FULL_NODE_SQLITE_PRAGMA_LOCKING_MODE": "await self.connection.execute(\"pragma locking_mode=exclusive\")",
+    "FULL_NODE_SQLITE_PRAGMA_CACHE_SPILL": "await self.connection.execute(\"pragma cache_spill=false\")",
+    "FULL_NODE_SQLITE_PRAGMA_SYNCHRONOUS": "await self.connection.execute(\"pragma synchronous=OFF\")",
+    "FULL_NODE_SQLITE_PRAGMA_JOURNAL_MODE": "await self.connection.execute(\"pragma journal_mode=off\")",
+    "COIN_STORE_COIN_LRU_CACHE": 6000000
+  },
+  "AUTOTEST37": {
+    "DESCRIPTION": "Only full blocks height + peak index; plus num_workers for block chain consensus equals core_count, not threads (only applicable if 2 threads per core)",
+    "RUNID": "37AUTOTEST",
+    "BLOCK_STORE_IS_FULLY_COMPACTIFIED_INDEX": "",
+    "BLOCK_STORE_HEIGHT_INDEX": "",
+    "BLOCK_STORE_HH_INDEX": "",
+    "COIN_STORE_COIN_CONFIRMED_INDEX": "",
+    "COIN_STORE_COIN_SPENT_INDEX": "",
+    "COIN_STORE_COIN_PUZZLE_HASH_INDEX": "",
+    "COIN_STORE_COIN_PARENT_INDEX": "",
+    "BLOCKCHAIN_CONSENSUS_THREADS": "cpu_count//2"
+  },
+  "AUTOTEST38": {
+    "DESCRIPTION": "Only full blocks height + peak index; locking_mode=exclusive, synchronous=OFF, journal_mode=off, increase coin_records lru cache * 100",
+    "RUNID": "38AUTOTEST",
+    "BLOCK_STORE_IS_FULLY_COMPACTIFIED_INDEX": "",
+    "BLOCK_STORE_HEIGHT_INDEX": "",
+    "BLOCK_STORE_HH_INDEX": "",
+    "COIN_STORE_COIN_CONFIRMED_INDEX": "",
+    "COIN_STORE_COIN_SPENT_INDEX": "",
+    "COIN_STORE_COIN_PUZZLE_HASH_INDEX": "",
+    "COIN_STORE_COIN_PARENT_INDEX": "",
+    "FULL_NODE_SQLITE_PRAGMA_LOCKING_MODE": "await self.connection.execute(\"pragma locking_mode=exclusive\")",
+    "FULL_NODE_SQLITE_PRAGMA_SYNCHRONOUS": "await self.connection.execute(\"pragma synchronous=OFF\")",
+    "FULL_NODE_SQLITE_PRAGMA_JOURNAL_MODE": "await self.connection.execute(\"pragma journal_mode=off\")",
+    "COIN_STORE_COIN_LRU_CACHE": 6000000
+  },
+  "AUTOTEST39": {
+    "DESCRIPTION": "Only full blocks height + peak index; locking_mode=exclusive, synchronous=OFF, journal_mode=off, uncommited=true, increase coin_records lru cache * 100",
+    "RUNID": "39AUTOTEST",
+    "BLOCK_STORE_IS_FULLY_COMPACTIFIED_INDEX": "",
+    "BLOCK_STORE_HEIGHT_INDEX": "",
+    "BLOCK_STORE_HH_INDEX": "",
+    "COIN_STORE_COIN_CONFIRMED_INDEX": "",
+    "COIN_STORE_COIN_SPENT_INDEX": "",
+    "COIN_STORE_COIN_PUZZLE_HASH_INDEX": "",
+    "COIN_STORE_COIN_PARENT_INDEX": "",
+    "FULL_NODE_SQLITE_PRAGMA_LOCKING_MODE": "await self.connection.execute(\"pragma locking_mode=exclusive\")",
+    "FULL_NODE_SQLITE_PRAGMA_SYNCHRONOUS": "await self.connection.execute(\"pragma synchronous=OFF\")",
+    "FULL_NODE_SQLITE_PRAGMA_JOURNAL_MODE": "await self.connection.execute(\"pragma journal_mode=off\")",
+    "FULL_NODE_SQLITE_PRAGMA_UNCOMMITTED": "await self.connection.execute(\"pragma uncommitted=true\")",
+    "COIN_STORE_COIN_LRU_CACHE": 6000000
   }
 }
