@@ -10,6 +10,7 @@
 - name: "Install chia-blockchain"
   shell: |
     sh install.sh 
+    . ./activate && chia init --fix-ssl-permissions
   args: 
     chdir: "{{ CHIA_SW_PATH }}"
   register: install_chia
