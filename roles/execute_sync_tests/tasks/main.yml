@@ -138,11 +138,11 @@
     . {{ CHIA_SW_PATH }}/activate 
     # get peak from sync_start
     PEAK=`chia show -s | head -1 | awk -F '[/.]' '{print $2}'`
-    # Run until the sadc process is still active
+    # Run as long as the sadc process is active
     while [[ `ps -eo pid,cmd | grep {{ ANSIBLE_SA_FILE_NAME }}.[s]a.data | wc -l` -ne 0 ]]
     do
       # Actively connect to peers until 15 peers with height >= the peak we are syncing to are reached
-      while [[ `chia show -c | grep FULL_NODE | awk -v IS_PEAK="$PEAK" '$11 >= IS_PEAK {print "count_me"}' | wc -l` -lt 15 ]] 
+      while [[ `chia show -c | grep FULL_NODE | awk -v IS_PEAK="$PEAK" '$11 >= IS_PEAK {print "count_me"}' | wc -l` -lt 15 ]] && [[ `ps -eo pid,cmd | grep {{ ANSIBLE_SA_FILE_NAME }}.[s]a.data | wc -l` -ne 0 ]]
       do 
         dig +short a dns-introducer.chia.net @one.one.one.one | head -15 | xargs -n1 -i chia show -a \{}:8444
       done
