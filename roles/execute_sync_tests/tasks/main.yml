@@ -76,34 +76,34 @@
     - "show.py"
 - name: "Change files from {{ CHIA_SW_PATH }}/chia/util to match testcase {{ RUNID }}"
   ansible.builtin.template:
-    src: "templates/{{ CHIA_BRANCH }}/util/{{ item }}"
+    src: "templates/{{ CHIA_BRANCH }}/util/{{ item }}.j2"
     dest: "{{ CHIA_SW_PATH }}/chia/util"
     owner: "{{ CHIA_OS_USER }}"
     group: "{{ CHIA_OS_GROUP }}"
     mode: 0644
   with_items:
-    - "chia_logging.py.j2"
+    - "chia_logging.py"
 - name: "Change files from {{ CHIA_SW_PATH }}/chia/consensus to match testcase {{ RUNID }}"
   ansible.builtin.template:
-    src: "templates/{{ CHIA_BRANCH }}/consensus/{{ item }}"
+    src: "templates/{{ CHIA_BRANCH }}/consensus/{{ item }}.j2"
     dest: "{{ CHIA_SW_PATH }}/chia/consensus"
     owner: "{{ CHIA_OS_USER }}"
     group: "{{ CHIA_OS_GROUP }}"
     mode: 0644
   with_items:
-    - "blockchain.py.j2"
+    - "blockchain.py"
 - name: "Change files from {{ CHIA_SW_PATH }}/chia/full_node to match testcase {{ RUNID }}"
   ansible.builtin.template:
-    src: "templates/{{ CHIA_BRANCH }}/full_node/{{ item }}"
+    src: "templates/{{ CHIA_BRANCH }}/full_node/{{ item }}.j2"
     dest: "{{ CHIA_SW_PATH }}/chia/full_node"
     owner: "{{ CHIA_OS_USER }}"
     group: "{{ CHIA_OS_GROUP }}"
     mode: 0644
   with_items:
-    - "block_store.py.j2"
-    - "coin_store.py.j2"
-    - "full_node.py.j2"
-    - "mempool_manager.py.j2"
+    - "block_store.py"
+    - "coin_store.py"
+    - "full_node.py"
+    - "mempool_manager.py"
 - name: "Clear FS Caches to get comparable runtimes and prevent need of probably unreliable warmup run"
   become: yes
   become_user: root
