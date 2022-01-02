@@ -7,3 +7,4 @@
   loop: "{{ ACTIVE_TESTCASES }}"
   loop_control:
     loop_var: ACTIVE_TESTCASES
+    extended: yes
