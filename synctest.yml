@@ -2,12 +2,6 @@
 - hosts: localhost
   gather_facts: true
   vars:
-    # User
-    CHIA_OS_USER: "chia"
-    CHIA_OS_GROUP: "chia"
-    # Git
-    CHIA_GIT_REPO: "https://github.com/Chia-Network/chia-blockchain.git"
-    CHIA_BRANCH: "1.2.11"
     # Required Os Packages
     LIST_OS_PACKAGES:
       Generic:
@@ -20,24 +14,9 @@
         - "dnsutils"
       Archlinux:
         - "bind"
-    # Testcases
-    #SCENARIO: "TRANSACTION_START"
-    SCENARIO: "DUSTSTORM1"
-    #SCENARIO: "DUSTSTORM2"
-    #SCENARIO: "TRANSACTION_PEAK"
-    # Read Test Scenario Config
-    BENCHMARK_CONFIG: "{{ lookup('file', 'testcases.json') | from_json }}"
-    # SAR
-    SADC_BIN_PATH: "/usr/lib64/sa"
-    # DB
-    BLOCKCHAIN_DB_NAME: "blockchain_v1_mainnet.sqlite"
-    # Paths
-    OS_USER_HOME: "/home/{{ CHIA_OS_USER }}"
-      #BLOCKCHAIN_DB_PATH: "/chia_temp1/Blockchain_DB"
-    BLOCKCHAIN_DB_PATH: "/ramdisk"
-    CHIA_SW_PATH: "{{ OS_USER_HOME }}/chia-blockchain"
-    ANSIBLE_HOME_PATH: "{{ OS_USER_HOME }}/chia-sync-test"
-    ANSIBLE_LOG_PATH: "{{ ANSIBLE_HOME_PATH }}/log"
+    # Read Local configuration files
+    BENCHMARK_CONFIG: "{{ lookup('file', 'config/testcases.json') | from_json }}"
+    SYNCTEST_CONFIG: "{{ lookup('file', 'config/local_config.yml') | from_yaml }}"
   vars_prompt:
     - name: ansible_become_pass
       prompt: "Enter sudo password"
@@ -47,23 +26,24 @@
       prompt: |
         |||||||||||||||||||||||||||||||||||||||||||||||||||||
         This script will
-          - Stop all chia processes of user "{{ CHIA_OS_GROUP }}"
-          - Replace any existing chia SW installation at "{{ CHIA_SW_PATH }}" with branch/tag "{{ CHIA_BRANCH }}"
-          - Remove chia db "{{ BLOCKCHAIN_DB_PATH }}/{{ BLOCKCHAIN_DB_NAME }}" and related -shm, -journal, -wal files
-          - If not already available, download the required database file for scenario "{{ SCENARIO }}"
+          - Stop all chia processes of user "{{ SYNCTEST_CONFIG.CHIA_OS_GROUP }}"
+          - Replace any existing chia SW installation at "{{ SYNCTEST_CONFIG.CHIA_SW_PATH }}" with branch/tag "{{ SYNCTEST_CONFIG.CHIA_BRANCH }}"
+          - Remove chia db "{{ SYNCTEST_CONFIG.BLOCKCHAIN_DB_PATH }}/{{ SYNCTEST_CONFIG.BLOCKCHAIN_DB_NAME }}" and related -shm, -journal, -wal files
+          - If not already available, download the required database file for scenario "{{ SYNCTEST_CONFIG.SCENARIO }}"
             The prepared database files are vacuumed and all relevant indexes are droped.
+          - Local configuration files are located at "{{ SYNCTEST_CONFIG.ANSIBLE_HOME_PATH }}/config"
           - Run the following testcases: 
               {{ BENCHMARK_CONFIG.ACTIVE_TESTCASES }}
-            Check file "testcases.json" for further information regarding testcases.
+            Check file "config/testcases.json" for further information regarding testcases.
           - Logfiles will be written to:
             .) chia 
-               debug.log in "{{ ANSIBLE_LOG_PATH }}/current/chia"
+               debug.log in "{{ SYNCTEST_CONFIG.ANSIBLE_LOG_PATH }}/current/chia"
             .) sar 
-               raw data in "{{ ANSIBLE_LOG_PATH }}/current/sa"
-               csv export "{{ ANSIBLE_LOG_PATH }}/current/*.sa.csv"
-               svg reports "{{ ANSIBLE_LOG_PATH }}/current/*.sa.svg"
+               raw data in "{{ SYNCTEST_CONFIG.ANSIBLE_LOG_PATH }}/current/sa"
+               csv export "{{ SYNCTEST_CONFIG.ANSIBLE_LOG_PATH }}/current/*.sa.csv"
+               svg reports "{{ SYNCTEST_CONFIG.ANSIBLE_LOG_PATH }}/current/*.sa.svg"
             .) testcase
-               run info "{{ ANSIBLE_LOG_PATH }}/current/*_ansible_run.csv"
+               run info "{{ SYNCTEST_CONFIG.ANSIBLE_LOG_PATH }}/current/*_ansible_run.csv"
           - Depending on the hosts hardware, selected scenario and testcases, the scripts execution can last from a few minutes to several days.
         |||||||||||||||||||||||||||||||||||||||||||||||||||||
         Proceed? (yes/no) 
@@ -85,6 +65,35 @@
         - "{{ LIST_OS_PACKAGES[ansible_facts.os_family] }}"
       loop_control:
         loop_var: PACK_TO_INSTALL_OS_FAMILY
+    - name: "Set Local Config Variables" 
+      ansible.builtin.set_fact:
+        CHIA_OS_USER: "{{ SYNCTEST_CONFIG.CHIA_OS_USER }}"
+        CHIA_OS_GROUP: "{{ SYNCTEST_CONFIG.CHIA_OS_GROUP }}"
+        CHIA_GIT_REPO: "{{ SYNCTEST_CONFIG.CHIA_GIT_REPO }}"
+        CHIA_BRANCH: "{{ SYNCTEST_CONFIG.CHIA_BRANCH }}"
+        SCENARIO: "{{ SYNCTEST_CONFIG.SCENARIO }}"
+        SADC_BIN_PATH: "{{ SYNCTEST_CONFIG.SADC_BIN_PATH }}"
+        BLOCKCHAIN_DB_NAME: "{{ SYNCTEST_CONFIG.BLOCKCHAIN_DB_NAME }}"
+        BLOCKCHAIN_DB_PATH: "{{ SYNCTEST_CONFIG.BLOCKCHAIN_DB_PATH }}"
+        OS_USER_HOME: "{{ SYNCTEST_CONFIG.OS_USER_HOME }}"
+        ANSIBLE_HOME_PATH: "{{ SYNCTEST_CONFIG.ANSIBLE_HOME_PATH }}"
+        CHIA_SW_PATH: "{{ SYNCTEST_CONFIG.CHIA_SW_PATH }}"
+        ANSIBLE_LOG_PATH: "{{ SYNCTEST_CONFIG.ANSIBLE_LOG_PATH }}"
+    - name: debug
+      debug:
+        msg:
+          - "{{ CHIA_OS_USER }}"
+          - "{{ CHIA_OS_GROUP }}"
+          - "{{ CHIA_GIT_REPO }}"
+          - "{{ CHIA_BRANCH }}"
+          - "{{ SCENARIO }}"
+          - "{{ SADC_BIN_PATH }}"
+          - "{{ BLOCKCHAIN_DB_NAME }}"
+          - "{{ OS_USER_HOME }}"
+          - "{{ BLOCKCHAIN_DB_PATH }}"
+          - "{{ CHIA_SW_PATH }}"
+          - "{{ ANSIBLE_HOME_PATH }}"
+          - "{{ ANSIBLE_LOG_PATH }}"
     - name: "Set Active Testcases"
       ansible.builtin.set_fact:
         ACTIVE_TESTCASES: "{{ BENCHMARK_CONFIG.ACTIVE_TESTCASES }}"
