@@ -8,6 +8,18 @@
     # Git
     CHIA_GIT_REPO: "https://github.com/Chia-Network/chia-blockchain.git"
     CHIA_BRANCH: "1.2.11"
+    # Required Os Packages
+    LIST_OS_PACKAGES:
+      Generic:
+        - sysstat
+        - unzip
+        - sudo
+      ClearLinux:
+        - "network-basic"
+      Debian:
+        - "dnsutils"
+      Archlinux:
+        - "bind"
     # Testcases
     #SCENARIO: "TRANSACTION_START"
     SCENARIO: "DUSTSTORM1"
@@ -36,6 +48,14 @@
       ansible.builtin.shell: |
         date +%Y-%m-%d_%H:%M:%S
       register: timestamp_started
+    - name: "Install required OS packages"
+      ansible.builtin.include_role:
+        name: install_os_package
+      loop: 
+        - "{{ LIST_OS_PACKAGES[\"Generic\"] }}"
+        - "{{ LIST_OS_PACKAGES[ansible_facts.os_family] }}"
+      loop_control:
+        loop_var: PACK_TO_INSTALL_OS_FAMILY
     - name: "Set Active Testcases"
       ansible.builtin.set_fact:
         ACTIVE_TESTCASES: "{{ BENCHMARK_CONFIG.ACTIVE_TESTCASES }}"

@@ -1,0 +1,10 @@
+---
+- name: "Install packages"
+  become: yes
+  become_user: root
+  become_method: sudo
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - "{{ PACK_TO_INSTALL_OS_FAMILY }}"
