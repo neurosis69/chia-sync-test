@@ -1,39 +1,39 @@
 ---
 - name: "Set Runtime (Testcase) Variables as fact"
   ansible.builtin.set_fact:
-    ANSIBLE_SA_FILE_NAME: "{{ ansible_hostname }}_{{ ansible_date_time.epoch }}_{{ RUNID }}"
-    DESCRIPTION: "{{ BENCHMARK_CONFIG[RUNID].DESCRIPTION | default(BENCHMARK_CONFIG.DEFAULT.DESCRIPTION) }}"
-    BLOCKCHAIN_CONSENSUS_THREADS: "{{ BENCHMARK_CONFIG[RUNID].BLOCKCHAIN_CONSENSUS_THREADS | default(BENCHMARK_CONFIG.DEFAULT.BLOCKCHAIN_CONSENSUS_THREADS) }}"
-    BLOCK_STORE_FULL_BLOCK_HEIGHT_INDEX: "{{ BENCHMARK_CONFIG[RUNID].BLOCK_STORE_FULL_BLOCK_HEIGHT_INDEX | default(BENCHMARK_CONFIG.DEFAULT.BLOCK_STORE_FULL_BLOCK_HEIGHT_INDEX) }}"
-    BLOCK_STORE_IS_FULLY_COMPACTIFIED_INDEX: "{{ BENCHMARK_CONFIG[RUNID].BLOCK_STORE_IS_FULLY_COMPACTIFIED_INDEX | default(BENCHMARK_CONFIG.DEFAULT.BLOCK_STORE_IS_FULLY_COMPACTIFIED_INDEX) }}"
-    BLOCK_STORE_HEIGHT_INDEX: "{{ BENCHMARK_CONFIG[RUNID].BLOCK_STORE_HEIGHT_INDEX | default(BENCHMARK_CONFIG.DEFAULT.BLOCK_STORE_HEIGHT_INDEX) }}"
-    BLOCK_STORE_HH_INDEX: "{{ BENCHMARK_CONFIG[RUNID].BLOCK_STORE_HH_INDEX | default(BENCHMARK_CONFIG.DEFAULT.BLOCK_STORE_HH_INDEX) }}"
-    BLOCK_STORE_PEAK_INDEX: "{{ BENCHMARK_CONFIG[RUNID].BLOCK_STORE_PEAK_INDEX | default(BENCHMARK_CONFIG.DEFAULT.BLOCK_STORE_PEAK_INDEX) }}"
-    BLOCK_STORE_BLOCK_LRU_CACHE: "{{ BENCHMARK_CONFIG[RUNID].BLOCK_STORE_BLOCK_LRU_CACHE | default(BENCHMARK_CONFIG.DEFAULT.BLOCK_STORE_BLOCK_LRU_CACHE) }}"
-    BLOCK_STORE_SES_CHALLENGE_LRU_CACHE: "{{ BENCHMARK_CONFIG[RUNID].BLOCK_STORE_SES_CHALLENGE_LRU_CACHE | default(BENCHMARK_CONFIG.DEFAULT.BLOCK_STORE_SES_CHALLENGE_LRU_CACHE) }}"
-    COIN_STORE_COIN_CONFIRMED_INDEX: "{{ BENCHMARK_CONFIG[RUNID].COIN_STORE_COIN_CONFIRMED_INDEX | default (BENCHMARK_CONFIG.DEFAULT.COIN_STORE_COIN_CONFIRMED_INDEX) }}"
-    COIN_STORE_COIN_SPENT_INDEX: "{{ BENCHMARK_CONFIG[RUNID].COIN_STORE_COIN_SPENT_INDEX | default(BENCHMARK_CONFIG.DEFAULT.COIN_STORE_COIN_SPENT_INDEX) }}"
-    COIN_STORE_COIN_PUZZLE_HASH_INDEX: "{{ BENCHMARK_CONFIG[RUNID].COIN_STORE_COIN_PUZZLE_HASH_INDEX | default(BENCHMARK_CONFIG.DEFAULT.COIN_STORE_COIN_PUZZLE_HASH_INDEX) }}"
-    COIN_STORE_COIN_PARENT_INDEX: "{{ BENCHMARK_CONFIG[RUNID].COIN_STORE_COIN_PARENT_INDEX | default(BENCHMARK_CONFIG.DEFAULT.COIN_STORE_COIN_PARENT_INDEX) }}"
-    COIN_STORE_COIN_LRU_CACHE: "{{ BENCHMARK_CONFIG[RUNID].COIN_STORE_COIN_LRU_CACHE | default(BENCHMARK_CONFIG.DEFAULT.COIN_STORE_COIN_LRU_CACHE) }}"
-    MEMPOOL_MANAGER_THREADS: "{{ BENCHMARK_CONFIG[RUNID].MEMPOOL_MANAGER_THREADS | default(BENCHMARK_CONFIG.DEFAULT.MEMPOOL_MANAGER_THREADS) }}"
-    MEMPOOL_MANAGER_LRU_CACHE: "{{ BENCHMARK_CONFIG[RUNID].MEMPOOL_MANAGER_LRU_CACHE | default(BENCHMARK_CONFIG.DEFAULT.MEMPOOL_MANAGER_LRU_CACHE) }}"
-    FULL_NODE_SQLITE_PRAGMA_JOURNAL_MODE: "{{ BENCHMARK_CONFIG[RUNID].FULL_NODE_SQLITE_PRAGMA_JOURNAL_MODE | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_JOURNAL_MODE) }}"
-    FULL_NODE_SQLITE_PRAGMA_LOCKING_MODE: "{{ BENCHMARK_CONFIG[RUNID].FULL_NODE_SQLITE_PRAGMA_LOCKING_MODE | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_LOCKING_MODE) }}"
-    FULL_NODE_SQLITE_PRAGMA_CACHE_SPILL: "{{ BENCHMARK_CONFIG[RUNID].FULL_NODE_SQLITE_PRAGMA_CACHE_SPILL | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_CACHE_SPILL) }}"
-    FULL_NODE_SQLITE_PRAGMA_PAGE_SIZE: "{{ BENCHMARK_CONFIG[RUNID].FULL_NODE_SQLITE_PRAGMA_PAGE_SIZE | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_PAGE_SIZE) }}"
-    FULL_NODE_SQLITE_PRAGMA_SYNCHRONOUS: "{{ BENCHMARK_CONFIG[RUNID].FULL_NODE_SQLITE_PRAGMA_SYNCHRONOUS | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_SYNCHRONOUS) }}"
-    FULL_NODE_SQLITE_PRAGMA_MMAP_SIZE: "{{ BENCHMARK_CONFIG[RUNID].FULL_NODE_SQLITE_PRAGMA_MMAP_SIZE | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_MMAP_SIZE) }}"
-    FULL_NODE_SQLITE_PRAGMA_CACHE_SIZE: "{{ BENCHMARK_CONFIG[RUNID].FULL_NODE_SQLITE_PRAGMA_CACHE_SIZE | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_CACHE_SIZE) }}"
-    FULL_NODE_SQLITE_PRAGMA_UNCOMMITTED: "{{ BENCHMARK_CONFIG[RUNID].FULL_NODE_SQLITE_PRAGMA_UNCOMMITTED | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_UNCOMMITTED) }}"
-    FULL_NODE_SQLITE_PRAGMA_WAL_CHECKPOINT: "{{ BENCHMARK_CONFIG[RUNID].FULL_NODE_SQLITE_PRAGMA_WAL_CHECKPOINT | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_WAL_CHECKPOINT) }}"
-    PAGE_SIZE: "{{ BENCHMARK_CONFIG[RUNID].PAGE_SIZE | default(BENCHMARK_CONFIG.DEFAULT.PAGE_SIZE) }}"
-    AUTO_VACUUM: "{{ BENCHMARK_CONFIG[RUNID].AUTO_VACUUM | default(BENCHMARK_CONFIG.DEFAULT.AUTO_VACUUM) }}"
-- name: "Test {{ RUNID }} start: {{ DESCRIPTION }}"
+    ANSIBLE_SA_FILE_NAME: "{{ ansible_hostname }}_{{ ansible_date_time.epoch }}_{{ TESTCASE }}"
+    DESCRIPTION: "{{ BENCHMARK_CONFIG[TESTCASE].DESCRIPTION | default(BENCHMARK_CONFIG.DEFAULT.DESCRIPTION) }}"
+    BLOCKCHAIN_CONSENSUS_THREADS: "{{ BENCHMARK_CONFIG[TESTCASE].BLOCKCHAIN_CONSENSUS_THREADS | default(BENCHMARK_CONFIG.DEFAULT.BLOCKCHAIN_CONSENSUS_THREADS) }}"
+    BLOCK_STORE_FULL_BLOCK_HEIGHT_INDEX: "{{ BENCHMARK_CONFIG[TESTCASE].BLOCK_STORE_FULL_BLOCK_HEIGHT_INDEX | default(BENCHMARK_CONFIG.DEFAULT.BLOCK_STORE_FULL_BLOCK_HEIGHT_INDEX) }}"
+    BLOCK_STORE_IS_FULLY_COMPACTIFIED_INDEX: "{{ BENCHMARK_CONFIG[TESTCASE].BLOCK_STORE_IS_FULLY_COMPACTIFIED_INDEX | default(BENCHMARK_CONFIG.DEFAULT.BLOCK_STORE_IS_FULLY_COMPACTIFIED_INDEX) }}"
+    BLOCK_STORE_HEIGHT_INDEX: "{{ BENCHMARK_CONFIG[TESTCASE].BLOCK_STORE_HEIGHT_INDEX | default(BENCHMARK_CONFIG.DEFAULT.BLOCK_STORE_HEIGHT_INDEX) }}"
+    BLOCK_STORE_HH_INDEX: "{{ BENCHMARK_CONFIG[TESTCASE].BLOCK_STORE_HH_INDEX | default(BENCHMARK_CONFIG.DEFAULT.BLOCK_STORE_HH_INDEX) }}"
+    BLOCK_STORE_PEAK_INDEX: "{{ BENCHMARK_CONFIG[TESTCASE].BLOCK_STORE_PEAK_INDEX | default(BENCHMARK_CONFIG.DEFAULT.BLOCK_STORE_PEAK_INDEX) }}"
+    BLOCK_STORE_BLOCK_LRU_CACHE: "{{ BENCHMARK_CONFIG[TESTCASE].BLOCK_STORE_BLOCK_LRU_CACHE | default(BENCHMARK_CONFIG.DEFAULT.BLOCK_STORE_BLOCK_LRU_CACHE) }}"
+    BLOCK_STORE_SES_CHALLENGE_LRU_CACHE: "{{ BENCHMARK_CONFIG[TESTCASE].BLOCK_STORE_SES_CHALLENGE_LRU_CACHE | default(BENCHMARK_CONFIG.DEFAULT.BLOCK_STORE_SES_CHALLENGE_LRU_CACHE) }}"
+    COIN_STORE_COIN_CONFIRMED_INDEX: "{{ BENCHMARK_CONFIG[TESTCASE].COIN_STORE_COIN_CONFIRMED_INDEX | default (BENCHMARK_CONFIG.DEFAULT.COIN_STORE_COIN_CONFIRMED_INDEX) }}"
+    COIN_STORE_COIN_SPENT_INDEX: "{{ BENCHMARK_CONFIG[TESTCASE].COIN_STORE_COIN_SPENT_INDEX | default(BENCHMARK_CONFIG.DEFAULT.COIN_STORE_COIN_SPENT_INDEX) }}"
+    COIN_STORE_COIN_PUZZLE_HASH_INDEX: "{{ BENCHMARK_CONFIG[TESTCASE].COIN_STORE_COIN_PUZZLE_HASH_INDEX | default(BENCHMARK_CONFIG.DEFAULT.COIN_STORE_COIN_PUZZLE_HASH_INDEX) }}"
+    COIN_STORE_COIN_PARENT_INDEX: "{{ BENCHMARK_CONFIG[TESTCASE].COIN_STORE_COIN_PARENT_INDEX | default(BENCHMARK_CONFIG.DEFAULT.COIN_STORE_COIN_PARENT_INDEX) }}"
+    COIN_STORE_COIN_LRU_CACHE: "{{ BENCHMARK_CONFIG[TESTCASE].COIN_STORE_COIN_LRU_CACHE | default(BENCHMARK_CONFIG.DEFAULT.COIN_STORE_COIN_LRU_CACHE) }}"
+    MEMPOOL_MANAGER_THREADS: "{{ BENCHMARK_CONFIG[TESTCASE].MEMPOOL_MANAGER_THREADS | default(BENCHMARK_CONFIG.DEFAULT.MEMPOOL_MANAGER_THREADS) }}"
+    MEMPOOL_MANAGER_LRU_CACHE: "{{ BENCHMARK_CONFIG[TESTCASE].MEMPOOL_MANAGER_LRU_CACHE | default(BENCHMARK_CONFIG.DEFAULT.MEMPOOL_MANAGER_LRU_CACHE) }}"
+    FULL_NODE_SQLITE_PRAGMA_JOURNAL_MODE: "{{ BENCHMARK_CONFIG[TESTCASE].FULL_NODE_SQLITE_PRAGMA_JOURNAL_MODE | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_JOURNAL_MODE) }}"
+    FULL_NODE_SQLITE_PRAGMA_LOCKING_MODE: "{{ BENCHMARK_CONFIG[TESTCASE].FULL_NODE_SQLITE_PRAGMA_LOCKING_MODE | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_LOCKING_MODE) }}"
+    FULL_NODE_SQLITE_PRAGMA_CACHE_SPILL: "{{ BENCHMARK_CONFIG[TESTCASE].FULL_NODE_SQLITE_PRAGMA_CACHE_SPILL | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_CACHE_SPILL) }}"
+    FULL_NODE_SQLITE_PRAGMA_PAGE_SIZE: "{{ BENCHMARK_CONFIG[TESTCASE].FULL_NODE_SQLITE_PRAGMA_PAGE_SIZE | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_PAGE_SIZE) }}"
+    FULL_NODE_SQLITE_PRAGMA_SYNCHRONOUS: "{{ BENCHMARK_CONFIG[TESTCASE].FULL_NODE_SQLITE_PRAGMA_SYNCHRONOUS | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_SYNCHRONOUS) }}"
+    FULL_NODE_SQLITE_PRAGMA_MMAP_SIZE: "{{ BENCHMARK_CONFIG[TESTCASE].FULL_NODE_SQLITE_PRAGMA_MMAP_SIZE | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_MMAP_SIZE) }}"
+    FULL_NODE_SQLITE_PRAGMA_CACHE_SIZE: "{{ BENCHMARK_CONFIG[TESTCASE].FULL_NODE_SQLITE_PRAGMA_CACHE_SIZE | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_CACHE_SIZE) }}"
+    FULL_NODE_SQLITE_PRAGMA_UNCOMMITTED: "{{ BENCHMARK_CONFIG[TESTCASE].FULL_NODE_SQLITE_PRAGMA_UNCOMMITTED | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_UNCOMMITTED) }}"
+    FULL_NODE_SQLITE_PRAGMA_WAL_CHECKPOINT: "{{ BENCHMARK_CONFIG[TESTCASE].FULL_NODE_SQLITE_PRAGMA_WAL_CHECKPOINT | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_WAL_CHECKPOINT) }}"
+    PAGE_SIZE: "{{ BENCHMARK_CONFIG[TESTCASE].PAGE_SIZE | default(BENCHMARK_CONFIG.DEFAULT.PAGE_SIZE) }}"
+    AUTO_VACUUM: "{{ BENCHMARK_CONFIG[TESTCASE].AUTO_VACUUM | default(BENCHMARK_CONFIG.DEFAULT.AUTO_VACUUM) }}"
+- name: "Test {{ TESTCASE }} start: {{ DESCRIPTION }}"
   ansible.builtin.lineinfile:
     path: "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
-    line: "{{ ansible_hostname }},{{ SCENARIO }},{{ RUNID }},{{ lookup('pipe', 'date +%Y-%m-%dT%H:%M:%S') }}"
-- name: "Start sadc data gathering for {{ RUNID }}"
+    line: "{{ ansible_hostname }},{{ SCENARIO }},{{ TESTCASE }},{{ lookup('pipe', 'date +%Y-%m-%dT%H:%M:%S') }}"
+- name: "Start sadc data gathering for {{ TESTCASE }}"
   become: yes
   become_user: root
   become_method: sudo
@@ -74,7 +74,7 @@
     mode: 0644
   with_items:
     - "show.py"
-- name: "Change files from {{ CHIA_SW_PATH }}/chia/util to match testcase {{ RUNID }}"
+- name: "Change files from {{ CHIA_SW_PATH }}/chia/util to match testcase {{ TESTCASE }}"
   ansible.builtin.template:
     src: "templates/{{ CHIA_BRANCH }}/util/{{ item }}.j2"
     dest: "{{ CHIA_SW_PATH }}/chia/util/{{ item }}"
@@ -83,7 +83,7 @@
     mode: 0644
   with_items:
     - "chia_logging.py"
-- name: "Change files from {{ CHIA_SW_PATH }}/chia/consensus to match testcase {{ RUNID }}"
+- name: "Change files from {{ CHIA_SW_PATH }}/chia/consensus to match testcase {{ TESTCASE }}"
   ansible.builtin.template:
     src: "templates/{{ CHIA_BRANCH }}/consensus/{{ item }}.j2"
     dest: "{{ CHIA_SW_PATH }}/chia/consensus/{{ item }}"
@@ -92,7 +92,7 @@
     mode: 0644
   with_items:
     - "blockchain.py"
-- name: "Change files from {{ CHIA_SW_PATH }}/chia/full_node to match testcase {{ RUNID }}"
+- name: "Change files from {{ CHIA_SW_PATH }}/chia/full_node to match testcase {{ TESTCASE }}"
   ansible.builtin.template:
     src: "templates/{{ CHIA_BRANCH }}/full_node/{{ item }}.j2"
     dest: "{{ CHIA_SW_PATH }}/chia/full_node/{{ item }}"
@@ -110,10 +110,10 @@
   become_method: sudo
   ansible.builtin.shell: |
     sync; echo 1 > /proc/sys/vm/drop_caches
-- name: "Write Log: {{ RUNID }} initiate sync"
+- name: "Write Log: {{ TESTCASE }} initiate sync"
   ansible.builtin.lineinfile:
     path: "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
-    regexp: "^({{ ansible_hostname }},{{ SCENARIO }},{{ RUNID }}.*)$"
+    regexp: "^({{ ansible_hostname }},{{ SCENARIO }},{{ TESTCASE }}.*)$"
     line: "\\1,{{ lookup('pipe', 'date +%Y-%m-%dT%H:%M:%S') }}"
     backrefs: yes
 - name: "Start chia full node"
@@ -121,7 +121,7 @@
     . {{ CHIA_SW_PATH }}/activate && chia start node
 - name: "Tail chia logfile to prevent trigger wait_for for old log entries"
   ansible.builtin.shell: |
-    tail -n 1 {{ ANSIBLE_LOG_CHIA_PATH }}/{{ CHIA_LOG_FILE_NAME }}_{{ RUNID }}.{{ ansible_loop.index }}.log
+    tail -n 1 {{ ANSIBLE_LOG_CHIA_PATH }}/{{ CHIA_LOG_FILE_NAME }}_{{ TESTCASE }}.{{ ansible_loop.index }}.log
   register: tail_debug_log
 - name: "Set fact for tail"
   ansible.builtin.set_fact:
@@ -151,35 +151,35 @@
   register: keep_chia_connections
 - name: "Sync until Height {{ SYNC_START_HEIGHT }} is reached"
   ansible.builtin.wait_for:
-    path: "{{ ANSIBLE_LOG_CHIA_PATH }}/{{ CHIA_LOG_FILE_NAME }}_{{ RUNID }}.{{ ansible_loop.index }}.log"
+    path: "{{ ANSIBLE_LOG_CHIA_PATH }}/{{ CHIA_LOG_FILE_NAME }}_{{ TESTCASE }}.{{ ansible_loop.index }}.log"
     search_regex: "{{ debug_log_since_test_start }}\r(.*\r)*.*Added blocks {{ SYNC_START_HEIGHT }}.* to .*"
     timeout: 86400
-- name: "Write Log: {{ RUNID }} start sync"
+- name: "Write Log: {{ TESTCASE }} start sync"
   ansible.builtin.lineinfile:
     path: "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
-    regexp: "^({{ ansible_hostname }},{{ SCENARIO }},{{ RUNID }}.*)$"
+    regexp: "^({{ ansible_hostname }},{{ SCENARIO }},{{ TESTCASE }}.*)$"
     line: "\\1,{{ lookup('pipe', 'date +%Y-%m-%dT%H:%M:%S') }}"
     backrefs: yes
 - name: "Sync until Height {{ DUST_START_HEIGHT }} is reached"
   ansible.builtin.wait_for:
-    path: "{{ ANSIBLE_LOG_CHIA_PATH }}/{{ CHIA_LOG_FILE_NAME }}_{{ RUNID }}.{{ ansible_loop.index }}.log"
+    path: "{{ ANSIBLE_LOG_CHIA_PATH }}/{{ CHIA_LOG_FILE_NAME }}_{{ TESTCASE }}.{{ ansible_loop.index }}.log"
     search_regex: "{{ debug_log_since_test_start }}\r(.*\r)*.*Added blocks .* to {{ DUST_START_HEIGHT }}.*"
     timeout: 86400
-- name: "Write Log: {{ RUNID }} duststorm start"
+- name: "Write Log: {{ TESTCASE }} duststorm start"
   ansible.builtin.lineinfile:
     path: "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
-    regexp: "^({{ ansible_hostname }},{{ SCENARIO }},{{ RUNID }}.*)$"
+    regexp: "^({{ ansible_hostname }},{{ SCENARIO }},{{ TESTCASE }}.*)$"
     line: "\\1,{{ lookup('pipe', 'date +%Y-%m-%dT%H:%M:%S') }}"
     backrefs: yes
 - name: "Sync until Height {{ DUST_STOP_HEIGHT }} is reached"
   ansible.builtin.wait_for:
-    path: "{{ ANSIBLE_LOG_CHIA_PATH }}/{{ CHIA_LOG_FILE_NAME }}_{{ RUNID }}.{{ ansible_loop.index }}.log"
+    path: "{{ ANSIBLE_LOG_CHIA_PATH }}/{{ CHIA_LOG_FILE_NAME }}_{{ TESTCASE }}.{{ ansible_loop.index }}.log"
     search_regex: "{{ debug_log_since_test_start }}\r(.*\r)*.*Added blocks .* to {{ DUST_STOP_HEIGHT }}.*"
     timeout: 86400
-- name: "Write Log: {{ RUNID }} duststorm end"
+- name: "Write Log: {{ TESTCASE }} duststorm end"
   ansible.builtin.lineinfile:
     path: "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
-    regexp: "^({{ ansible_hostname }},{{ SCENARIO }},{{ RUNID }}.*)$"
+    regexp: "^({{ ansible_hostname }},{{ SCENARIO }},{{ TESTCASE }}.*)$"
     line: "\\1,{{ lookup('pipe', 'date +%Y-%m-%dT%H:%M:%S') }}"
     backrefs: yes
 - name: "Stop chia processes"
@@ -191,10 +191,10 @@
     get_checksum: no
     get_mime: no
   register: sqlite_db_stats
-- name: "Write Log: {{ RUNID }} write sqlite db size"
+- name: "Write Log: {{ TESTCASE }} write sqlite db size"
   ansible.builtin.lineinfile:
     path: "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
-    regexp: "^({{ ansible_hostname }},{{ SCENARIO }},{{ RUNID }}.*)$"
+    regexp: "^({{ ansible_hostname }},{{ SCENARIO }},{{ TESTCASE }}.*)$"
     line: "\\1,{{ sqlite_db_stats.stat.size }},\"{{ DESCRIPTION }}\""
     backrefs: yes
 - name: "Cancel sadc data gathering and tail processes"
@@ -210,5 +210,5 @@
   register: sqlite_device
 - name: "Convert and write SA output"
   ansible.builtin.shell: |
-    sadf -d -T  {{ ANSIBLE_LOG_SA_PATH }}/{{ ANSIBLE_SA_FILE_NAME }}.{{ ansible_loop.index }}.sa.data --fs={{ sqlite_device.stdout }} -- -F -m CPU -d -u -S -q -r -b -n DEV > {{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}_{{ RUNID }}.{{ ansible_loop.index }}.sa.csv
-    sadf -g -T -O autoscale,showinfo,showidle,showtoc,skipempty {{ ANSIBLE_LOG_SA_PATH }}/{{ ANSIBLE_SA_FILE_NAME }}.{{ ansible_loop.index }}.sa.data --fs={{ sqlite_device.stdout }} -- -F -m CPU -d -u -S -q -r -b -n DEV > {{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}_{{ RUNID }}.{{ ansible_loop.index }}.sa.svg
+    sadf -d -T  {{ ANSIBLE_LOG_SA_PATH }}/{{ ANSIBLE_SA_FILE_NAME }}.{{ ansible_loop.index }}.sa.data --fs={{ sqlite_device.stdout }} -- -F -m CPU -d -u -S -q -r -b -n DEV > {{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}_{{ TESTCASE }}.{{ ansible_loop.index }}.sa.csv
+    sadf -g -T -O autoscale,showinfo,showidle,showtoc,skipempty {{ ANSIBLE_LOG_SA_PATH }}/{{ ANSIBLE_SA_FILE_NAME }}.{{ ansible_loop.index }}.sa.data --fs={{ sqlite_device.stdout }} -- -F -m CPU -d -u -S -q -r -b -n DEV > {{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}_{{ TESTCASE }}.{{ ansible_loop.index }}.sa.svg

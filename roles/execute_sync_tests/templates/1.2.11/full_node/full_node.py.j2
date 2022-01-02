@@ -391,7 +391,7 @@ class FullNode:
                             await self.peak_post_processing(peak_fb, peak, fork_height, peer, coin_changes[0])
                             raise
                         finally:
-                            self.log.info(f"{{ RUNID }} Added blocks {height}-{end_height}")
+                            self.log.info(f"{{ TESTCASE }} Added blocks {height}-{end_height}")
         except (asyncio.CancelledError, Exception) as e:
             self.sync_store.batch_syncing.remove(peer.peer_node_id)
             raise e
@@ -915,7 +915,7 @@ class FullNode:
                         peers_with_peak.remove(peer)
                     await peer.close(600)
                     raise ValueError(f"Failed to validate block batch {start_height} to {end_height}")
-                self.log.info(f"{{ RUNID }} Added blocks {start_height} to {end_height}")
+                self.log.info(f"{{ TESTCASE }} Added blocks {start_height} to {end_height}")
                 await self.send_peak_to_wallets()
                 peak = self.blockchain.get_peak()
                 if len(coin_states) > 0 and fork_height is not None:

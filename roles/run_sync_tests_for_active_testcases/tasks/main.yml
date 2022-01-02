@@ -2,9 +2,9 @@
 - name: Execute sync tests for all activated testcases
   ansible.builtin.include_role: 
     name: execute_sync_tests
-  vars:
-    RUNID: "{{ ACTIVE_TESTCASES }}"
+      #  vars:
+      #    RUNID: "{{ ACTIVE_TESTCASES }}"
   loop: "{{ ACTIVE_TESTCASES }}"
   loop_control:
-    loop_var: ACTIVE_TESTCASES
+    loop_var: TESTCASE
     extended: yes
