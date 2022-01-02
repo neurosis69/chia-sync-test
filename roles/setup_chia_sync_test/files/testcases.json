@@ -1,4 +1,5 @@
 {
+  "_comment": "This fill will be replaced by setup.yml. Do not edit in config directory if you want to keep changes!",
   "ACTIVE_TESTCASES": [
       "AUTOTEST40"
     ],

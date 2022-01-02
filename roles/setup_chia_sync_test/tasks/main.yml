@@ -7,7 +7,7 @@
     group: "{{ CHIA_OS_GROUP }}"
     mode: 0700
 - name: "Copy testcases.json to config path"
-  ansible.builtin.file:
+  ansible.builtin.copy:
     src: "files/testcases.json"
     dest: "{{ ANSIBLE_HOME_PATH }}/config"
     mode: 0644
