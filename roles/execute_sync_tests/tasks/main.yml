@@ -76,34 +76,34 @@
     - "show.py"
 - name: "Change files from {{ CHIA_SW_PATH }}/chia/util to match testcase {{ RUNID }}"
   template:
-    src: "templates/{{ CHIA_BRANCH }}/{{ item }}"
+    src: "templates/{{ CHIA_BRANCH }}/util/{{ item }}"
     dest: "{{ CHIA_SW_PATH }}/chia/util"
     owner: "{{ CHIA_OS_USER }}"
     group: "{{ CHIA_OS_GROUP }}"
     mode: 0644
   with_items:
-    - "chia_logging.py"
+    - "chia_logging.py.j2"
 - name: "Change files from {{ CHIA_SW_PATH }}/chia/consensus to match testcase {{ RUNID }}"
   template:
-    src: "templates/{{ CHIA_BRANCH }}/{{ item }}"
+    src: "templates/{{ CHIA_BRANCH }}/consensus/{{ item }}"
     dest: "{{ CHIA_SW_PATH }}/chia/consensus"
     owner: "{{ CHIA_OS_USER }}"
     group: "{{ CHIA_OS_GROUP }}"
     mode: 0644
   with_items:
-    - "blockchain.py"
+    - "blockchain.py.j2"
 - name: "Change files from {{ CHIA_SW_PATH }}/chia/full_node to match testcase {{ RUNID }}"
   template:
-    src: "templates/{{ CHIA_BRANCH }}/{{ item }}"
+    src: "templates/{{ CHIA_BRANCH }}/full_node/{{ item }}"
     dest: "{{ CHIA_SW_PATH }}/chia/full_node"
     owner: "{{ CHIA_OS_USER }}"
     group: "{{ CHIA_OS_GROUP }}"
     mode: 0644
   with_items:
-    - "block_store.py"
-    - "coin_store.py"
-    - "full_node.py"
-    - "mempool_manager.py"
+    - "block_store.py.j2"
+    - "coin_store.py.j2"
+    - "full_node.py.j2"
+    - "mempool_manager.py.j2"
 - name: "Clear FS Caches to get comparable runtimes and prevent need of probably unreliable warmup run"
   become: yes
   become_user: root
