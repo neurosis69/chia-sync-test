@@ -3,8 +3,10 @@
   ansible.builtin.shell: |
     sqlite3 {{ BLOCKCHAIN_DB_PATH }}/{{ BLOCKCHAIN_DB_NAME }} 'PRAGMA page_size;'
   register: db_page_size
+- name: "Set fact for conditional page_size check"
+  ansible.builtin.set_fact:
+    DB_PAGE_SIZE: "{{ db.page_size.stdout }}"
 - name: "Vacuum db to write with different pagesize"
   ansible.builtin.shell: |
     sqlite3 {{ BLOCKCHAIN_DB_PATH }}/{{ BLOCKCHAIN_DB_NAME }} 'PRAGMA journal_mode=OFF; PRAGMA page_size={{ PAGE_SIZE }}; VACUUM;'
-  register: output
-  when: PAGE_SIZE != db_page_size
+  when: PAGE_SIZE != DB_PAGE_SIZE
