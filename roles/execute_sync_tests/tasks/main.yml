@@ -77,7 +77,7 @@
 - name: "Change files from {{ CHIA_SW_PATH }}/chia/util to match testcase {{ RUNID }}"
   ansible.builtin.template:
     src: "templates/{{ CHIA_BRANCH }}/util/{{ item }}.j2"
-    dest: "{{ CHIA_SW_PATH }}/chia/util/{{ item }}"
+    dest: "{{ CHIA_SW_PATH }}/chia/util"
     owner: "{{ CHIA_OS_USER }}"
     group: "{{ CHIA_OS_GROUP }}"
     mode: 0644
@@ -86,7 +86,7 @@
 - name: "Change files from {{ CHIA_SW_PATH }}/chia/consensus to match testcase {{ RUNID }}"
   ansible.builtin.template:
     src: "templates/{{ CHIA_BRANCH }}/consensus/{{ item }}.j2"
-    dest: "{{ CHIA_SW_PATH }}/chia/consensus/{{ item }}"
+    dest: "{{ CHIA_SW_PATH }}/chia/consensus"
     owner: "{{ CHIA_OS_USER }}"
     group: "{{ CHIA_OS_GROUP }}"
     mode: 0644
@@ -95,7 +95,7 @@
 - name: "Change files from {{ CHIA_SW_PATH }}/chia/full_node to match testcase {{ RUNID }}"
   ansible.builtin.template:
     src: "templates/{{ CHIA_BRANCH }}/full_node/{{ item }}.j2"
-    dest: "{{ CHIA_SW_PATH }}/chia/full_node/{{ item }}"
+    dest: "{{ CHIA_SW_PATH }}/chia/full_node"
     owner: "{{ CHIA_OS_USER }}"
     group: "{{ CHIA_OS_GROUP }}"
     mode: 0644
