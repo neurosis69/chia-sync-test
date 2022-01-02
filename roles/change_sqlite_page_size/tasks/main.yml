@@ -1,5 +1,10 @@
 ---
+- name: "Get current page_size configuration"
+  ansible.builtin.shell: |
+    sqlite3 {{ BLOCKCHAIN_DB_PATH }}/{{ BLOCKCHAIN_DB_NAME }} 'PRAGMA page_size;'
+  register: db_page_size
 - name: "Vacuum db to write with different pagesize"
   ansible.builtin.shell: |
     sqlite3 {{ BLOCKCHAIN_DB_PATH }}/{{ BLOCKCHAIN_DB_NAME }} 'PRAGMA journal_mode=OFF; PRAGMA page_size={{ PAGE_SIZE }}; VACUUM;'
   register: output
+  when: PAGE_SIZE != db_page_size
