@@ -43,7 +43,36 @@
       prompt: "Enter sudo password"
       confirm: yes
       private: yes
+    - name: confirmation
+      prompt: |
+        |||||||||||||||||||||||||||||||||||||||||||||||||||||
+        This script will
+          - Stop all chia processes of user "{{ CHIA_OS_GROUP }}"
+          - Replace any existing chia SW installation at "{{ CHIA_SW_PATH }}" with branch/tag "{{ CHIA_BRANCH }}"
+          - Remove chia db "{{ BLOCKCHAIN_DB_PATH }}/{{ BLOCKCHAIN_DB_NAME }}" and related -shm, -journal, -wal files
+          - If not already available, download the required database file for scenario "{{ SCENARIO }}"
+            The prepared database files are vacuumed and all relevant indexes are droped.
+          - Run the following testcases: 
+              {{ BENCHMARK_CONFIG.ACTIVE_TESTCASES }}
+            Check file "testcases.json" for further information regarding testcases.
+          - Logfiles will be written to:
+            .) chia 
+               debug.log in "{{ ANSIBLE_LOG_PATH }}/current/chia"
+            .) sar 
+               raw data in "{{ ANSIBLE_LOG_PATH }}/current/sa"
+               csv export "{{ ANSIBLE_LOG_PATH }}/current/*.sa.csv"
+               svg reports "{{ ANSIBLE_LOG_PATH }}/current/*.sa.svg"
+            .) testcase
+               run info "{{ ANSIBLE_LOG_PATH }}/current/*_ansible_run.csv"
+          - Depending on the hosts hardware, selected scenario and testcases, the scripts execution can last from a few minutes to several days.
+        |||||||||||||||||||||||||||||||||||||||||||||||||||||
+        Proceed? (yes/no) 
+      private: no
   pre_tasks:
+    - name: "Fail if no confirmation was given"
+      fail:
+        msg: "No confirmation given ... aborting."
+      when: "confirmation|lower != 'yes'"
     - name: "Get timestamp for execution"
       ansible.builtin.shell: |
         date +%Y-%m-%d_%H:%M:%S
@@ -113,7 +142,7 @@
   roles:
     - { role: setup_chia }
     - { role: run_sync_tests_for_active_testcases }
-  #  tasks:
-  #    - name: test
-  #      debug: 
-  #        msg: "{{ ansible_facts }}"
+        #  tasks:
+        #    - name: test
+        #      debug: 
+        #        msg: "{{ ansible_facts }}"
