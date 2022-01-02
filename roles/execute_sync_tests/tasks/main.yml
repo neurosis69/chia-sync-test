@@ -1,6 +1,6 @@
 ---
 - name: "Set Runtime (Testcase) Variables as fact"
-  set_fact:
+  ansible.builtin.set_fact:
     ANSIBLE_SA_FILE_NAME: "{{ ansible_hostname }}_{{ ansible_date_time.epoch }}_{{ RUNID }}"
     DESCRIPTION: "{{ BENCHMARK_CONFIG[RUNID].DESCRIPTION | default(BENCHMARK_CONFIG.DEFAULT.DESCRIPTION) }}"
     BLOCKCHAIN_CONSENSUS_THREADS: "{{ BENCHMARK_CONFIG[RUNID].BLOCKCHAIN_CONSENSUS_THREADS | default(BENCHMARK_CONFIG.DEFAULT.BLOCKCHAIN_CONSENSUS_THREADS) }}"
@@ -30,7 +30,7 @@
     PAGE_SIZE: "{{ BENCHMARK_CONFIG[RUNID].PAGE_SIZE | default(BENCHMARK_CONFIG.DEFAULT.PAGE_SIZE) }}"
     AUTO_VACUUM: "{{ BENCHMARK_CONFIG[RUNID].AUTO_VACUUM | default(BENCHMARK_CONFIG.DEFAULT.AUTO_VACUUM) }}"
 - name: "Test {{ RUNID }} start: {{ DESCRIPTION }}"
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
     line: "{{ ansible_hostname }},{{ SCENARIO }},{{ RUNID }},{{ lookup('pipe', 'date +%Y-%m-%dT%H:%M:%S') }}"
 - name: "Start sadc data gathering for {{ RUNID }}"
@@ -39,15 +39,15 @@
   become_method: sudo
   async: 86400
   poll: 0
-  shell: |
+  ansible.builtin.shell: |
     {{ SADC_BIN_PATH }}/sadc 60 -L -S POWER -S XDISK {{ ANSIBLE_LOG_SA_PATH }}/{{ ANSIBLE_SA_FILE_NAME }}.{{ ansible_loop.index }}.sa.data
   register: sar_data_gathering
 - name: "Stop all chia processes"
   ignore_errors: yes
-  shell: |
+  ansible.builtin.shell: |
     . {{ CHIA_SW_PATH }}/activate && chia stop all -d
 - name: "Remove old sqlite db files (including shm + wal + journal)"
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: absent
   with_items:
@@ -56,18 +56,18 @@
     - "{{ BLOCKCHAIN_DB_PATH }}/{{ BLOCKCHAIN_DB_NAME }}-wal"
     - "{{ BLOCKCHAIN_DB_PATH }}/{{ BLOCKCHAIN_DB_NAME }}-journal"
 - name: "Copy extracted sqlite db file {{ DB_BACKUP }} to {{ BLOCKCHAIN_DB_NAME }}"
-  command: "cp {{ BLOCKCHAIN_DB_PATH }}/{{ DB_BACKUP }} {{ BLOCKCHAIN_DB_PATH }}/{{ BLOCKCHAIN_DB_NAME }}"
+  ansible.builtin.command: "cp {{ BLOCKCHAIN_DB_PATH }}/{{ DB_BACKUP }} {{ BLOCKCHAIN_DB_PATH }}/{{ BLOCKCHAIN_DB_NAME }}"
 - name: "Change page_size if variable FULL_NODE_SQLITE_PRAGMA_PAGE_SIZE is not empty"
-  import_role:
+  ansible.builtin.import_role:
     name: change_sqlite_page_size
   when: FULL_NODE_SQLITE_PRAGMA_PAGE_SIZE != ""
 - name: "Change auto_vacuum if variable AUTO_VACUUM is not empty"
-  import_role:
+  ansible.builtin.import_role:
     name:  change_sqlite_auto_vacuum
   when: AUTO_VACUUM != ""
 - name: "Change file in {{ CHIA_SW_PATH}}/chia/cmds to remove newline in chia show"
-  copy:
-    src: "files/{{ CHIA_BRANCH }}/{{ item }}"
+  ansible.builtin.copy:
+    src: "files/{{ CHIA_BRANCH }}/cmds/{{ item }}"
     dest: "{{ CHIA_SW_PATH }}/chia/cmds"
     owner: "{{ CHIA_OS_USER }}"
     group: "{{ CHIA_OS_GROUP }}"
@@ -75,7 +75,7 @@
   with_items:
     - "show.py"
 - name: "Change files from {{ CHIA_SW_PATH }}/chia/util to match testcase {{ RUNID }}"
-  template:
+  ansible.builtin.template:
     src: "templates/{{ CHIA_BRANCH }}/util/{{ item }}"
     dest: "{{ CHIA_SW_PATH }}/chia/util"
     owner: "{{ CHIA_OS_USER }}"
@@ -84,7 +84,7 @@
   with_items:
     - "chia_logging.py.j2"
 - name: "Change files from {{ CHIA_SW_PATH }}/chia/consensus to match testcase {{ RUNID }}"
-  template:
+  ansible.builtin.template:
     src: "templates/{{ CHIA_BRANCH }}/consensus/{{ item }}"
     dest: "{{ CHIA_SW_PATH }}/chia/consensus"
     owner: "{{ CHIA_OS_USER }}"
@@ -93,7 +93,7 @@
   with_items:
     - "blockchain.py.j2"
 - name: "Change files from {{ CHIA_SW_PATH }}/chia/full_node to match testcase {{ RUNID }}"
-  template:
+  ansible.builtin.template:
     src: "templates/{{ CHIA_BRANCH }}/full_node/{{ item }}"
     dest: "{{ CHIA_SW_PATH }}/chia/full_node"
     owner: "{{ CHIA_OS_USER }}"
@@ -108,33 +108,33 @@
   become: yes
   become_user: root
   become_method: sudo
-  shell: |
+  ansible.builtin.shell: |
     sync; echo 1 > /proc/sys/vm/drop_caches
 - name: "Write Log: {{ RUNID }} initiate sync"
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
     regexp: "^({{ ansible_hostname }},{{ SCENARIO }},{{ RUNID }}.*)$"
     line: "\\1,{{ lookup('pipe', 'date +%Y-%m-%dT%H:%M:%S') }}"
     backrefs: yes
 - name: "Start chia full node"
-  shell: |
+  ansible.builtin.shell: |
     . {{ CHIA_SW_PATH }}/activate && chia start node
 - name: "Tail chia logfile to prevent trigger wait_for for old log entries"
-  shell: |
+  ansible.builtin.shell: |
     tail -n 1 {{ ANSIBLE_LOG_CHIA_PATH }}/{{ CHIA_LOG_FILE_NAME }}_{{ RUNID }}.{{ ansible_loop.index }}.log
   register: tail_debug_log
 - name: "Set fact for tail"
-  set_fact:
+  ansible.builtin.set_fact:
     debug_log_since_test_start: "{{ tail_debug_log.stdout }}"
 - name: "Wait for chia node on port 8444"
-  wait_for:
+  ansible.builtin.wait_for:
     port: 8444
     delay: 5
     state: started
 - name: "Actively connect to random peers until a minimum of 15 connections is reached"
   async: 86400
   poll: 0
-  shell: |
+  ansible.builtin.shell: |
     . {{ CHIA_SW_PATH }}/activate 
     # get peak from sync_start
     PEAK=`chia show -s | head -1 | awk -F '[/.]' '{print $2}'`
@@ -150,49 +150,49 @@
     done
   register: keep_chia_connections
 - name: "Sync until Height {{ SYNC_START_HEIGHT }} is reached"
-  wait_for:
+  ansible.builtin.wait_for:
     path: "{{ ANSIBLE_LOG_CHIA_PATH }}/{{ CHIA_LOG_FILE_NAME }}_{{ RUNID }}.{{ ansible_loop.index }}.log"
     search_regex: "{{ debug_log_since_test_start }}\r(.*\r)*.*Added blocks {{ SYNC_START_HEIGHT }}.* to .*"
     timeout: 86400
 - name: "Write Log: {{ RUNID }} start sync"
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
     regexp: "^({{ ansible_hostname }},{{ SCENARIO }},{{ RUNID }}.*)$"
     line: "\\1,{{ lookup('pipe', 'date +%Y-%m-%dT%H:%M:%S') }}"
     backrefs: yes
 - name: "Sync until Height {{ DUST_START_HEIGHT }} is reached"
-  wait_for:
+  ansible.builtin.wait_for:
     path: "{{ ANSIBLE_LOG_CHIA_PATH }}/{{ CHIA_LOG_FILE_NAME }}_{{ RUNID }}.{{ ansible_loop.index }}.log"
     search_regex: "{{ debug_log_since_test_start }}\r(.*\r)*.*Added blocks .* to {{ DUST_START_HEIGHT }}.*"
     timeout: 86400
 - name: "Write Log: {{ RUNID }} duststorm start"
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
     regexp: "^({{ ansible_hostname }},{{ SCENARIO }},{{ RUNID }}.*)$"
     line: "\\1,{{ lookup('pipe', 'date +%Y-%m-%dT%H:%M:%S') }}"
     backrefs: yes
 - name: "Sync until Height {{ DUST_STOP_HEIGHT }} is reached"
-  wait_for:
+  ansible.builtin.wait_for:
     path: "{{ ANSIBLE_LOG_CHIA_PATH }}/{{ CHIA_LOG_FILE_NAME }}_{{ RUNID }}.{{ ansible_loop.index }}.log"
     search_regex: "{{ debug_log_since_test_start }}\r(.*\r)*.*Added blocks .* to {{ DUST_STOP_HEIGHT }}.*"
     timeout: 86400
 - name: "Write Log: {{ RUNID }} duststorm end"
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
     regexp: "^({{ ansible_hostname }},{{ SCENARIO }},{{ RUNID }}.*)$"
     line: "\\1,{{ lookup('pipe', 'date +%Y-%m-%dT%H:%M:%S') }}"
     backrefs: yes
 - name: "Stop chia processes"
-  shell: |
+  ansible.builtin.shell: |
     . {{ CHIA_SW_PATH }}/activate && chia stop all -d
 - name: "Get SQLITE DB size"
-  stat:
+  ansible.builtin.stat:
     path: "{{ BLOCKCHAIN_DB_PATH }}/{{ BLOCKCHAIN_DB_NAME }}"
     get_checksum: no
     get_mime: no
   register: sqlite_db_stats
 - name: "Write Log: {{ RUNID }} write sqlite db size"
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
     regexp: "^({{ ansible_hostname }},{{ SCENARIO }},{{ RUNID }}.*)$"
     line: "\\1,{{ sqlite_db_stats.stat.size }},\"{{ DESCRIPTION }}\""
@@ -202,13 +202,13 @@
   become_user: root
   become_method: sudo
   ignore_errors: yes
-  shell: |
+  ansible.builtin.shell: |
     ps -eo pid,cmd|grep {{ ANSIBLE_SA_FILE_NAME }}.{{ ansible_loop.index }}.[s]a.data | sed -e 's/^[ ]*//' | cut -d" " -f1 | xargs -I {} kill -9 {}
 - name: "Get device from sqlite db on"
-  shell: |
+  ansible.builtin.shell: |
     findmnt -n -o SOURCE --target {{ BLOCKCHAIN_DB_PATH }}
   register: sqlite_device
 - name: "Convert and write SA output"
-  shell: |
+  ansible.builtin.shell: |
     sadf -d -T  {{ ANSIBLE_LOG_SA_PATH }}/{{ ANSIBLE_SA_FILE_NAME }}.{{ ansible_loop.index }}.sa.data --fs={{ sqlite_device.stdout }} -- -F -m CPU -d -u -S -q -r -b -n DEV > {{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}_{{ RUNID }}.{{ ansible_loop.index }}.sa.csv
     sadf -g -T -O autoscale,showinfo,showidle,showtoc,skipempty {{ ANSIBLE_LOG_SA_PATH }}/{{ ANSIBLE_SA_FILE_NAME }}.{{ ansible_loop.index }}.sa.data --fs={{ sqlite_device.stdout }} -- -F -m CPU -d -u -S -q -r -b -n DEV > {{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}_{{ RUNID }}.{{ ansible_loop.index }}.sa.svg

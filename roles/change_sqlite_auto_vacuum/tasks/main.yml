@@ -1,8 +1,5 @@
 ---
 - name: "Vacuum db to enable auto_vacuum={{ AUTO_VACUUM }}"
-  shell: |
+  ansible.builtin.shell: |
     sqlite3 {{ BLOCKCHAIN_DB_PATH }}/{{ BLOCKCHAIN_DB_NAME }} 'PRAGMA journal_mode=OFF; PRAGMA auto_vacuum={{ AUTO_VACUUM }}; VACUUM;'
   register: output
-- name: "debug"
-  debug:
-    msg: "{{ output }}"

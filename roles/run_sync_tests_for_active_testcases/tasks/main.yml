@@ -1,6 +1,6 @@
 ---
 - name: Execute sync tests for all activated testcases
-  include_role: 
+  ansible.builtin.include_role: 
     name: execute_sync_tests
   vars:
     RUNID: "{{ ACTIVE_TESTCASES }}"

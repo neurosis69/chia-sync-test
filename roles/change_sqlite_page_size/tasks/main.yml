@@ -1,8 +1,5 @@
 ---
 - name: "Vacuum db to write with different pagesize"
-  shell: |
+  ansible.builtin.shell: |
     sqlite3 {{ BLOCKCHAIN_DB_PATH }}/{{ BLOCKCHAIN_DB_NAME }} 'PRAGMA journal_mode=OFF; PRAGMA page_size={{ PAGE_SIZE }}; VACUUM;'
   register: output
-- name: "debug"
-  debug:
-    msg: "{{ output }}"

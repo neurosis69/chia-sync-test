@@ -1,6 +1,6 @@
 ---
 - name: "Git checkout chia-blockchain branch {{ CHIA_BRANCH }}"
-  git:
+  ansible.builtin.git:
     repo: "{{ CHIA_GIT_REPO }}"
     dest: "{{ CHIA_SW_PATH }}"
     version: "{{ CHIA_BRANCH }}"
@@ -8,7 +8,7 @@
     recursive: yes
     update: no
 - name: "Install chia-blockchain"
-  shell: |
+  ansible.builtin.shell: |
     sh install.sh 
     . ./activate && chia init --fix-ssl-permissions
   args: 

@@ -33,30 +33,30 @@
       private: yes
   pre_tasks:
     - name: "Get timestamp for execution"
-      shell: |
+      ansible.builtin.shell: |
         date +%Y-%m-%d_%H:%M:%S
       register: timestamp_started
     - name: "Set Active Testcases"
-      set_fact:
+      ansible.builtin.set_fact:
         ACTIVE_TESTCASES: "{{ BENCHMARK_CONFIG.ACTIVE_TESTCASES }}"
     - name: "Set Test Scenario Variables" 
-      set_fact:
+      ansible.builtin.set_fact:
         DB_BACKUP: "{{ BENCHMARK_CONFIG.SCENARIO[SCENARIO].DB_BACKUP_NAME }}"
         DB_BACKUP_URL: "{{ BENCHMARK_CONFIG.SCENARIO[SCENARIO].DB_BACKUP_URL }}"
         SYNC_START_HEIGHT: "{{ BENCHMARK_CONFIG.SCENARIO[SCENARIO].SYNC_START_HEIGHT }}" 
         DUST_START_HEIGHT: "{{ BENCHMARK_CONFIG.SCENARIO[SCENARIO].DUST_START_HEIGHT }}"
         DUST_STOP_HEIGHT: "{{ BENCHMARK_CONFIG.SCENARIO[SCENARIO].DUST_STOP_HEIGHT }}"
     - name: "Set Log File Path variable as fact before using for other assignments"
-      set_fact:
+      ansible.builtin.set_fact:
         ANSIBLE_LOG_FILE_PATH: "{{ ANSIBLE_LOG_PATH }}/{{ timestamp_started.stdout }}"
     - name: "Set Logfiles paths/names"
-      set_fact:
+      ansible.builtin.set_fact:
         ANSIBLE_LOG_FILE_NAME: "{{ ansible_hostname }}_ansible_run"
         ANSIBLE_LOG_SA_PATH: "{{ ANSIBLE_LOG_FILE_PATH }}/sa"
         ANSIBLE_LOG_CHIA_PATH: "{{ ANSIBLE_LOG_FILE_PATH }}/chia"
         CHIA_LOG_FILE_NAME: "{{ ansible_hostname }}_chia_debug"
     - name: "Create Log Directories"
-      file:
+      ansible.builtin.file:
         path: "{{ item }}"
         state: directory
       with_items:
@@ -65,27 +65,27 @@
         - "{{ ANSIBLE_LOG_SA_PATH }}"
         - "{{ ANSIBLE_LOG_CHIA_PATH }}"
     - name: "Cleanup old link to log directory"
-      file:
+      ansible.builtin.file:
         path: "{{ ANSIBLE_LOG_PATH }}/current"
         state: absent
     - name: "Create Link to current log directory"
-      file:
+      ansible.builtin.file:
         src: "{{ ANSIBLE_LOG_FILE_PATH }}"
         dest: "{{ ANSIBLE_LOG_PATH }}/current"
         state: link
     - name: "Write logfile header"
-      lineinfile:
+      ansible.builtin.lineinfile:
         path: "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
         line: "HOSTNAME,SCENARIO,TESTCASE,START_RUN,LOG_INITIATE_SYNC,LOG_START_SYNC,LOG_DUST_START_SYNC,LOG_DUST_STOP_SYNC,SQLITE_DB_SIZE_BYTES,DESCRIPTION"
         create: yes
     - name: "Check if extracted sqlite db file for scenario {{ SCENARIO }} already exists"
-      stat:
+      ansible.builtin.stat:
         path: "{{ BLOCKCHAIN_DB_PATH }}/{{ DB_BACKUP }}"
         get_checksum: no
         get_mime: no
       register: db_backup_already_extracted
     - name: "Extract sqlite db file for scenario {{ SCENARIO }}"
-      unarchive:
+      ansible.builtin.unarchive:
         src: "{{ DB_BACKUP_URL }}"
         dest: "{{ BLOCKCHAIN_DB_PATH }}"
         remote_src: yes
