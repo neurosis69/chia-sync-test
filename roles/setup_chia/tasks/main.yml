@@ -6,7 +6,7 @@
     version: "{{ CHIA_BRANCH }}"
     clone: yes
     recursive: yes
-    update: no
+    force: yes
 - name: "Install chia-blockchain"
   ansible.builtin.shell: |
     sh install.sh 
