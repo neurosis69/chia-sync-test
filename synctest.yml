@@ -113,3 +113,7 @@
   roles:
     - { role: setup_chia }
     - { role: run_sync_tests_for_active_testcases }
+  #  tasks:
+  #    - name: test
+  #      debug: 
+  #        msg: "{{ ansible_facts }}"
