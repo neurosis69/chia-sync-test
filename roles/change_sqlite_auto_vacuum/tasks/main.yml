@@ -3,16 +3,8 @@
   ansible.builtin.shell: |
     sqlite3 {{ BLOCKCHAIN_DB_PATH }}/{{ BLOCKCHAIN_DB_NAME }} 'PRAGMA auto_vacuum;'
   register: db_auto_vacuum
-- name: "Set fact for conditional check if auto_vacuum is FULL"
-  ansible.builtin.set_fact:
-    DB_AUTO_VACUUM: 'FULL'
-  when: db_auto_vacuum.stdout == '1'
-- name: "Set fact for conditional check if auto_vacuum is INCREMENTAL"
-  ansible.builtin.set_fact:
-    DB_AUTO_VACUUM: 'INCREMENTAL'
-  when: db_auto_vacuum.stdout == '2'
 - name: "Vacuum db to enable auto_vacuum={{ AUTO_VACUUM }}"
   ansible.builtin.shell: |
     sqlite3 {{ BLOCKCHAIN_DB_PATH }}/{{ BLOCKCHAIN_DB_NAME }} 'PRAGMA journal_mode=OFF; PRAGMA auto_vacuum={{ AUTO_VACUUM }}; VACUUM;'
   register: output
-  when: DB_AUTO_VACUUM != AUTO_VACUUM
+  when: "(db_auto_vacuum.stdout != 1 and 'AUTO_VACUUM|upper' == 'FULL') or (db_auto_vacuum.stdout != 2 and 'AUTO_VACUUM|upper' == 'INCREMENTAL')"
