@@ -105,7 +105,7 @@
     - "coin_store.py"
     - "full_node.py"
     - "mempool_manager.py"
-- name: "Clear FS Caches to get comparable runtimes and prevent need of probably unreliable warmup run"
+- name: "Clear FS Caches to get comparable runtimes"
   become: yes
   become_user: root
   become_method: sudo
