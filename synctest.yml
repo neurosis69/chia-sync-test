@@ -123,18 +123,18 @@
         path: "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
         line: "HOSTNAME,SCENARIO,TESTCASE,START_RUN,LOG_INITIATE_SYNC,LOG_START_SYNC,LOG_DUST_START_SYNC,LOG_DUST_STOP_SYNC,SQLITE_DB_SIZE_BYTES,DESCRIPTION"
         create: yes
-    - name: "Check if extracted sqlite db file for scenario {{ SCENARIO }} already exists"
+    - name: "Check if unpacked sqlite db file for scenario {{ SCENARIO }} already exists"
       ansible.builtin.stat:
         path: "{{ BLOCKCHAIN_DB_PATH }}/{{ DB_BACKUP }}"
         get_checksum: no
         get_mime: no
-      register: db_backup_already_extracted
-    - name: "Extract sqlite db file for scenario {{ SCENARIO }}"
+      register: db_backup_already_unpacked
+    - name: "Download and unpack sqlite db file for scenario {{ SCENARIO }}"
       ansible.builtin.unarchive:
         src: "{{ DB_BACKUP_URL }}"
         dest: "{{ BLOCKCHAIN_DB_PATH }}"
         remote_src: yes
-      when: not db_backup_already_extracted.stat.exists and SCENARIO != 'FULLSYNC'
+      when: not db_backup_already_unpacked.stat.exists and SCENARIO != 'FULLSYNC'
   roles:
     - { role: setup_chia }
     - { role: run_sync_tests_for_active_testcases }
