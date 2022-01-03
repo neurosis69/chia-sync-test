@@ -37,8 +37,8 @@
       "Description": "Sync database from scratch to current peak - 400 (default sync_blocks_behind_threshold + 100)",
       "DB_BACKUP_NAME": "",
       "DB_BACKUP_URL": "",
-      "SYNC_START_HEIGHT": "",
-      "DUST_START_HEIGHT": "",
+      "SYNC_START_HEIGHT": "0",
+      "DUST_START_HEIGHT": "225696",
       "DUST_STOP_HEIGHT": ""
     }
   },
@@ -69,6 +69,7 @@
     "FULL_NODE_SQLITE_PRAGMA_CACHE_SIZE": "",
     "FULL_NODE_SQLITE_PRAGMA_UNCOMMITTED": "",
     "FULL_NODE_SQLITE_PRAGMA_WAL_CHECKPOINT": "",
+    "FULL_NODE_SQLITE_PRAGMA_MMAP_SIZE": "",
     "PAGE_SIZE": "",
     "AUTO_VACUUM": ""
   },
@@ -645,5 +646,17 @@
     "FULL_NODE_SQLITE_PRAGMA_JOURNAL_MODE": "await self.connection.execute(\"pragma journal_mode=off\")",
     "FULL_NODE_SQLITE_PRAGMA_UNCOMMITTED": "await self.connection.execute(\"pragma uncommitted=true\")",
     "COIN_STORE_COIN_LRU_CACHE": 6000000
+  },
+  "AUTOTEST46": {
+    "DESCRIPTION": "Only full blocks height + peak index; increase coin_records lru cache * 100, pragma mmap_size=2G",
+    "RUNID": "46AUTOTEST",
+    "BLOCK_STORE_IS_FULLY_COMPACTIFIED_INDEX": "",
+    "BLOCK_STORE_HEIGHT_INDEX": "",
+    "BLOCK_STORE_HH_INDEX": "",
+    "COIN_STORE_COIN_CONFIRMED_INDEX": "",
+    "COIN_STORE_COIN_SPENT_INDEX": "",
+    "COIN_STORE_COIN_PUZZLE_HASH_INDEX": "",
+    "COIN_STORE_COIN_PARENT_INDEX": "",
+    "FULL_NODE_SQLITE_PRAGMA_MMAP_SIZE": "await self.connection.execute(\"pragma mmap_size=2147483648\")"
   }
 }

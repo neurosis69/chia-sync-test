@@ -149,10 +149,10 @@
       done
       sleep 60
     done
-- name: "Set facts if Scenario is FULLSYNC"
-  ansible.builtin.set_fact:
-    SYNC_START_HEIGHT: 0 
-  when: SCENARIO == 'FULLSYNC'
+    #- name: "Set facts if Scenario is FULLSYNC"
+    #  ansible.builtin.set_fact:
+    #    SYNC_START_HEIGHT: 0 
+    #  when: SCENARIO == 'FULLSYNC'
 - name: "Sync until Height {{ SYNC_START_HEIGHT }} is reached"
   ansible.builtin.wait_for:
     path: "{{ ANSIBLE_LOG_CHIA_PATH }}/{{ CHIA_LOG_FILE_NAME }}_{{ TESTCASE }}.{{ ansible_loop.index }}.log"
@@ -175,7 +175,7 @@
   when: SCENARIO == 'FULLSYNC'
 - name: "Set facts if Scenario is FULLSYNC"
   ansible.builtin.set_fact:
-    DUST_START_HEIGHT: 225696
+    #    DUST_START_HEIGHT: 225696
     DUST_STOP_HEIGHT: "{{ long_sync_peak.stdout }}"
   when: SCENARIO == 'FULLSYNC'
 - name: "Sync until Height {{ DUST_START_HEIGHT }} is reached"
