@@ -14,8 +14,8 @@
       "DB_BACKUP_NAME": "db_before_duststorm_1007000.sqlite",
       "DB_BACKUP_URL": "https://www.dropbox.com/s/6jlfhdq5rmqa6kx/db_before_duststorm_1007000.sqlite.zip?dl=1",
       "SYNC_START_HEIGHT": "1303062",
-      "DUST_START_HEIGHT": "",
-      "DUST_STOP_HEIGHT": ""
+      "DUST_START_HEIGHT": "1304608",
+      "DUST_STOP_HEIGHT": "1316352"
     },
     "TRANSACTION_START": {
       "Description": "Database synced right before Transaction Start in May 2020",
@@ -30,8 +30,8 @@
       "DB_BACKUP_NAME": "db_before_height_740000.sqlite",
       "DB_BACKUP_URL": "https://www.dropbox.com/s/ydejz8t9923eb9r/db_before_height_740000.sqlite.zip?dl=1",
       "SYNC_START_HEIGHT": "739202",
-      "DUST_START_HEIGHT": "",
-      "DUST_STOP_HEIGHT": ""
+      "DUST_START_HEIGHT": "740736",
+      "DUST_STOP_HEIGHT": "772928"
     },
     "FULLSYNC": {
       "Description": "Sync database from scratch to current peak - 400 (default sync_blocks_behind_threshold + 100)",
