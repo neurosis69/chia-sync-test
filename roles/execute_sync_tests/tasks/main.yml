@@ -57,6 +57,7 @@
     - "{{ BLOCKCHAIN_DB_PATH }}/{{ BLOCKCHAIN_DB_NAME }}-journal"
 - name: "Copy extracted sqlite db file {{ DB_BACKUP }} to {{ BLOCKCHAIN_DB_NAME }}"
   ansible.builtin.command: "cp {{ BLOCKCHAIN_DB_PATH }}/{{ DB_BACKUP }} {{ BLOCKCHAIN_DB_PATH }}/{{ BLOCKCHAIN_DB_NAME }}"
+  when: SCENARIO != 'FULLSYNC'
 - name: "Change page_size if variable FULL_NODE_SQLITE_PRAGMA_PAGE_SIZE is not empty"
   ansible.builtin.import_role:
     name: change_sqlite_page_size
@@ -129,7 +130,7 @@
 - name: "Wait for chia node on port 8444"
   ansible.builtin.wait_for:
     port: 8444
-    delay: 5
+    delay: 10
     state: started
 - name: "Actively connect to random peers until a minimum of 15 connections is reached"
   async: 86400
@@ -148,7 +149,10 @@
       done
       sleep 60
     done
-  register: keep_chia_connections
+- name: "Set facts if Scenario is FULLSYNC"
+  ansible.builtin.set_fact:
+    SYNC_START_HEIGHT: 0 
+  when: SCENARIO == 'FULLSYNC'
 - name: "Sync until Height {{ SYNC_START_HEIGHT }} is reached"
   ansible.builtin.wait_for:
     path: "{{ ANSIBLE_LOG_CHIA_PATH }}/{{ CHIA_LOG_FILE_NAME }}_{{ TESTCASE }}.{{ ansible_loop.index }}.log"
@@ -160,6 +164,20 @@
     regexp: "^({{ ansible_hostname }},{{ SCENARIO }},{{ TESTCASE }}.*)$"
     line: "\\1,{{ lookup('pipe', 'date +%Y-%m-%dT%H:%M:%S') }}"
     backrefs: yes
+- name: "Get height for long sync (wait until reasonable peak is returned)"
+  ansible.builtin.shell: |
+    while [[ `chia show -s | head -1 | awk -F '[/.]' '{print $2}'` -lt 1000000 ]]
+    do
+      sleep 10
+    done
+    echo $(echo $(echo $(chia show -s | head -1 | awk -F '[/.]' '{print $2}')-400 | bc)/32|bc)*32|bc
+  register: long_sync_peak
+  when: SCENARIO == 'FULLSYNC'
+- name: "Set facts if Scenario is FULLSYNC"
+  ansible.builtin.set_fact:
+    DUST_START_HEIGHT: 225696
+    DUST_STOP_HEIGHT: "{{ long_sync_peak.stdout }}"
+  when: SCENARIO == 'FULLSYNC'
 - name: "Sync until Height {{ DUST_START_HEIGHT }} is reached"
   ansible.builtin.wait_for:
     path: "{{ ANSIBLE_LOG_CHIA_PATH }}/{{ CHIA_LOG_FILE_NAME }}_{{ TESTCASE }}.{{ ansible_loop.index }}.log"

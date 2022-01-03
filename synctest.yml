@@ -15,7 +15,8 @@
       Archlinux:
         - "bind"
     # Read Local configuration files
-    BENCHMARK_CONFIG: "{{ lookup('file', 'config/testcases.json') | from_json }}"
+    TESTCASES: "{{ lookup('file', 'config/active_testcases.json') | from_json }}"
+    BENCHMARK_CONFIG: "{{ lookup('file', 'config/testcase_definition.json') | from_json }}"
     SYNCTEST_CONFIG: "{{ lookup('file', 'config/local_config.yml') | from_yaml }}"
   vars_prompt:
     - name: ansible_become_pass
@@ -33,7 +34,7 @@
             The prepared database files are vacuumed and all relevant indexes are droped.
           - Local configuration files are located at "{{ SYNCTEST_CONFIG.ANSIBLE_HOME_PATH }}/config"
           - Run the following testcases: 
-              {{ BENCHMARK_CONFIG.ACTIVE_TESTCASES }}
+              {{ TESTCASES.ACTIVE_TESTCASES }}
             Check file "config/testcases.json" for further information regarding testcases.
           - Logfiles will be written to:
             .) chia 
@@ -79,24 +80,9 @@
         ANSIBLE_HOME_PATH: "{{ SYNCTEST_CONFIG.ANSIBLE_HOME_PATH }}"
         CHIA_SW_PATH: "{{ SYNCTEST_CONFIG.CHIA_SW_PATH }}"
         ANSIBLE_LOG_PATH: "{{ SYNCTEST_CONFIG.ANSIBLE_LOG_PATH }}"
-    - name: debug
-      debug:
-        msg:
-          - "{{ CHIA_OS_USER }}"
-          - "{{ CHIA_OS_GROUP }}"
-          - "{{ CHIA_GIT_REPO }}"
-          - "{{ CHIA_BRANCH }}"
-          - "{{ SCENARIO }}"
-          - "{{ SADC_BIN_PATH }}"
-          - "{{ BLOCKCHAIN_DB_NAME }}"
-          - "{{ OS_USER_HOME }}"
-          - "{{ BLOCKCHAIN_DB_PATH }}"
-          - "{{ CHIA_SW_PATH }}"
-          - "{{ ANSIBLE_HOME_PATH }}"
-          - "{{ ANSIBLE_LOG_PATH }}"
     - name: "Set Active Testcases"
       ansible.builtin.set_fact:
-        ACTIVE_TESTCASES: "{{ BENCHMARK_CONFIG.ACTIVE_TESTCASES }}"
+        ACTIVE_TESTCASES: "{{ TESTCASES.ACTIVE_TESTCASES }}"
     - name: "Set Test Scenario Variables" 
       ansible.builtin.set_fact:
         DB_BACKUP: "{{ BENCHMARK_CONFIG.SCENARIO[SCENARIO].DB_BACKUP_NAME }}"
@@ -147,7 +133,7 @@
         src: "{{ DB_BACKUP_URL }}"
         dest: "{{ BLOCKCHAIN_DB_PATH }}"
         remote_src: yes
-      when: not db_backup_already_extracted.stat.exists 
+      when: not db_backup_already_extracted.stat.exists and SCENARIO != 'FULLSYNC'
   roles:
     - { role: setup_chia }
     - { role: run_sync_tests_for_active_testcases }

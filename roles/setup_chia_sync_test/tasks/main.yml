@@ -6,8 +6,13 @@
     owner: "{{CHIA_OS_USER }}"
     group: "{{ CHIA_OS_GROUP }}"
     mode: 0700
-- name: "Copy testcases.json to config path"
+- name: "Copy testcase_definition.json to config path"
   ansible.builtin.copy:
-    src: "files/testcases.json"
+    src: "files/testcase_definition.json"
+    dest: "{{ ANSIBLE_HOME_PATH }}/config"
+    mode: 0644
+- name: "Copy active_testcases.json to config path"
+  ansible.builtin.copy:
+    src: "files/active_testcases.json"
     dest: "{{ ANSIBLE_HOME_PATH }}/config"
     mode: 0644
