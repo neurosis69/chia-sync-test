@@ -155,7 +155,9 @@ After completing setup and configuration start the test.
 
 ## Logging
 
-The logfiles are located in **{{ ANSIBLE_LOG_PATH }}** and the tree looks like:
+The logfiles are located in **{{ ANSIBLE_LOG_PATH }}**
+
+#### Directory Tree
 
 ```bash
 .
@@ -195,3 +197,7 @@ plotter1,DUSTSTORM1,AUTOTEST33,2022-01-01T10:23:39,2022-01-01T10:23:48,2022-01-0
 - `log/YYYY-MM-DD_HH24:MI:SS/sa/plotter1_1641083293_AUTOTEST36.11.sa.data` raw data written by sadc process during the sync of the testcase
 - `log/YYYY-MM-DD_HH24:MI:SS/plotter1_ansible_run_AUTOTEST36.11.sa.csv` auto generated csv file from sar rawdata by predefined parameters
 - `log/YYYY-MM-DD_HH24:MI:SS/plotter1_ansible_run_AUTOTEST36.11.sa.svg` auto generated svg file from sar rawdata by predefined parameters
+
+## Testcase documentation
+
+tbd
