@@ -1023,7 +1023,7 @@ class FullNode:
         if pre_validate_end - pre_validate_start > 10:
             self.log.warning(f"TEST Block pre-validation time: {pre_validate_end - pre_validate_start:0.2f} seconds")
         else:
-            self.log.info(f"TEST Block pre-validation time: {pre_validate_end - pre_validate_start:0.2f} seconds")
+            self.log.{{ CUSTOM_LOGGING }}(f"TEST Block pre-validation time: {pre_validate_end - pre_validate_start:0.2f} seconds")
         if pre_validation_results is None:
             return False, False, None, ([], {})
         for i, block in enumerate(blocks_to_validate):
@@ -1033,7 +1033,7 @@ class FullNode:
                 )
                 return False, advanced_peak, fork_height, ([], {})
         # TEST
-        self.log.info(f"TEST Block pre-validation check time: {time.time() - pre_validate_end:0.2f} seconds")
+        self.log.{{ CUSTOM_LOGGING }}(f"TEST Block pre-validation check time: {time.time() - pre_validate_end:0.2f} seconds")
         # Dicts because deduping
         all_coin_changes: Dict[bytes32, CoinRecord] = {}
         all_hint_changes: Dict[bytes, Dict[bytes32, CoinRecord]] = {}
@@ -1049,7 +1049,7 @@ class FullNode:
             receive_block_end = time.time()
             # TEST
             if round(receive_block_end - receive_block_start,2) >= 0.01:
-                self.log.info(f"TEST Receive time for block {i}: {round(receive_block_end - receive_block_start,2):0.2f} seconds")
+                self.log.{{ CUSTOM_LOGGING }}(f"TEST Receive time for block {i}: {round(receive_block_end - receive_block_start,2):0.2f} seconds")
             update_all_changes_start = time.time()
             # Update all changes
             for record in coin_record_list:
@@ -1062,7 +1062,7 @@ class FullNode:
             update_all_changes_end = time.time()
             # TEST
             if round(update_all_changes_end - update_all_changes_start,2) >= 0.01:
-                self.log.info(f"TEST Update all changes for block {i}: {round(update_all_changes_end- update_all_changes_start,2):0.2f} seconds")
+                self.log.{{ CUSTOM_LOGGING }}(f"TEST Update all changes for block {i}: {round(update_all_changes_end- update_all_changes_start,2):0.2f} seconds")
             receive_block_result_start = time.time()
             if result == ReceiveBlockResult.NEW_PEAK:
                 advanced_peak = True
@@ -1073,7 +1073,7 @@ class FullNode:
             receive_block_result_end = time.time()
             # TEST
             if round(receive_block_result_end - receive_block_result_start,2) >= 0.01:
-                self.log.info(f"TEST Receive block result for block {i}: {round(receive_block_result_end - receive_block_result_start,2):0.2f} seconds")
+                self.log.{{ CUSTOM_LOGGING }}(f"TEST Receive block result for block {i}: {round(receive_block_result_end - receive_block_result_start,2):0.2f} seconds")
             write_block_record_start = time.time()
             block_record = self.blockchain.block_record(block.header_hash)
             if block_record.sub_epoch_summary_included is not None:
@@ -1082,13 +1082,13 @@ class FullNode:
             # TEST
             write_block_record_end = time.time()
             if round(write_block_record_end - write_block_record_start,2) >= 0.01:
-                self.log.info(f"TEST Write block record for block {i}: {round(write_block_record_end - write_block_record_start,2):0.2f} seconds")
+                self.log.{{ CUSTOM_LOGGING }}(f"TEST Write block record for block {i}: {round(write_block_record_end - write_block_record_start,2):0.2f} seconds")
             if round(write_block_record_end - receive_block_start,2) >= 0.01:
-                self.log.info(f"TEST Total loop time for block {i}: {write_block_record_end - receive_block_start:0.2f} seconds")
+                self.log.{{ CUSTOM_LOGGING }}(f"TEST Total loop time for block {i}: {write_block_record_end - receive_block_start:0.2f} seconds")
         if advanced_peak:
             self._state_changed("new_peak")
-            self.log.info(f"TEST Validate Time for {len(blocks_to_validate)} blocks: {time.time() - validate_start}")
-            self.log.info(f"TEST Total time for {len(blocks_to_validate)} blocks: {time.time() - pre_validate_start}, "
+            self.log.{{ CUSTOM_LOGGING }}(f"TEST Validate Time for {len(blocks_to_validate)} blocks: {time.time() - validate_start}")
+            self.log.{{ CUSTOM_LOGGING }}(f"TEST Total time for {len(blocks_to_validate)} blocks: {time.time() - pre_validate_start}, "
                 f"advanced: {advanced_peak}"
             )
         return True, advanced_peak, fork_height, (list(all_coin_changes.values()), all_hint_changes)
