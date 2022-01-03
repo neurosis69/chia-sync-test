@@ -16,6 +16,7 @@
         - "bind"
     # Read Local configuration files
     TESTCASES: "{{ lookup('file', 'config/active_testcases.json') | from_json }}"
+    SCENARIO_CONFIG: "{{ lookup('file', 'config/active_scenario.yml') | from_yaml }}"
     BENCHMARK_CONFIG: "{{ lookup('file', 'config/testcase_definition.json') | from_json }}"
     SYNCTEST_CONFIG: "{{ lookup('file', 'config/local_config.yml') | from_yaml }}"
   vars_prompt:
@@ -30,7 +31,7 @@
           - Stop all chia processes of user "{{ SYNCTEST_CONFIG.CHIA_OS_GROUP }}"
           - Replace any existing chia SW installation at "{{ SYNCTEST_CONFIG.CHIA_SW_PATH }}" with branch/tag "{{ SYNCTEST_CONFIG.CHIA_BRANCH }}"
           - Remove chia db "{{ SYNCTEST_CONFIG.BLOCKCHAIN_DB_PATH }}/{{ SYNCTEST_CONFIG.BLOCKCHAIN_DB_NAME }}" and related -shm, -journal, -wal files
-          - If not already available, download the required database file for scenario "{{ SYNCTEST_CONFIG.SCENARIO }}"
+          - If not already available, download the required database file for scenario "{{ SCENARIO_CONFIG.SCENARIO }}"
             The prepared database files are vacuumed and all relevant indexes are droped.
           - Local configuration files are located at "{{ SYNCTEST_CONFIG.ANSIBLE_HOME_PATH }}/config"
           - Run the following testcases: 
@@ -73,7 +74,6 @@
         CHIA_GIT_REPO: "{{ SYNCTEST_CONFIG.CHIA_GIT_REPO }}"
         CHIA_BRANCH: "{{ SYNCTEST_CONFIG.CHIA_BRANCH }}"
         CUSTOM_LOGGING: "{{ SYNCTEST_CONFIG.CUSTOM_LOGGING }}"
-        SCENARIO: "{{ SYNCTEST_CONFIG.SCENARIO }}"
         SADC_BIN_PATH: "{{ SYNCTEST_CONFIG.SADC_BIN_PATH }}"
         BLOCKCHAIN_DB_NAME: "{{ SYNCTEST_CONFIG.BLOCKCHAIN_DB_NAME }}"
         BLOCKCHAIN_DB_PATH: "{{ SYNCTEST_CONFIG.BLOCKCHAIN_DB_PATH }}"
@@ -84,6 +84,9 @@
     - name: "Set Active Testcases"
       ansible.builtin.set_fact:
         ACTIVE_TESTCASES: "{{ TESTCASES.ACTIVE_TESTCASES }}"
+    - name: "Set Active Scenario"
+      ansible.builtin.set_fact:
+        SCENARIO: "{{ SCENARIO_CONFIG.SCENARIO }}"
     - name: "Set Test Scenario Variables" 
       ansible.builtin.set_fact:
         DB_BACKUP: "{{ BENCHMARK_CONFIG.SCENARIO[SCENARIO].DB_BACKUP_NAME }}"

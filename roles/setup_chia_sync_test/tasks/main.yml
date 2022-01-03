@@ -16,3 +16,8 @@
     src: "files/active_testcases.json"
     dest: "{{ ANSIBLE_HOME_PATH }}/config"
     mode: 0644
+- name: "Copy active_scenario.yml to config path"
+  ansible.builtin.copy:
+    src: "files/active_scenario.yml"
+    dest: "{{ ANSIBLE_HOME_PATH }}/config"
+    mode: 0644
