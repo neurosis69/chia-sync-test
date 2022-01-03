@@ -191,7 +191,7 @@ HOSTNAME,SCENARIO,TESTCASE,START_RUN,LOG_INITIATE_SYNC,LOG_START_SYNC,LOG_DUST_S
 plotter1,DUSTSTORM1,AUTOTEST32,2022-01-01T09:44:10,2022-01-01T09:44:34,2022-01-01T09:45:44,2022-01-01T09:46:21,2022-01-01T10:23:24,22398107648,"Only full blocks height + peak index; increase coin_records lru cache * 500"
 plotter1,DUSTSTORM1,AUTOTEST33,2022-01-01T10:23:39,2022-01-01T10:23:48,2022-01-01T10:24:56,2022-01-01T10:25:23,2022-01-01T11:02:02,22398107648,"Only full blocks height + peak index; locking_mode=exclusive, synchronous=OFF, journal_mode=off, uncommited=true, increase coin_records lru cache * 500"
 ```
-- `log/YYYY-MM-DD_HH24:MI:SS/chia/plotter1_chia_debug_AUTOTEST36.11.log` is the redirected chia debug.log, one separate file per testcase
-- `log/YYYY-MM-DD_HH24:MI:SS/sa/plotter1_1641083293_AUTOTEST36.11.sa.data` is the raw data written by sadc process during the sync of the testcase
-- `log/YYYY-MM-DD_HH24:MI:SS/plotter1_ansible_run_AUTOTEST36.11.sa.csv` is a auto generated csv file from sar rawdata by predefined parameters
-- `log/YYYY-MM-DD_HH24:MI:SS/plotter1_ansible_run_AUTOTEST36.11.sa.svg` is a auto generated svg file from sar rawdata by predefined parameters
+- `log/YYYY-MM-DD_HH24:MI:SS/chia/plotter1_chia_debug_AUTOTEST36.11.log` redirected chia debug.log, one separate file per testcase
+- `log/YYYY-MM-DD_HH24:MI:SS/sa/plotter1_1641083293_AUTOTEST36.11.sa.data` raw data written by sadc process during the sync of the testcase
+- `log/YYYY-MM-DD_HH24:MI:SS/plotter1_ansible_run_AUTOTEST36.11.sa.csv` auto generated csv file from sar rawdata by predefined parameters
+- `log/YYYY-MM-DD_HH24:MI:SS/plotter1_ansible_run_AUTOTEST36.11.sa.svg` auto generated svg file from sar rawdata by predefined parameters
