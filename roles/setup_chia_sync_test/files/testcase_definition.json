@@ -14,8 +14,8 @@
       "DB_BACKUP_NAME": "db_before_duststorm_2.sqlite",
       "DB_BACKUP_URL": "https://www.dropbox.com/s/oo5le7x8vwbsujb/db_before_duststorm_2.sqlite.zip?dl=1",
       "SYNC_START_HEIGHT": "1303062",
-      "DUST_START_HEIGHT": "1304608",
-      "DUST_STOP_HEIGHT": "1316352"
+      "DUST_START_HEIGHT": "1304598",
+      "DUST_STOP_HEIGHT": "1316342"
     },
     "TRANSACTION_START": {
       "Description": "Database synced right before Transaction Start in May 2020",
