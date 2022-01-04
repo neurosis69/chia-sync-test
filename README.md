@@ -200,4 +200,15 @@ plotter1,DUSTSTORM1,AUTOTEST33,2022-01-01T10:23:39,2022-01-01T10:23:48,2022-01-0
 
 ## Testcase documentation
 
-tbd
+The most reasonable testcases are
+
+Testcase|Description|Why?
+---|---|---
+AUTOTEST1|No Changes from branch|Baseline
+AUTOTEST3|From Block Store, only use fullblocks height and peak index; Drop all coin store indexes|Best Index related sync performance
+AUTOTEST5|Only full blocks height + peak index; plus max num workers for block chain consensus|Best pre-validation times (important for RPi)
+AUTOTEST45|Only full blocks height + peak index; locking_mode=exclusive, synchronous=OFF, journal_mode=off, increase coin_records lru cache * 100, cache_spill=false, uncommited=true, max blockchain consensus threads|Best sync performance overall
+
+## Other performance improvements
+
+- If applicable, place the blockchain db on ramdisk
