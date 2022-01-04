@@ -221,6 +221,7 @@ AUTOTEST45|Only full blocks height + peak index; locking_mode=exclusive, synchro
 - create separate `long sync` job
   - `chia start node fullsync` to sync from scratch and sync only connection pragmas
   - only create the 2 needed indexes during fullsync
+  - [allow more than 32 blocks](https://github.com/Chia-Network/chia-blockchain/blob/13ff7489b606d38b8294ed8c256d0177d39eb4bb/chia/consensus/default_constants.py#L52) per request for `long sync` 
 - [remove cpu thread limitation](https://github.com/Chia-Network/chia-blockchain/pull/9709#issue-1092109095)
 - increase coin store cache size times 100, instead of [60000](https://github.com/Chia-Network/chia-blockchain/blob/13ff7489b606d38b8294ed8c256d0177d39eb4bb/chia/full_node/coin_store.py#L28) use 6000000. suggestion was not calculated but tested with signifcant improvement (at RPi as well).
 
