@@ -221,7 +221,7 @@ AUTOTEST45|Only full blocks height + peak index; locking_mode=exclusive, synchro
 # Possible further sync improvements
 
 - create separate `long sync` job
-  - `chia start node fullsync` to sync from scratch and sync only connection pragmas
+  - `chia start node fullsync` to sync from scratch and sync using special connection pragmas
   - only create the 2 needed indexes during fullsync
   - [allow more than 32 blocks](https://github.com/Chia-Network/chia-blockchain/blob/13ff7489b606d38b8294ed8c256d0177d39eb4bb/chia/consensus/default_constants.py#L52) per request for `long sync` 
 - [remove cpu thread limitation](https://github.com/Chia-Network/chia-blockchain/pull/9709#issue-1092109095)
