@@ -297,7 +297,7 @@ class Blockchain(BlockchainInterface):
                 raise
         transaction_end = time.time()
         if round(transaction_end - transaction_start,2) >= 0.01:
-            log.{{ CUSTOM_LOGGING }(f"TEST Time to write block {block.height} to database: {round(transaction_end - transaction_start,2):0.2f} seconds")
+            log.{{ CUSTOM_LOGGING }}(f"TEST Time to write block {block.height} to database: {round(transaction_end - transaction_start,2):0.2f} seconds")
 
         if fork_height is not None:
             # new coin records added
