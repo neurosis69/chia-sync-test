@@ -223,3 +223,9 @@ AUTOTEST45|Only full blocks height + peak index; locking_mode=exclusive, synchro
   - only create the 2 needed indexes during fullsync
 - [remove cpu thread limitation](https://github.com/Chia-Network/chia-blockchain/pull/9709#issue-1092109095)
 - increase coin store cache size times 100, instead of [60000](https://github.com/Chia-Network/chia-blockchain/blob/13ff7489b606d38b8294ed8c256d0177d39eb4bb/chia/full_node/coin_store.py#L28) use 6000000. suggestion was not calculated but tested with signifcant improvement (at RPi as well).
+
+# Known Issues
+
+- The ansible [async task](https://github.com/neurosis69/chia-sync-test/blob/ad41a66e2a626e9aef92404602a4462143574c49/roles/execute_sync_tests/tasks/main.yml#L135) to keep enough valid peers connected is not working on my Ubuntu RPi Setup, but is working on Clear Linux Setup .. _still investigating_.
+
+  Workaround: Execute the shell commands separately.
