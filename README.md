@@ -112,15 +112,17 @@ SCENARIO: "DUSTSTORM1"
  TRANSACTION_START | 223648 | 225696 | 228000 | Transaction start on mainnet
  TRANSACTION_PEAK | 739202 | 740736 | 772928 | Some transactions peaks in (Aug 2021)
 
-##### SQLite Databases
+##### SQLite Database
 
-For every Scenario one initially fresh synced chia db is prepared as follows:
+For every Scenario, except for FULLSYNC, one initially fresh synced chia db was prepared as follows:
 * synced until mentioned "DB Height"
 * droped all indexes, except the following:
   * peak on block_records(is_peak) where is_peak=1
   * full_block_height on full_blocks(height)
   * hint_index on hints(hint)
 * finally vacuumed the db
+
+If you want to use a db for production, please use Scenario FULLSYNC.
 
 ### Start Test
 
