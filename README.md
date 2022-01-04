@@ -110,7 +110,7 @@ SCENARIO: "DUSTSTORM1"
  DUSTSTORM1 | 1069664 | 1070016 | 1080000 | First dust storm (end Oct 2021)
  DUSTSTORM2 | 1303062 | 1304608 | 1316352 | Second dust storm (mid Dec 2021)
  TRANSACTION_START | 223648 | 225696 | 228000 | Transaction start on mainnet
- TRANSACTION_PEAK | 739202 | 740736 | 772928 | Some transactions peaks in (Aug 2021)
+ TRANSACTION_PEAK | 739202 | 740738 | 772930 | Some transactions peaks in (Aug 2021)
 
 ##### SQLite Database
 
