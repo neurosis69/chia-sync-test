@@ -32,7 +32,8 @@
           - Replace any existing chia SW installation at "{{ SYNCTEST_CONFIG.CHIA_SW_PATH }}" with branch/tag "{{ SYNCTEST_CONFIG.CHIA_BRANCH }}"
           - Remove chia db "{{ SYNCTEST_CONFIG.BLOCKCHAIN_DB_PATH }}/{{ SYNCTEST_CONFIG.BLOCKCHAIN_DB_NAME }}" and related -shm, -journal, -wal files
           - If not already available, download the required database file for scenario "{{ SCENARIO_CONFIG.SCENARIO }}"
-            The prepared database files are vacuumed and all relevant indexes are droped.
+            For scenarios other than FULLSYNC: 
+              The prepared database files are vacuumed and all relevant indexes are droped.
           - Local configuration files are located at "{{ SYNCTEST_CONFIG.ANSIBLE_HOME_PATH }}/config"
           - Run the following testcases: 
               {{ TESTCASES.ACTIVE_TESTCASES }}
