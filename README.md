@@ -6,6 +6,8 @@ The scenarios are chosen to reflect high transaction volumes like Transaction St
 
 ***Current Testcases are prepared for chia version 1.2.11 only.*** 
 
+***Replacing Testcase DUSTSTORM2 db file, currently not available*** 
+
 ## Get started
 
 ### Install ansible
