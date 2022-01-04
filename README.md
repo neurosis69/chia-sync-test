@@ -121,6 +121,7 @@ For every Scenario, except for FULLSYNC, one initially fresh synced chia db was 
   * full_block_height on full_blocks(height)
   * hint_index on hints(hint)
 * finally vacuumed the db
+* compressed using zip
 
 If you want to use a db for production, please use Scenario FULLSYNC.
 
