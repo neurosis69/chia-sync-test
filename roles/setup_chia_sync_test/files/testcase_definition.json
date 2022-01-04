@@ -11,8 +11,8 @@
     },
     "DUSTSTORM2": {
       "Description": "Database synced right before Duststorm2 Dec 2020",
-      "DB_BACKUP_NAME": "db_before_duststorm_1007000.sqlite",
-      "DB_BACKUP_URL": "https://www.dropbox.com/s/6jlfhdq5rmqa6kx/db_before_duststorm_1007000.sqlite.zip?dl=1",
+      "DB_BACKUP_NAME": "db_before_duststorm_2.sqlite",
+      "DB_BACKUP_URL": "https://www.dropbox.com/s/oo5le7x8vwbsujb/db_before_duststorm_2.sqlite.zip?dl=1",
       "SYNC_START_HEIGHT": "1303062",
       "DUST_START_HEIGHT": "1304608",
       "DUST_STOP_HEIGHT": "1316352"
