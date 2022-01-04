@@ -211,4 +211,4 @@ AUTOTEST45|Only full blocks height + peak index; locking_mode=exclusive, synchro
 
 ## Other performance improvements
 
-- If applicable, place the blockchain db on ramdisk
+- If applicable, place the blockchain db on ramdisk during fullsync
