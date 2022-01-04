@@ -223,5 +223,17 @@
   register: sqlite_device
 - name: "Convert and write SA output"
   ansible.builtin.shell: |
-    sadf -d -T  {{ ANSIBLE_LOG_SA_PATH }}/{{ ANSIBLE_SA_FILE_NAME }}.{{ ansible_loop.index }}.sa.data --fs={{ sqlite_device.stdout }} -- -F -m CPU -d -u -S -q -r -b -n DEV > {{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}_{{ TESTCASE }}.{{ ansible_loop.index }}.sa.csv
-    sadf -g -T -O autoscale,showinfo,showidle,showtoc,skipempty {{ ANSIBLE_LOG_SA_PATH }}/{{ ANSIBLE_SA_FILE_NAME }}.{{ ansible_loop.index }}.sa.data --fs={{ sqlite_device.stdout }} -- -F -m CPU -d -u -S -q -r -b -n DEV > {{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}_{{ TESTCASE }}.{{ ansible_loop.index }}.sa.svg
+    sadf -d -T  {{ ANSIBLE_LOG_SA_PATH }}/{{ ANSIBLE_SA_FILE_NAME }}.{{ ansible_loop.index }}.sa.data -- -m CPU | sed 's/;/,/g' > {{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}_{{ TESTCASE }}.{{ ansible_loop.index }}.m.sa.csv
+    sadf -d -T  {{ ANSIBLE_LOG_SA_PATH }}/{{ ANSIBLE_SA_FILE_NAME }}.{{ ansible_loop.index }}.sa.data -- -d | sed 's/;/,/g' > {{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}_{{ TESTCASE }}.{{ ansible_loop.index }}.d.sa.csv
+    sadf -d -T  {{ ANSIBLE_LOG_SA_PATH }}/{{ ANSIBLE_SA_FILE_NAME }}.{{ ansible_loop.index }}.sa.data -- -u | sed 's/;/,/g' > {{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}_{{ TESTCASE }}.{{ ansible_loop.index }}.u.sa.csv
+    sadf -d -T  {{ ANSIBLE_LOG_SA_PATH }}/{{ ANSIBLE_SA_FILE_NAME }}.{{ ansible_loop.index }}.sa.data -- -S | sed 's/;/,/g' > {{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}_{{ TESTCASE }}.{{ ansible_loop.index }}.S.sa.csv
+    sadf -d -T  {{ ANSIBLE_LOG_SA_PATH }}/{{ ANSIBLE_SA_FILE_NAME }}.{{ ansible_loop.index }}.sa.data -- -q | sed 's/;/,/g' > {{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}_{{ TESTCASE }}.{{ ansible_loop.index }}.q.sa.csv
+    sadf -d -T  {{ ANSIBLE_LOG_SA_PATH }}/{{ ANSIBLE_SA_FILE_NAME }}.{{ ansible_loop.index }}.sa.data -- -r | sed 's/;/,/g' > {{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}_{{ TESTCASE }}.{{ ansible_loop.index }}.r.sa.csv
+    sadf -d -T  {{ ANSIBLE_LOG_SA_PATH }}/{{ ANSIBLE_SA_FILE_NAME }}.{{ ansible_loop.index }}.sa.data -- -b | sed 's/;/,/g' > {{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}_{{ TESTCASE }}.{{ ansible_loop.index }}.b.sa.csv
+    sadf -d -T  {{ ANSIBLE_LOG_SA_PATH }}/{{ ANSIBLE_SA_FILE_NAME }}.{{ ansible_loop.index }}.sa.data -- -n DEV | sed 's/;/,/g' > {{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}_{{ TESTCASE }}.{{ ansible_loop.index }}.n.sa.csv
+    sadf -g -T -O autoscale,showinfo,showidle,showtoc,skipempty {{ ANSIBLE_LOG_SA_PATH }}/{{ ANSIBLE_SA_FILE_NAME }}.{{ ansible_loop.index }}.sa.data -- -m CPU -d -u -S -q -r -b -n DEV > {{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}_{{ TESTCASE }}.{{ ansible_loop.index }}.sa.svg
+- name: "Convert and write filesystem SA output if device is not ramfs or tmpfs"
+  ansible.builtin.shell: |
+    sadf -d -T  {{ ANSIBLE_LOG_SA_PATH }}/{{ ANSIBLE_SA_FILE_NAME }}.{{ ansible_loop.index }}.sa.data --fs={{ sqlite_device.stdout }} -- -F | sed 's/;/,/g' > {{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}_{{ TESTCASE }}.{{ ansible_loop.index }}.F.sa.csv
+    sadf -g -T -O autoscale,showinfo,showidle,skipempty {{ ANSIBLE_LOG_SA_PATH }}/{{ ANSIBLE_SA_FILE_NAME }}.{{ ansible_loop.index }}.sa.data --fs={{ sqlite_device.stdout }} -- -F > {{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}_{{ TESTCASE }}.{{ ansible_loop.index }}.F.sa.svg
+  when: "sqlite_device.stdout != 'ramfs' and sqlite_device.stdout != 'tmpfs'"
