@@ -59,6 +59,8 @@ CUSTOM_LOGGING|all chia log levels are valid. choose the log level you want to u
 ANSIBLE_REMOTE_TEMP|Path to the directory where the db file will be staged during download/unpack
 SADC_BIN_PATH|directory path to the binary sadc
 
+***@RPi: Using CUSTOM_LOGGING=info and AUTOTEST45, where both the DB and the logfile are located at the same SSD, the time to sync increases by ~9%. (sync tested from 0 - 350000).***
+
 ### Setup chia-sync-test
 
 ```
