@@ -726,5 +726,25 @@
     "FULL_NODE_SQLITE_PRAGMA_JOURNAL_MODE": "await self.connection.execute(\"pragma journal_mode=off\")",
     "FULL_NODE_SQLITE_PRAGMA_UNCOMMITTED": "await self.connection.execute(\"pragma uncommitted=true\")",
     "COIN_STORE_COIN_LRU_CACHE": 600
+  },
+  "AUTOTEST51": {
+    "DESCRIPTION": "Only full blocks height + peak index; locking_mode=exclusive, synchronous=OFF, journal_mode=off, increase coin_records lru cache * 100, cache_spill=false, uncommited=true, max blockchain consensus threads, page_size=65536",
+    "RUNID": "51AUTOTEST",
+    "BLOCK_STORE_IS_FULLY_COMPACTIFIED_INDEX": "",
+    "BLOCK_STORE_HEIGHT_INDEX": "",
+    "BLOCK_STORE_HH_INDEX": "",
+    "COIN_STORE_COIN_CONFIRMED_INDEX": "",
+    "COIN_STORE_COIN_SPENT_INDEX": "",
+    "COIN_STORE_COIN_PUZZLE_HASH_INDEX": "",
+    "COIN_STORE_COIN_PARENT_INDEX": "",
+    "BLOCKCHAIN_CONSENSUS_THREADS": "cpu_count",
+    "FULL_NODE_SQLITE_PRAGMA_LOCKING_MODE": "await self.connection.execute(\"pragma locking_mode=exclusive\")",
+    "FULL_NODE_SQLITE_PRAGMA_SYNCHRONOUS": "await self.connection.execute(\"pragma synchronous=OFF\")",
+    "FULL_NODE_SQLITE_PRAGMA_CACHE_SPILL": "await self.connection.execute(\"pragma cache_spill=false\")",
+    "FULL_NODE_SQLITE_PRAGMA_JOURNAL_MODE": "await self.connection.execute(\"pragma journal_mode=off\")",
+    "FULL_NODE_SQLITE_PRAGMA_UNCOMMITTED": "await self.connection.execute(\"pragma uncommitted=true\")",
+    "COIN_STORE_COIN_LRU_CACHE": 6000000,
+    "PAGE_SIZE": "65536",
+    "FULL_NODE_SQLITE_PRAGMA_PAGE_SIZE": "await self.connection.execute(\"pragma page_size=65536\")"
   }
 }
