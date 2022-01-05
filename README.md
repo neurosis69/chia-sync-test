@@ -6,6 +6,11 @@ The scenarios are chosen to reflect high transaction volumes like Transaction St
 
 ***Current Testcases are prepared for chia version 1.2.11 only.*** 
 
+This playbook doesn't change any configuration settings in ~/.chia/mainnet/config.
+
+All changes are directly made in the ~/chia-blockchain/chia/* files by replacing certain parameters/lines.
+
+For details, check out the modules ansible.builtin.copy and ansible.builtin.template in the ansible role [execute_sync_tests](https://github.com/neurosis69/chia-sync-test/tree/main/roles/execute_sync_tests).
 
 ## Get started
 
@@ -127,6 +132,13 @@ For every Scenario, except for FULLSYNC, one initially fresh synced chia db was 
 * compressed using zip
 
 If you want to use a db for production, please use Scenario FULLSYNC.
+
+##### Necessary steps to use db after FULLSYNC
+
+1. Shutdown all chia processes, if not already done
+2. If Device=RAMDISK, move DB to persistent storage
+3. Remove ~/chia-blockchain SW and reinstall using [chia install instructions](https://github.com/Chia-Network/chia-blockchain/wiki/INSTALL)
+4. Start node -> this will recreate all missing indexes
 
 ### Start Test
 
