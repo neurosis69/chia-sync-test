@@ -66,16 +66,6 @@
   ansible.builtin.import_role:
     name:  change_sqlite_auto_vacuum
   when: AUTO_VACUUM != ""
-- name: "Change file in {{ CHIA_SW_PATH}}/chia/types to test PR#9731"
-  ansible.builtin.copy:
-    src: "files/{{ CHIA_PR }}/types/{{ item }}"
-    dest: "{{ CHIA_SW_PATH }}/chia/types/{{ item }}"
-    owner: "{{ CHIA_OS_USER }}"
-    group: "{{ CHIA_OS_GROUP }}"
-    mode: 0644
-  with_items:
-    - "full_block.py"
-  when: CHIA_PR == "PR9731"
 - name: "Change file in {{ CHIA_SW_PATH}}/chia/cmds to remove newline in chia show"
   ansible.builtin.copy:
     src: "files/{{ CHIA_BRANCH }}/cmds/{{ item }}"
