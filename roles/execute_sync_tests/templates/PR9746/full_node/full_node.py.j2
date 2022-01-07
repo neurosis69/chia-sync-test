@@ -127,8 +127,7 @@ class FullNode:
 
         self._ui_tasks = set()
 
-        self.db_path = path_from_root(root_path, "/chia_temp1/blockchain_v1_mainnet.sqlite")
-#        self.db_path1 = path_from_root(root_path, '/chia_temp1/db1.sqlite')
+        self.db_path = path_from_root(root_path, "{{ BLOCKCHAIN_DB_PATH }}/{{ BLOCKCHAIN_DB_NAME }}")
         self.coin_subscriptions: Dict[bytes32, Set[bytes32]] = {}  # Puzzle Hash : Set[Peer ID]
         self.ph_subscriptions: Dict[bytes32, Set[bytes32]] = {}  # Puzzle Hash : Set[Peer ID]
         self.peer_coin_ids: Dict[bytes32, Set[bytes32]] = {}  # Peer ID: Set[Coin ids]
@@ -150,28 +149,18 @@ class FullNode:
         # These many respond_transaction tasks can be active at any point in time
         self.respond_transaction_semaphore = asyncio.Semaphore(200)
         # create the store (db) and full node instance
-
-        self.connection = await aiosqlite.connect('/chia_temp1/db1.sqlite')
-        await self.connection.execute("pragma journal_mode=off")
-        await self.connection.execute("pragma page_size=65536")
-        await self.connection.execute("vacuum")
-#        self.db_wrapper = DBWrapper(self.connection)
-#        self.coin_store = await CoinStore.create(self.db_wrapper)
-        self.connection.close()
-
         self.connection = await aiosqlite.connect(self.db_path)
 
-        await self.connection.execute("pragma journal_mode=off")
-        await self.connection.execute("pragma locking_mode=exclusive")
-        await self.connection.execute("pragma cache_spill=false")
-        
-        await self.connection.execute("pragma synchronous=OFF")
-        
-        
-        await self.connection.execute("pragma uncommitted=true")
-        
+        {{ FULL_NODE_SQLITE_PRAGMA_JOURNAL_MODE }}
+        {{ FULL_NODE_SQLITE_PRAGMA_LOCKING_MODE }}
+        {{ FULL_NODE_SQLITE_PRAGMA_CACHE_SPILL }}
+        {{ FULL_NODE_SQLITE_PRAGMA_PAGE_SIZE }}
+        {{ FULL_NODE_SQLITE_PRAGMA_SYNCHRONOUS }}
+        {{ FULL_NODE_SQLITE_PRAGMA_MMAP_SIZE }}
+        {{ FULL_NODE_SQLITE_PRAGMA_CACHE_SIZE }}
+        {{ FULL_NODE_SQLITE_PRAGMA_UNCOMMITTED }}
+        {{ FULL_NODE_SQLITE_PRAGMA_WAL_CHECKPOINT }}
 
-        await self.connection.execute("attach database '/chia_temp1/db1.sqlite' as db1")
 
         if self.config.get("log_sqlite_cmds", False):
             sql_log_path = path_from_root(self.root_path, "log/sql.log")
@@ -402,7 +391,7 @@ class FullNode:
                             await self.peak_post_processing(peak_fb, peak, fork_height, peer, coin_changes[0])
                             raise
                         finally:
-                            self.log.info(f"AUTOTEST45 Added blocks {height}-{end_height}")
+                            self.log.info(f"{{ TESTCASE }} Added blocks {height}-{end_height}")
         except (asyncio.CancelledError, Exception) as e:
             self.sync_store.batch_syncing.remove(peer.peer_node_id)
             raise e
@@ -926,7 +915,7 @@ class FullNode:
                         peers_with_peak.remove(peer)
                     await peer.close(600)
                     raise ValueError(f"Failed to validate block batch {start_height} to {end_height}")
-                self.log.info(f"AUTOTEST45 Added blocks {start_height} to {end_height}")
+                self.log.info(f"{{ TESTCASE }} Added blocks {start_height} to {end_height}")
                 await self.send_peak_to_wallets()
                 peak = self.blockchain.get_peak()
                 if len(coin_states) > 0 and fork_height is not None:
@@ -1038,7 +1027,7 @@ class FullNode:
         if pre_validate_end - pre_validate_start > 10:
             self.log.warning(f"TEST Block pre-validation time: {pre_validate_end - pre_validate_start:0.2f} seconds")
         else:
-            self.log.info(f"TEST Block pre-validation time: {pre_validate_end - pre_validate_start:0.2f} seconds")
+            self.log.{{ CUSTOM_LOGGING }}(f"TEST Block pre-validation time: {pre_validate_end - pre_validate_start:0.2f} seconds")
         if pre_validation_results is None:
             return False, False, None, ([], {})
         for i, block in enumerate(blocks_to_validate):
@@ -1048,7 +1037,7 @@ class FullNode:
                 )
                 return False, advanced_peak, fork_height, ([], {})
         # TEST
-        self.log.info(f"TEST Block pre-validation check time: {time.time() - pre_validate_end:0.2f} seconds")
+        self.log.{{ CUSTOM_LOGGING }}(f"TEST Block pre-validation check time: {time.time() - pre_validate_end:0.2f} seconds")
         # Dicts because deduping
         all_coin_changes: Dict[bytes32, CoinRecord] = {}
         all_hint_changes: Dict[bytes, Dict[bytes32, CoinRecord]] = {}
@@ -1064,7 +1053,7 @@ class FullNode:
             receive_block_end = time.time()
             # TEST
             if round(receive_block_end - receive_block_start,2) >= 0.01:
-                self.log.info(f"TEST Receive time for block {i}: {round(receive_block_end - receive_block_start,2):0.2f} seconds")
+                self.log.{{ CUSTOM_LOGGING }}(f"TEST Receive time for block {i}: {round(receive_block_end - receive_block_start,2):0.2f} seconds")
             update_all_changes_start = time.time()
             # Update all changes
             for record in coin_record_list:
@@ -1077,7 +1066,7 @@ class FullNode:
             update_all_changes_end = time.time()
             # TEST
             if round(update_all_changes_end - update_all_changes_start,2) >= 0.01:
-                self.log.info(f"TEST Update all changes for block {i}: {round(update_all_changes_end- update_all_changes_start,2):0.2f} seconds")
+                self.log.{{ CUSTOM_LOGGING }}(f"TEST Update all changes for block {i}: {round(update_all_changes_end- update_all_changes_start,2):0.2f} seconds")
             receive_block_result_start = time.time()
             if result == ReceiveBlockResult.NEW_PEAK:
                 advanced_peak = True
@@ -1088,7 +1077,7 @@ class FullNode:
             receive_block_result_end = time.time()
             # TEST
             if round(receive_block_result_end - receive_block_result_start,2) >= 0.01:
-                self.log.info(f"TEST Receive block result for block {i}: {round(receive_block_result_end - receive_block_result_start,2):0.2f} seconds")
+                self.log.{{ CUSTOM_LOGGING }}(f"TEST Receive block result for block {i}: {round(receive_block_result_end - receive_block_result_start,2):0.2f} seconds")
             write_block_record_start = time.time()
             block_record = self.blockchain.block_record(block.header_hash)
             if block_record.sub_epoch_summary_included is not None:
@@ -1097,13 +1086,13 @@ class FullNode:
             # TEST
             write_block_record_end = time.time()
             if round(write_block_record_end - write_block_record_start,2) >= 0.01:
-                self.log.info(f"TEST Write block record for block {i}: {round(write_block_record_end - write_block_record_start,2):0.2f} seconds")
+                self.log.{{ CUSTOM_LOGGING }}(f"TEST Write block record for block {i}: {round(write_block_record_end - write_block_record_start,2):0.2f} seconds")
             if round(write_block_record_end - receive_block_start,2) >= 0.01:
-                self.log.info(f"TEST Total loop time for block {i}: {write_block_record_end - receive_block_start:0.2f} seconds")
+                self.log.{{ CUSTOM_LOGGING }}(f"TEST Total loop time for block {i}: {write_block_record_end - receive_block_start:0.2f} seconds")
         if advanced_peak:
             self._state_changed("new_peak")
-            self.log.info(f"TEST Validate Time for {len(blocks_to_validate)} blocks: {time.time() - validate_start}")
-            self.log.info(f"TEST Total time for {len(blocks_to_validate)} blocks: {time.time() - pre_validate_start}, "
+            self.log.{{ CUSTOM_LOGGING }}(f"TEST Validate Time for {len(blocks_to_validate)} blocks: {time.time() - validate_start}")
+            self.log.{{ CUSTOM_LOGGING }}(f"TEST Total time for {len(blocks_to_validate)} blocks: {time.time() - pre_validate_start}, "
                 f"advanced: {advanced_peak}"
             )
         return True, advanced_peak, fork_height, (list(all_coin_changes.values()), all_hint_changes)
