@@ -71,7 +71,8 @@
     "FULL_NODE_SQLITE_PRAGMA_WAL_CHECKPOINT": "",
     "FULL_NODE_SQLITE_PRAGMA_MMAP_SIZE": "",
     "PAGE_SIZE": "",
-    "AUTO_VACUUM": ""
+    "AUTO_VACUUM": "",
+    "TEST_PR": "" 
   },
   "AUTOTEST1": {
     "DESCRIPTION": "No Changes from branch",
@@ -746,5 +747,23 @@
     "COIN_STORE_COIN_LRU_CACHE": 6000000,
     "PAGE_SIZE": "65536",
     "FULL_NODE_SQLITE_PRAGMA_PAGE_SIZE": "await self.connection.execute(\"pragma page_size=65536\")"
+  },
+  "AUTOTEST3_PR9746": {
+    "DESCRIPTION": "Only full blocks height + peak index; max blockchain consensus threads, PR9746",
+    "RUNID": "3AUTOTEST_PR9746",
+    "BLOCK_STORE_IS_FULLY_COMPACTIFIED_INDEX": "",
+    "BLOCK_STORE_HEIGHT_INDEX": "",
+    "BLOCK_STORE_HH_INDEX": "",
+    "COIN_STORE_COIN_CONFIRMED_INDEX": "",
+    "COIN_STORE_COIN_SPENT_INDEX": "",
+    "COIN_STORE_COIN_PUZZLE_HASH_INDEX": "",
+    "COIN_STORE_COIN_PARENT_INDEX": "",
+    "BLOCKCHAIN_CONSENSUS_THREADS": "cpu_count",
+    "TEST_PR": "PR9746"
+  },
+  "AUTOTEST1_PR9746": {
+    "DESCRIPTION": "max blockchain consensus threads",
+    "RUNID": "1AUTOTEST_PR9746",
+    "TEST_PR": "PR9746"
   }
 }

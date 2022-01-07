@@ -29,6 +29,7 @@
     FULL_NODE_SQLITE_PRAGMA_WAL_CHECKPOINT: "{{ BENCHMARK_CONFIG[TESTCASE].FULL_NODE_SQLITE_PRAGMA_WAL_CHECKPOINT | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_WAL_CHECKPOINT) }}"
     PAGE_SIZE: "{{ BENCHMARK_CONFIG[TESTCASE].PAGE_SIZE | default(BENCHMARK_CONFIG.DEFAULT.PAGE_SIZE) }}"
     AUTO_VACUUM: "{{ BENCHMARK_CONFIG[TESTCASE].AUTO_VACUUM | default(BENCHMARK_CONFIG.DEFAULT.AUTO_VACUUM) }}"
+    TEST_PR: "{{ BENCHMARK_CONFIG[TESTCASE].TEST_PR | default(BENCHMARK_CONFIG.DEFAULT.TEST_PR) }}"
 - name: "Test {{ TESTCASE }} start: {{ DESCRIPTION }}"
   ansible.builtin.lineinfile:
     path: "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
@@ -105,6 +106,27 @@
     - "coin_store.py"
     - "full_node.py"
     - "mempool_manager.py"
+- name: "Change files from {{ CHIA_SW_PATH }}/chia/consensus to match testcase {{ TESTCASE }}"
+  ansible.builtin.template:
+    src: "templates/{{ TEST_PR }}/consensus/{{ item }}.j2"
+    dest: "{{ CHIA_SW_PATH }}/chia/consensus/{{ item }}"
+    owner: "{{ CHIA_OS_USER }}"
+    group: "{{ CHIA_OS_GROUP }}"
+    mode: 0644
+  with_items:
+    - "blockchain.py"
+    - "multiprocess_validation.py"
+  when: TEST_PR == 'PR9746'
+- name: "Change files from {{ CHIA_SW_PATH }}/chia/full_node to match testcase {{ TESTCASE }}"
+  ansible.builtin.template:
+    src: "templates/{{ TEST_PR }}/full_node/{{ item }}.j2"
+    dest: "{{ CHIA_SW_PATH }}/chia/full_node/{{ item }}"
+    owner: "{{ CHIA_OS_USER }}"
+    group: "{{ CHIA_OS_GROUP }}"
+    mode: 0644
+  with_items:
+    - "full_node.py"
+  when: TEST_PR == 'PR9746'
 - name: "Clear FS Caches to get comparable runtimes"
   become: yes
   become_user: root
