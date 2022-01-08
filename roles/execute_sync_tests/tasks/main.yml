@@ -154,6 +154,7 @@
     port: 8444
     delay: 10
     state: started
+    timeout: 3600
 - name: "Actively connect to random peers until a minimum of 15 connections is reached"
   async: 86400
   poll: 0

@@ -753,7 +753,7 @@
     "RUNID": "AUTOTEST52",
     "BLOCKCHAIN_CONSENSUS_THREADS": "cpu_count"
   },
-  "AUTOTEST3_PR9746": {
+  "AUTOTEST5_PR9746": {
     "DESCRIPTION": "Only full blocks height + peak index; max blockchain consensus threads, PR9746",
     "RUNID": "3AUTOTEST_PR9746",
     "BLOCK_STORE_IS_FULLY_COMPACTIFIED_INDEX": "",
