@@ -1,0 +1,12 @@
+---
+- name: "Set Chia Facts"
+  ansible.builtin.set_fact:
+    CHIA_OS_USER: "{{ CHIA_OS_USER }}"
+    CHIA_OS_GROUP: "{{ CHIA_OS_GROUP }}"
+    CHIA_GIT_REPO: "{{ CHIA_GIT_REPO }}"
+    CHIA_BRANCH: "{{ CHIA_BRANCH }}"
+    CHIA_SW_PATH: "{{ CHIA_SW_PATH }}"
+    CHIA_LOGGING: "{{ CHIA_LOGGING }}"
+    BLOCKCHAIN_DB_NAME: "{{ BLOCKCHAIN_DB_NAME }}"
+    BLOCKCHAIN_DB_PATH: "{{ BLOCKCHAIN_DB_PATH }}"
+    OS_USER_HOME: "{{ OS_USER_HOME }}"

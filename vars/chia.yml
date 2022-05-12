@@ -1,0 +1,16 @@
+---
+# Define version to test
+CHIA_GIT_REPO: "https://github.com/Chia-Network/chia-blockchain.git"
+CHIA_BRANCH: "latest"
+
+# Define db parameter
+BLOCKCHAIN_DB_PATH: "/chia_temp1"
+BLOCKCHAIN_DB_NAME: "blockchain_v1_mainnet.sqlite"
+
+# Set chia basic parameter
+CHIA_OS_USER: "chia"
+CHIA_OS_GROUP: "chia"
+OS_USER_HOME: "/home/chia"
+CHIA_SW_PATH: "/home/chia/chia-blockchain"
+CHIA_LOGGING: "info"
+CHIA_PASSPHRASE_SUPPORT: false

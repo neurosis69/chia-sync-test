@@ -1,0 +1,9 @@
+---
+ANSIBLE_HOME_PATH: "/home/chia/chia-sync-test"
+ANSIBLE_LOG_PATH: "/home/chia/chia-sync-test/log"
+ANSIBLE_LOG_FILENAME: "/home/chia/chia-sync-test/log/ansible_playbook.log"
+ANSIBLE_CALLBACKS_ENABLED: "profile_roles"
+ANSIBLE_STDOUT_CALLBACK: "debug"
+
+#Remote Temp is used to stage downloaded files
+ANSIBLE_REMOTE_TEMP: "/chia_temp1/.ansible/tmp"

@@ -1,0 +1,53 @@
+---
+argument_specs:
+  # roles/copy_sync_test_files/tasks/main.yml entry point
+  main:
+    short_description: The main entry point for the setup_chia role.
+    description: Clone given chia branch and run install.
+    author: neurosis
+    options:
+      CHIA_OS_USER:
+        type: "str"
+        required: false
+        default: "chia"
+        description: "Chia installation os user"
+      CHIA_OS_GROUP:
+        type: "str"
+        required: false
+        default: "chia"
+        description: "Chia installation os group"
+      ANSIBLE_HOME_PATH:
+        type: "path"
+        required: false
+        default: "/home/chia/chia-sync-test"
+        description: "Target destination of the sync test git clone."
+      CHIA_PASSPHRASE_SUPPORT:
+        type: "bool"
+        required: false
+        default: false
+        description: "Is chia passphrase used?"
+      ANSIBLE_CALLBACKS_ENABLED:
+        type: "str"
+        required: false
+        default: "profile_roles"
+        description: "Which ansible callback is enabled?"
+      ANSIBLE_STDOUT_CALLBACK:
+        type: "str"
+        required: false
+        default: "debug"
+        description: "Which ansible main callback is used for stdout?"
+      ANSIBLE_LOG_FILENAME:
+        type: "str"
+        required: false
+        default: "debug"
+        description: "Which ansible main callback is used for stdout?"
+      ANSIBLE_LOG_PATH:
+        type: "path"
+        required: false
+        default: "/home/chia/chia-sync-test/log"
+        description: "Parameter is used to set the path where logfiles of the testruns will be stored."
+      ANSIBLE_REMOTE_TEMP:
+        type: "path"
+        required: false
+        default: "/chia_temp1/.ansible/tmp"
+        description: "Parameter is used to define the staging directory for downloaded files using ansible."

@@ -1,0 +1,7 @@
+---
+argument_specs:
+  # roles/install_os_package/tasks/main.yml entry point
+  main:
+    short_description: The main entry point for the install_os_package role.
+    description: Install all prequisite os packages.
+    author: neurosis

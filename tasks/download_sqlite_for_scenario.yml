@@ -1,0 +1,13 @@
+---
+- name: "Check if unpacked sqlite db file for scenario {{ SCENARIO }} already exists"
+  register: db_backup_already_unpacked
+  ansible.builtin.stat:
+    path: "{{ BLOCKCHAIN_DB_PATH }}/{{ DB_BACKUP }}"
+    get_checksum: no
+    get_mime: no
+- name: "Download and unpack sqlite db file for scenario {{ SCENARIO }}"
+  when: not db_backup_already_unpacked.stat.exists and SCENARIO != 'FULLSYNC'
+  ansible.builtin.unarchive:
+    src: "{{ DB_BACKUP_URL }}"
+    dest: "{{ BLOCKCHAIN_DB_PATH }}"
+    remote_src: yes

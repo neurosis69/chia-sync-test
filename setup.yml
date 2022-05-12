@@ -1,22 +1,16 @@
 ---
-- hosts: localhost
-  gather_facts: false
-  vars:
-    # Read Local configuration files
-    SYNCTEST_CONFIG: "{{ lookup('file', 'config/local_config.yml') | from_yaml }}"
+- hosts: all
+  gather_facts: true
+  vars_files:
+    - vars/chia.yml
+    - vars/ansible.yml
   pre_tasks:
-    - name: "Set facts for config"
-      ansible.builtin.set_fact:
-        CHIA_OS_USER: "{{ SYNCTEST_CONFIG.CHIA_OS_USER }}"
-        CHIA_OS_GROUP: "{{ SYNCTEST_CONFIG.CHIA_OS_GROUP }}"
-        ANSIBLE_REMOTE_TEMP: "{{ SYNCTEST_CONFIG.ANSIBLE_REMOTE_TEMP }}"
-        OS_USER_HOME: "{{ SYNCTEST_CONFIG.OS_USER_HOME }}"
-        ANSIBLE_HOME_PATH: "{{ SYNCTEST_CONFIG.ANSIBLE_HOME_PATH }}"
-        ANSIBLE_LOG_PATH: "{{ SYNCTEST_CONFIG.ANSIBLE_LOG_PATH }}" 
-    - name: "Create config directory"
+    - name: "Create chia-sync-test log directory"
       ansible.builtin.file:
-        path: "{{ ANSIBLE_HOME_PATH }}/config"
+        path: "{{ ANSIBLE_LOG_PATH }}"
         state: directory
-        mode: 0755
+        mode: '0700'
   roles:
-    - { role: setup_chia_sync_test }
+    - role: install_os_package
+    - role: setup_chia
+    - role: copy_sync_test_script

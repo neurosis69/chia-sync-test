@@ -9,8 +9,7 @@
     force: yes
 - name: "Install chia-blockchain"
   ansible.builtin.shell: |
-    sh install.sh 
-    . ./activate && chia init --fix-ssl-permissions
-  args: 
+    sh install.sh
+    . ./activate && chia init --fix-ssl-permissions && chia configure --log-level {{ CHIA_LOGGING | upper }}
+  args:
     chdir: "{{ CHIA_SW_PATH }}"
-  register: install_chia
