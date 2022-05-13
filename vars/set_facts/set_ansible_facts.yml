@@ -1,5 +1,5 @@
 ---
-- name: "Set Ansible Facts"
+- name:                     "Set Ansible Facts"
   ansible.builtin.set_fact:
-    ANSIBLE_HOME_PATH: "{{ ANSIBLE_HOME_PATH }}"
-    ANSIBLE_LOG_PATH: "{{ ANSIBLE_LOG_PATH }}"
+    ANSIBLE_HOME_PATH:      "{{ ANSIBLE_HOME_PATH }}"
+    ANSIBLE_LOG_PATH:       "{{ ANSIBLE_LOG_PATH }}"

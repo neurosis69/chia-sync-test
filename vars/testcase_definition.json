@@ -461,7 +461,7 @@
     "COIN_STORE_COIN_PARENT_INDEX": "",
     "COIN_STORE_COIN_LRU_CACHE": 30000000
   },
-    "AUTOTEST33": {
+  "AUTOTEST33": {
     "DESCRIPTION": "Only full blocks height + peak index; locking_mode=exclusive, synchronous=OFF, journal_mode=off, uncommited=true, increase coin_records lru cache * 500",
     "RUNID": "33AUTOTEST",
     "BLOCK_STORE_IS_FULLY_COMPACTIFIED_INDEX": "",

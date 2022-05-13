@@ -1,4 +1,4 @@
 ---
-- name: "Set Chia Facts"
+- name:                     "Set Chia Facts"
   ansible.builtin.set_fact:
-    SADC_BIN_PATH: "{{ SADC_BIN_PATH }}"
+    SADC_BIN_PATH:          "{{ SADC_BIN_PATH }}"

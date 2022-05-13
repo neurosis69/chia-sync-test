@@ -1,15 +1,15 @@
 ---
-- hosts: all
-  gather_facts: true
+- hosts:                    all
+  gather_facts:             true
   vars_files:
     - vars/chia.yml
     - vars/ansible.yml
   pre_tasks:
-    - name: "Create chia-sync-test log directory"
+    - name:                 "Create chia-sync-test log directory"
       ansible.builtin.file:
-        path: "{{ ANSIBLE_LOG_PATH }}"
-        state: directory
-        mode: '0700'
+        path:               "{{ ANSIBLE_LOG_PATH }}"
+        state:              directory
+        mode:               '0700'
   roles:
-    - role: install_os_package
-    - role: copy_sync_test_script
+    - role:                 install_os_package
+    - role:                 copy_sync_test_script

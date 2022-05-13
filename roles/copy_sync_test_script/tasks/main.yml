@@ -1,29 +1,29 @@
 ---
-- name: "Set defaults"
+- name:                       "Set defaults"
   module_defaults:
     ansible.builtin.template:
-      state: present
-      owner: "{{ CHIA_OS_USER }}"
-      group: "{{ CHIA_OS_GROUP }}"
-      mode: 0644
+      state:                  present
+      owner:                  "{{ CHIA_OS_USER }}"
+      group:                  "{{ CHIA_OS_GROUP }}"
+      mode:                   0644
     ansible.builtin.copy:
-      state: present
-      owner: "{{ CHIA_OS_USER }}"
-      group: "{{ CHIA_OS_GROUP }}"
-      mode: 0644
-- name: "Copy run_synctest.sh.j2 template to {{ ANSIBLE_HOME_PATH }}"
+      state:                  present
+      owner:                  "{{ CHIA_OS_USER }}"
+      group:                  "{{ CHIA_OS_GROUP }}"
+      mode:                   0644
+- name:                       "Copy run_synctest.sh.j2 template to {{ ANSIBLE_HOME_PATH }}"
   ansible.builtin.template:
-    src: "templates/run_synctest.sh.j2"
-    dest: "{{ ANSIBLE_HOME_PATH }}/run_synctest.sh"
-- name: "Copy testcase_definition.json to config path"
+    src:                      "templates/run_synctest.sh.j2"
+    dest:                     "{{ ANSIBLE_HOME_PATH }}/run_synctest.sh"
+- name:                       "Copy testcase_definition.json to config path"
   ansible.builtin.copy:
-    src: "files/testcase_definition.json"
-    dest: "{{ ANSIBLE_HOME_PATH }}/config"
-- name: "Copy active_testcases.json to config path"
+    src:                      "files/testcase_definition.json"
+    dest:                     "{{ ANSIBLE_HOME_PATH }}/config"
+- name:                       "Copy active_testcases.json to config path"
   ansible.builtin.copy:
-    src: "files/active_testcases.json"
-    dest: "{{ ANSIBLE_HOME_PATH }}/config"
-- name: "Copy active_scenario.yml to config path"
+    src:                      "files/active_testcases.json"
+    dest:                     "{{ ANSIBLE_HOME_PATH }}/config"
+- name:                       "Copy active_scenario.yml to config path"
   ansible.builtin.copy:
-    src: "files/active_scenario.yml"
-    dest: "{{ ANSIBLE_HOME_PATH }}/config"
+    src:                      "files/active_scenario.yml"
+    dest:                     "{{ ANSIBLE_HOME_PATH }}/config"

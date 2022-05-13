@@ -1,24 +1,24 @@
 ---
-- name: "Create Log Directories"
+- name:                       "Create Log Directories"
   ansible.builtin.file:
-    path: "{{ item }}"
-    state: directory
+    path:                     "{{ item }}"
+    state:                    directory
   with_items:
     - "{{ ANSIBLE_LOG_PATH }}"
     - "{{ ANSIBLE_LOG_FILE_PATH }}"
     - "{{ ANSIBLE_LOG_SA_PATH }}"
     - "{{ ANSIBLE_LOG_CHIA_PATH }}"
-- name: "Cleanup old link to log directory"
+- name:                       "Cleanup old link to log directory"
   ansible.builtin.file:
-    path: "{{ ANSIBLE_LOG_PATH }}/current"
-    state: absent
-- name: "Create Link to current log directory"
+    path:                     "{{ ANSIBLE_LOG_PATH }}/current"
+    state:                    absent
+- name:                       "Create Link to current log directory"
   ansible.builtin.file:
-    src: "{{ ANSIBLE_LOG_FILE_PATH }}"
-    dest: "{{ ANSIBLE_LOG_PATH }}/current"
-    state: link
-- name: "Write logfile header"
+    src:                      "{{ ANSIBLE_LOG_FILE_PATH }}"
+    dest:                     "{{ ANSIBLE_LOG_PATH }}/current"
+    state:                    link
+- name:                       "Write logfile header"
   ansible.builtin.lineinfile:
-    path: "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
-    line: "HOSTNAME,SCENARIO,TESTCASE,START_RUN,LOG_INITIATE_SYNC,LOG_START_SYNC,LOG_DUST_START_SYNC,LOG_DUST_STOP_SYNC,SQLITE_DB_SIZE_BYTES,DESCRIPTION"
-    create: yes
+    path:                     "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
+    line:                     "HOSTNAME,SCENARIO,TESTCASE,START_RUN,LOG_INITIATE_SYNC,LOG_START_SYNC,LOG_DUST_START_SYNC,LOG_DUST_STOP_SYNC,SQLITE_DB_SIZE_BYTES,DESCRIPTION"
+    create:                   yes

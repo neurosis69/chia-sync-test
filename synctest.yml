@@ -1,39 +1,39 @@
 ---
-- hosts: all
-  gather_facts: true
+- hosts:                     all
+  gather_facts:              true
   vars_files:
     - vars/active_scenario.yml
     - vars/OS/{{ ansible_facts.os_family }}.yml
   vars:
     # Read Local configuration files
-    TESTCASES: "{{ lookup('file', 'vars/active_testcases.json') | from_json }}"
-    BENCHMARK_CONFIG: "{{ lookup('file', 'vars/testcase_definition.json') | from_json }}"
+    TESTCASES:               "{{ lookup('file', 'vars/active_testcases.json') | from_json }}"
+    BENCHMARK_CONFIG:        "{{ lookup('file', 'vars/testcase_definition.json') | from_json }}"
   vars_prompt:
-    - import_tasks: vars/passwd_prompt.yml
+    - import_tasks:          vars/passwd_prompt.yml
   pre_tasks:
-    - name: "Fail if no confirmation was given"
-      when: "confirmation|lower != 'yes'"
+    - name:                  "Fail if no confirmation was given"
+      when:                  "confirmation|lower != 'yes'"
       fail:
-        msg: "No confirmation given ... aborting."
-    - name: "Get timestamp for execution"
-      register: timestamp_started
+        msg:                 "No confirmation given ... aborting."
+    - name:                  "Get timestamp for execution"
+      register:              timestamp_started
       ansible.builtin.shell: |
         date +%Y-%m-%d_%H:%M:%S
-    - name: "Set ansible facts"
-      import_tasks: vars/set_facts/set_ansible_facts.yml
-    - name: "Set chia facts"
-      import_tasks: vars/set_facts/set_chia_facts.yml
-    - name: "Set os facts"
-      import_tasks: vars/set_facts/set_os_facts.yml
-    - name: "Set testrun facts"
-      import_tasks: vars/set_facts/set_testrun_facts.yml
-    - name: "Do testrun preparation, create directories, ..."
-      import_tasks: tasks/prepare_for_testrun.yml
-    - name: "Download sqlite file for scenario"
-      import_tasks: tasks/download_sqlite_for_scenario.yml
+    - name:                  "Set ansible facts"
+      import_tasks:          vars/set_facts/set_ansible_facts.yml
+    - name:                  "Set chia facts"
+      import_tasks:          vars/set_facts/set_chia_facts.yml
+    - name:                  "Set os facts"
+      import_tasks:          vars/set_facts/set_os_facts.yml
+    - name:                  "Set testrun facts"
+      import_tasks:          vars/set_facts/set_testrun_facts.yml
+    - name:                  "Do testrun preparation, create directories, ..."
+      import_tasks:          tasks/prepare_for_testrun.yml
+    - name:                  "Download sqlite file for scenario"
+      import_tasks:          tasks/download_sqlite_for_scenario.yml
   roles:
     # Add get device from blockchain, dir is known, use lsblk
     # Get smartinfo
     # Add write smart info out
-    - role: setup_chia
-    - role: run_sync_tests_for_active_testcases
+    - role:                  setup_chia
+    - role:                  run_sync_tests_for_active_testcases

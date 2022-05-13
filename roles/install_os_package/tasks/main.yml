@@ -1,12 +1,12 @@
 ---
-- name: "Set defaults"
+- name:                      "Set defaults"
   module_defaults:
-    become: yes
-    become_user: root
-    become_method: sudo
+    become:                  yes
+    become_user:             root
+    become_method:           sudo
     ansible.builtin.package:
-      state: present
-- name: "Install generic packages"
-  import_file: install_generic.yml
-- name: "Install os-dependent packages"
-  import_file: "install_{{ ansible_facts.os_family }}.yml"
+      state:                 present
+- name:                      "Install generic packages"
+  import_file:               generic.yml
+- name:                      "Install os-dependent packages"
+  import_file:               "{{ ansible_facts.os_family }}.yml"

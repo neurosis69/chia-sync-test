@@ -1,10 +1,10 @@
 ---
-- name: ansible_become_pass
-  prompt: "Enter sudo password"
+- name:    ansible_become_pass
+  prompt:  "Enter sudo password"
   confirm: yes
   private: yes
-- name: confirmation
-  prompt: |
+- name:    confirmation
+  prompt:  |
     |||||||||||||||||||||||||||||||||||||||||||||||||||||
     This script will
       - Stop all chia processes of user "{{ SYNCTEST_CONFIG.CHIA_OS_GROUP }}"

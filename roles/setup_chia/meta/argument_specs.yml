@@ -3,29 +3,29 @@ argument_specs:
   # roles/setup_chia/tasks/main.yml entry point
   main:
     short_description: The main entry point for the setup_chia role.
-    description: Clone given chia branch and run install.
-    author: neurosis
+    description:       Clone given chia branch and run install.
+    author:            neurosis
     options:
       CHIA_GIT_REPO:
-        type: "str"
-        required: false
-        default: "https://github.com/Chia-Network/chia-blockchain.git"
-        description: "Chia repo path to clone from."
+        type:          "str"
+        required:      false
+        default:       "https://github.com/Chia-Network/chia-blockchain.git"
+        description:   "Chia repo path to clone from."
       CHIA_BRANCH:
-        type: "str"
-        required: false
-        default: "latest"
-        description: "Branch that will be cloned."
+        type:          "str"
+        required:      false
+        default:       "latest"
+        description:   "Branch that will be cloned."
       CHIA_SW_PATH:
-        type: "path"
-        required: false
-        default: "/home/chia/chia-blockchain"
-        description: "Target destination where to save the clone."
+        type:          "path"
+        required:      false
+        default:       "/home/chia/chia-blockchain"
+        description:   "Target destination where to save the clone."
       CHIA_LOGGING:
-        type: "str"
-        required: false
-        default: "info"
-        description: "Chia log level to set by default."
+        type:          "str"
+        required:      false
+        default:       "info"
+        description:   "Chia log level to set by default."
         choices:
           - info
           - critical
