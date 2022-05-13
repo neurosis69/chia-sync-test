@@ -32,5 +32,8 @@
     - name: "Download sqlite file for scenario"
       import_tasks: tasks/download_sqlite_for_scenario.yml
   roles:
-    - { role: setup_chia }
-    - { role: run_sync_tests_for_active_testcases }
+    # Add get device from blockchain, dir is known, use lsblk
+    # Get smartinfo
+    # Add write smart info out
+    - role: setup_chia
+    - role: run_sync_tests_for_active_testcases

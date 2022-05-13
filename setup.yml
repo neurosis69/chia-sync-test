@@ -12,5 +12,4 @@
         mode: '0700'
   roles:
     - role: install_os_package
-    - role: setup_chia
     - role: copy_sync_test_script
