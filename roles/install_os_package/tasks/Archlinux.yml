@@ -1,5 +1,8 @@
 ---
 - name:                    "Install packages"
+  become:                  yes
+  become_user:             root
+  become_method:           sudo
   ansible.builtin.package:
     name:
       - bind

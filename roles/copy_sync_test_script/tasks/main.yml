@@ -1,16 +1,4 @@
 ---
-- name:                       "Set defaults"
-  module_defaults:
-    ansible.builtin.template:
-      state:                  present
-      owner:                  "{{ CHIA_OS_USER }}"
-      group:                  "{{ CHIA_OS_GROUP }}"
-      mode:                   0644
-    ansible.builtin.copy:
-      state:                  present
-      owner:                  "{{ CHIA_OS_USER }}"
-      group:                  "{{ CHIA_OS_GROUP }}"
-      mode:                   0644
 - name:                       "Copy run_synctest.sh.j2 template to {{ ANSIBLE_HOME_PATH }}"
   ansible.builtin.template:
     src:                      "templates/run_synctest.sh.j2"

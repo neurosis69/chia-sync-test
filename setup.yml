@@ -4,6 +4,19 @@
   vars_files:
     - vars/chia.yml
     - vars/ansible.yml
+  module_defaults:
+    ansible.builtin.package:
+      state:                 present
+    ansible.builtin.template:
+      state:                  present
+      owner:                  "{{ CHIA_OS_USER }}"
+      group:                  "{{ CHIA_OS_GROUP }}"
+      mode:                   0644
+    ansible.builtin.copy:
+      state:                  present
+      owner:                  "{{ CHIA_OS_USER }}"
+      group:                  "{{ CHIA_OS_GROUP }}"
+      mode:                   0644
   pre_tasks:
     - name:                 "Create chia-sync-test log directory"
       ansible.builtin.file:
