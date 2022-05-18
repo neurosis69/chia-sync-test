@@ -1,0 +1,12 @@
+---
+argument_specs:
+  # roles/setup_chia/tasks/main.yml entry point
+  main:
+    short_description: The main entry point for the loop_over_testcases role.
+    description:       Helper role to loop over given testcases.
+    author:            neurosis
+    options:
+      ACTIVE_TESTCASES:
+        type:          "json"
+        required:      true
+        description:   "All active testcases stored in a JSON Array "

@@ -52,47 +52,58 @@
   },
   "DEFAULT": {
     "DESCRIPTION": "Main branch, no changes",
-    "CHIA_BRANCH": "main"
+    "CHIA_BRANCH": "main",
+    "CHANGE_PAGE_SIZE": false
   },
   "AUTOTEST1": {
     "DESCRIPTION": "Call _set_spent only if block has removals",
-    "CHIA_BRANCH": "main_scenario1"
+    "CHIA_BRANCH": "main_scenario1",
+    "CHANGE_PAGE_SIZE": false
   },
   "AUTOTEST2": {
     "DESCRIPTION": "Set pragma synchronous=off",
-    "CHIA_BRANCH": "main_scenario2"
+    "CHIA_BRANCH": "main_scenario2",
+    "CHANGE_PAGE_SIZE": false
   },
   "AUTOTEST3": {
     "DESCRIPTION": "Set pragma journal_mode=off",
-    "CHIA_BRANCH": "main_scenario3"
+    "CHIA_BRANCH": "main_scenario3",
+    "CHANGE_PAGE_SIZE": false
   },
   "AUTOTEST4": {
     "DESCRIPTION": "Drop all indexes except for height and main_chain on full_blocks",
-    "CHIA_BRANCH": "main_scenario4"
+    "CHIA_BRANCH": "main_scenario4",
+    "CHANGE_PAGE_SIZE": false
   },
   "AUTOTEST5": {
     "DESCRIPTION": "Increase SQLITE_MAX_VARIABLE_NUMBER limit from 900/999 to 32700",
-    "CHIA_BRANCH": "main_scenario5"
+    "CHIA_BRANCH": "main_scenario5",
+    "CHANGE_PAGE_SIZE": false
   },
   "AUTOTEST6": {
     "DESCRIPTION": "Use one update statement in _set_spent instead of _many_",
-    "CHIA_BRANCH": "main_scenario6"
+    "CHIA_BRANCH": "main_scenario6",
+    "CHANGE_PAGE_SIZE": false
   },
   "AUTOTEST7": {
     "DESCRIPTION": "Use mmap_size of 2G",
-    "CHIA_BRANCH": "main_scenario7"
+    "CHIA_BRANCH": "main_scenario7",
+    "CHANGE_PAGE_SIZE": false
   },
   "AUTOTEST8": {
     "DESCRIPTION": "Use cache_size of 500M",
-    "CHIA_BRANCH": "main_scenario8"
+    "CHIA_BRANCH": "main_scenario8",
+    "CHANGE_PAGE_SIZE": false
   },
   "AUTOTEST9": {
     "DESCRIPTION": "Use page_size=8k for synctest",
-    "CHIA_BRANCH": "main"
+    "CHIA_BRANCH": "main",
+    "CHANGE_PAGE_SIZE": true
   },
   "AUTOTEST10": {
     "DESCRIPTION": "Use page_size=16k for synctest",
-    "CHIA_BRANCH": "main"
+    "CHIA_BRANCH": "main",
+    "CHANGE_PAGE_SIZE": true
   },
   "AUTOTEST0": {
     "DESCRIPTION": "Combination",

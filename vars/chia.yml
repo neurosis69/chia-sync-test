@@ -4,7 +4,7 @@ CHIA_GIT_REPO: "https://github.com/Chia-Network/chia-blockchain.git"
 CHIA_BRANCH: "latest"
 
 # Define db parameter
-BLOCKCHAIN_DB_PATH: "/chia_temp1"
+BLOCKCHAIN_DB_PATH: "/home/chia/.chia/mainnet/db"
 BLOCKCHAIN_DB_NAME: "blockchain_v1_mainnet.sqlite"
 
 # Set chia basic parameter

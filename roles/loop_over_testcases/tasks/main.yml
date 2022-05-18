@@ -1,0 +1,8 @@
+---
+- name:                         Execute sync tests for all activated testcases
+  ansible.builtin.include_role:
+    name:                       run_testcase
+  loop:                         "{{ ACTIVE_TESTCASES }}"
+  loop_control:
+    loop_var:                   TESTCASE
+    extended:                   yes

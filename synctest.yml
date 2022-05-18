@@ -1,5 +1,5 @@
 ---
-- hosts:                     all
+- hosts:                     192.168.1.166
   gather_facts:              true
   vars_files:
     - vars/active_scenario.yml
@@ -35,5 +35,4 @@
     # Add get device from blockchain, dir is known, use lsblk
     # Get smartinfo
     # Add write smart info out
-    - role:                  setup_chia
-    - role:                  run_sync_tests_for_active_testcases
+    - role:                  loop_over_testcases

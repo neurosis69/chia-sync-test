@@ -1,34 +1,7 @@
 ---
-- name: "Set Runtime (Testcase) Variables as fact"
-  ansible.builtin.set_fact:
-    ANSIBLE_SA_FILE_NAME: "{{ ansible_hostname }}_{{ ansible_date_time.epoch }}_{{ TESTCASE }}"
-    DESCRIPTION: "{{ BENCHMARK_CONFIG[TESTCASE].DESCRIPTION | default(BENCHMARK_CONFIG.DEFAULT.DESCRIPTION) }}"
-    BLOCKCHAIN_CONSENSUS_THREADS: "{{ BENCHMARK_CONFIG[TESTCASE].BLOCKCHAIN_CONSENSUS_THREADS | default(BENCHMARK_CONFIG.DEFAULT.BLOCKCHAIN_CONSENSUS_THREADS) }}"
-    BLOCK_STORE_FULL_BLOCK_HEIGHT_INDEX: "{{ BENCHMARK_CONFIG[TESTCASE].BLOCK_STORE_FULL_BLOCK_HEIGHT_INDEX | default(BENCHMARK_CONFIG.DEFAULT.BLOCK_STORE_FULL_BLOCK_HEIGHT_INDEX) }}"
-    BLOCK_STORE_IS_FULLY_COMPACTIFIED_INDEX: "{{ BENCHMARK_CONFIG[TESTCASE].BLOCK_STORE_IS_FULLY_COMPACTIFIED_INDEX | default(BENCHMARK_CONFIG.DEFAULT.BLOCK_STORE_IS_FULLY_COMPACTIFIED_INDEX) }}"
-    BLOCK_STORE_HEIGHT_INDEX: "{{ BENCHMARK_CONFIG[TESTCASE].BLOCK_STORE_HEIGHT_INDEX | default(BENCHMARK_CONFIG.DEFAULT.BLOCK_STORE_HEIGHT_INDEX) }}"
-    BLOCK_STORE_HH_INDEX: "{{ BENCHMARK_CONFIG[TESTCASE].BLOCK_STORE_HH_INDEX | default(BENCHMARK_CONFIG.DEFAULT.BLOCK_STORE_HH_INDEX) }}"
-    BLOCK_STORE_PEAK_INDEX: "{{ BENCHMARK_CONFIG[TESTCASE].BLOCK_STORE_PEAK_INDEX | default(BENCHMARK_CONFIG.DEFAULT.BLOCK_STORE_PEAK_INDEX) }}"
-    BLOCK_STORE_BLOCK_LRU_CACHE: "{{ BENCHMARK_CONFIG[TESTCASE].BLOCK_STORE_BLOCK_LRU_CACHE | default(BENCHMARK_CONFIG.DEFAULT.BLOCK_STORE_BLOCK_LRU_CACHE) }}"
-    BLOCK_STORE_SES_CHALLENGE_LRU_CACHE: "{{ BENCHMARK_CONFIG[TESTCASE].BLOCK_STORE_SES_CHALLENGE_LRU_CACHE | default(BENCHMARK_CONFIG.DEFAULT.BLOCK_STORE_SES_CHALLENGE_LRU_CACHE) }}"
-    COIN_STORE_COIN_CONFIRMED_INDEX: "{{ BENCHMARK_CONFIG[TESTCASE].COIN_STORE_COIN_CONFIRMED_INDEX | default (BENCHMARK_CONFIG.DEFAULT.COIN_STORE_COIN_CONFIRMED_INDEX) }}"
-    COIN_STORE_COIN_SPENT_INDEX: "{{ BENCHMARK_CONFIG[TESTCASE].COIN_STORE_COIN_SPENT_INDEX | default(BENCHMARK_CONFIG.DEFAULT.COIN_STORE_COIN_SPENT_INDEX) }}"
-    COIN_STORE_COIN_PUZZLE_HASH_INDEX: "{{ BENCHMARK_CONFIG[TESTCASE].COIN_STORE_COIN_PUZZLE_HASH_INDEX | default(BENCHMARK_CONFIG.DEFAULT.COIN_STORE_COIN_PUZZLE_HASH_INDEX) }}"
-    COIN_STORE_COIN_PARENT_INDEX: "{{ BENCHMARK_CONFIG[TESTCASE].COIN_STORE_COIN_PARENT_INDEX | default(BENCHMARK_CONFIG.DEFAULT.COIN_STORE_COIN_PARENT_INDEX) }}"
-    COIN_STORE_COIN_LRU_CACHE: "{{ BENCHMARK_CONFIG[TESTCASE].COIN_STORE_COIN_LRU_CACHE | default(BENCHMARK_CONFIG.DEFAULT.COIN_STORE_COIN_LRU_CACHE) }}"
-    MEMPOOL_MANAGER_THREADS: "{{ BENCHMARK_CONFIG[TESTCASE].MEMPOOL_MANAGER_THREADS | default(BENCHMARK_CONFIG.DEFAULT.MEMPOOL_MANAGER_THREADS) }}"
-    MEMPOOL_MANAGER_LRU_CACHE: "{{ BENCHMARK_CONFIG[TESTCASE].MEMPOOL_MANAGER_LRU_CACHE | default(BENCHMARK_CONFIG.DEFAULT.MEMPOOL_MANAGER_LRU_CACHE) }}"
-    FULL_NODE_SQLITE_PRAGMA_JOURNAL_MODE: "{{ BENCHMARK_CONFIG[TESTCASE].FULL_NODE_SQLITE_PRAGMA_JOURNAL_MODE | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_JOURNAL_MODE) }}"
-    FULL_NODE_SQLITE_PRAGMA_LOCKING_MODE: "{{ BENCHMARK_CONFIG[TESTCASE].FULL_NODE_SQLITE_PRAGMA_LOCKING_MODE | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_LOCKING_MODE) }}"
-    FULL_NODE_SQLITE_PRAGMA_CACHE_SPILL: "{{ BENCHMARK_CONFIG[TESTCASE].FULL_NODE_SQLITE_PRAGMA_CACHE_SPILL | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_CACHE_SPILL) }}"
-    FULL_NODE_SQLITE_PRAGMA_PAGE_SIZE: "{{ BENCHMARK_CONFIG[TESTCASE].FULL_NODE_SQLITE_PRAGMA_PAGE_SIZE | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_PAGE_SIZE) }}"
-    FULL_NODE_SQLITE_PRAGMA_SYNCHRONOUS: "{{ BENCHMARK_CONFIG[TESTCASE].FULL_NODE_SQLITE_PRAGMA_SYNCHRONOUS | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_SYNCHRONOUS) }}"
-    FULL_NODE_SQLITE_PRAGMA_MMAP_SIZE: "{{ BENCHMARK_CONFIG[TESTCASE].FULL_NODE_SQLITE_PRAGMA_MMAP_SIZE | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_MMAP_SIZE) }}"
-    FULL_NODE_SQLITE_PRAGMA_CACHE_SIZE: "{{ BENCHMARK_CONFIG[TESTCASE].FULL_NODE_SQLITE_PRAGMA_CACHE_SIZE | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_CACHE_SIZE) }}"
-    FULL_NODE_SQLITE_PRAGMA_UNCOMMITTED: "{{ BENCHMARK_CONFIG[TESTCASE].FULL_NODE_SQLITE_PRAGMA_UNCOMMITTED | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_UNCOMMITTED) }}"
-    FULL_NODE_SQLITE_PRAGMA_WAL_CHECKPOINT: "{{ BENCHMARK_CONFIG[TESTCASE].FULL_NODE_SQLITE_PRAGMA_WAL_CHECKPOINT | default(BENCHMARK_CONFIG.DEFAULT.FULL_NODE_SQLITE_PRAGMA_WAL_CHECKPOINT) }}"
-    PAGE_SIZE: "{{ BENCHMARK_CONFIG[TESTCASE].PAGE_SIZE | default(BENCHMARK_CONFIG.DEFAULT.PAGE_SIZE) }}"
-    AUTO_VACUUM: "{{ BENCHMARK_CONFIG[TESTCASE].AUTO_VACUUM | default(BENCHMARK_CONFIG.DEFAULT.AUTO_VACUUM) }}"
+- name:                  "Set ansible facts"
+  import_tasks:          vars/set_facts/set_facts_for_testcase.yml
+# Write header for logfile
 - name: "Test {{ TESTCASE }} start: {{ DESCRIPTION }}"
   ansible.builtin.lineinfile:
     path: "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
@@ -56,55 +29,14 @@
     - "{{ BLOCKCHAIN_DB_PATH }}/{{ BLOCKCHAIN_DB_NAME }}-wal"
     - "{{ BLOCKCHAIN_DB_PATH }}/{{ BLOCKCHAIN_DB_NAME }}-journal"
 - name: "Copy extracted sqlite db file {{ DB_BACKUP }} to {{ BLOCKCHAIN_DB_NAME }}"
-  ansible.builtin.command: "cp {{ BLOCKCHAIN_DB_PATH }}/{{ DB_BACKUP }} {{ BLOCKCHAIN_DB_PATH }}/{{ BLOCKCHAIN_DB_NAME }}"
   when: SCENARIO != 'FULLSYNC'
-- name: "Change page_size if variable FULL_NODE_SQLITE_PRAGMA_PAGE_SIZE is not empty"
+  ansible.builtin.command: "cp {{ BLOCKCHAIN_DB_PATH }}/{{ DB_BACKUP }} {{ BLOCKCHAIN_DB_PATH }}/{{ BLOCKCHAIN_DB_NAME }}"
+- name: "Change page_size if CHANGE_PAGE_SIZE is true"
+  when: CHANGE_PAGE_SIZE
   ansible.builtin.import_role:
     name: change_sqlite_page_size
-  when: FULL_NODE_SQLITE_PRAGMA_PAGE_SIZE != ""
-- name: "Change auto_vacuum if variable AUTO_VACUUM is not empty"
-  ansible.builtin.import_role:
-    name:  change_sqlite_auto_vacuum
-  when: AUTO_VACUUM != ""
-- name: "Change file in {{ CHIA_SW_PATH}}/chia/cmds to remove newline in chia show"
-  ansible.builtin.copy:
-    src: "files/{{ CHIA_BRANCH }}/cmds/{{ item }}"
-    dest: "{{ CHIA_SW_PATH }}/chia/cmds/{{ item }}"
-    owner: "{{ CHIA_OS_USER }}"
-    group: "{{ CHIA_OS_GROUP }}"
-    mode: 0644
-  with_items:
-    - "show.py"
-- name: "Change files from {{ CHIA_SW_PATH }}/chia/util to match testcase {{ TESTCASE }}"
-  ansible.builtin.template:
-    src: "templates/{{ CHIA_BRANCH }}/util/{{ item }}.j2"
-    dest: "{{ CHIA_SW_PATH }}/chia/util/{{ item }}"
-    owner: "{{ CHIA_OS_USER }}"
-    group: "{{ CHIA_OS_GROUP }}"
-    mode: 0644
-  with_items:
-    - "chia_logging.py"
-- name: "Change files from {{ CHIA_SW_PATH }}/chia/consensus to match testcase {{ TESTCASE }}"
-  ansible.builtin.template:
-    src: "templates/{{ CHIA_BRANCH }}/consensus/{{ item }}.j2"
-    dest: "{{ CHIA_SW_PATH }}/chia/consensus/{{ item }}"
-    owner: "{{ CHIA_OS_USER }}"
-    group: "{{ CHIA_OS_GROUP }}"
-    mode: 0644
-  with_items:
-    - "blockchain.py"
-- name: "Change files from {{ CHIA_SW_PATH }}/chia/full_node to match testcase {{ TESTCASE }}"
-  ansible.builtin.template:
-    src: "templates/{{ CHIA_BRANCH }}/full_node/{{ item }}.j2"
-    dest: "{{ CHIA_SW_PATH }}/chia/full_node/{{ item }}"
-    owner: "{{ CHIA_OS_USER }}"
-    group: "{{ CHIA_OS_GROUP }}"
-    mode: 0644
-  with_items:
-    - "block_store.py"
-    - "coin_store.py"
-    - "full_node.py"
-    - "mempool_manager.py"
+- name: "Setup chia using branch for given testcase"
+  include_role:                  setup_chia
 - name: "Clear FS Caches to get comparable runtimes"
   become: yes
   become_user: root
@@ -136,7 +68,7 @@
   async: 86400
   poll: 0
   ansible.builtin.shell: |
-    . {{ CHIA_SW_PATH }}/activate 
+    . {{ CHIA_SW_PATH }}/activate
     # get peak from sync_start
     PEAK=`chia show -s | head -1 | awk -F '[/.]' '{print $2}'`
     # Run as long as the sadc process is active
@@ -144,7 +76,7 @@
     do
       # Actively connect to peers until 15 peers with height >= the peak we are syncing to are reached
       while [[ `chia show -c | grep FULL_NODE | awk -v IS_PEAK="$PEAK" '$11 >= IS_PEAK {print "count_me"}' | wc -l` -lt 15 ]] && [[ `ps -eo pid,cmd | grep {{ ANSIBLE_SA_FILE_NAME }}.{{ ansible_loop.index }}.[s]a.data | wc -l` -ne 0 ]]
-      do 
+      do
         dig +short a dns-introducer.chia.net @one.one.one.one | head -15 | xargs -i chia show -a \{}:8444
       done
       sleep 60
