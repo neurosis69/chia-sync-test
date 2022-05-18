@@ -1,5 +1,15 @@
 {
   "ACTIVE_TESTCASES": [
-    "AUTOTEST45"
+    "DEFAULT",
+    "AUTOTEST1",
+    "AUTOTEST2",
+    "AUTOTEST3",
+    "AUTOTEST4",
+    "AUTOTEST5",
+    "AUTOTEST6",
+    "AUTOTEST7",
+    "AUTOTEST8",
+    "AUTOTEST9",
+    "AUTOTEST10"
   ]
 }
