@@ -1,5 +1,5 @@
 ---
 - name:                      "Install generic packages"
-  import_file:               generic.yml
+  include_tasks:               generic.yml
 - name:                      "Install os-dependent packages"
-  import_file:               "{{ ansible_facts.os_family }}.yml"
+  include_tasks:               "{{ ansible_facts.os_family }}.yml"
