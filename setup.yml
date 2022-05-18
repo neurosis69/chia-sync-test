@@ -8,7 +8,6 @@
     ansible.builtin.package:
       state:                 present
     ansible.builtin.template:
-      state:                  present
       owner:                  "{{ CHIA_OS_USER }}"
       group:                  "{{ CHIA_OS_GROUP }}"
       mode:                   0644
