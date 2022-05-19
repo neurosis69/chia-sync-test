@@ -50,6 +50,10 @@
     regexp: "^({{ ansible_hostname }},{{ SCENARIO }},{{ TESTCASE }}.*)$"
     line: "\\1,{{ lookup('pipe', 'date +%Y-%m-%dT%H:%M:%S') }}"
     backrefs: yes
+- name: "Truncate debug.log"
+  ansible.builtin.file: 
+    path: "{{ OS_USER_HOME }}/.chia/mainnet/log/debug.log"
+    state: absent
 - name: "Start chia full node"
   ansible.builtin.shell: |
     . {{ CHIA_SW_PATH }}/activate && chia start node
