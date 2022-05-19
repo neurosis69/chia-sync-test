@@ -65,12 +65,12 @@
 - name: "Set fact for tail"
   ansible.builtin.set_fact:
     debug_log_since_test_start: "{{ tail_debug_log.stdout }}"
-# Use huge timeout so even on slow machines like RPi missing indexes can be created
+# Use long timeout so even on slow machines like RPi missing indexes can be created
 - name: "Wait for chia node on port 8444"
   ansible.builtin.wait_for:
     port: 8444
     delay: 15
-    timeout: 7200
+    timeout: 1800
     state: started
 - name: "Actively connect to random peers until a minimum of 15 connections is reached"
   async: 86400
