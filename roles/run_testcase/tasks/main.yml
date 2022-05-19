@@ -36,7 +36,8 @@
   ansible.builtin.import_role:
     name: change_sqlite_page_size
 - name: "Setup chia using branch for given testcase"
-  include_role:                  setup_chia
+  include_role:
+    name: setup_chia
 - name: "Clear FS Caches to get comparable runtimes"
   become: yes
   become_user: root
