@@ -1,7 +1,7 @@
 ---
 # Define version to test
 CHIA_GIT_REPO: "https://github.com/Chia-Network/chia-blockchain.git"
-CHIA_BRANCH: "latest"
+CHIA_BRANCH: "main"
 
 # Define db parameter
 BLOCKCHAIN_DB_PATH: "/home/chia/.chia/mainnet/db"

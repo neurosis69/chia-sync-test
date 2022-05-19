@@ -68,7 +68,8 @@
 - name: "Wait for chia node on port 8444"
   ansible.builtin.wait_for:
     port: 8444
-    delay: 10
+    delay: 15
+    timeout: 600
     state: started
 - name: "Actively connect to random peers until a minimum of 15 connections is reached"
   async: 86400
