@@ -106,7 +106,7 @@
     do
       sleep 10
     done
-    echo $(echo $(echo $(chia show -s|grep "Current Blockchain Status" | awk -F '[/.(]' '{print $2}'')-400 | bc)/32|bc)*32|bc
+    echo $(echo $(echo $(chia show -s|grep "Current Blockchain Status" | awk -F '[/.(]' '{print $2}')-400 | bc)/32|bc)*32|bc
   register: long_sync_peak
   when: SCENARIO == 'FULLSYNC'
 - name: "Set facts if Scenario is FULLSYNC"

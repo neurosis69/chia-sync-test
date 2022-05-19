@@ -1,5 +1,5 @@
 ---
-- hosts:                     192.168.1.166
+- hosts:                     localhost
   gather_facts:              true
   vars_files:
     - vars/active_scenario.yml

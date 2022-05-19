@@ -1,6 +1,6 @@
 ---
 # Define version to test
-CHIA_GIT_REPO: "https://github.com/Chia-Network/chia-blockchain.git"
+CHIA_GIT_REPO: "https://github.com/neurosis69/chia-blockchain.git"
 CHIA_BRANCH: "main"
 
 # Define db parameter
