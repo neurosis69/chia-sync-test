@@ -53,6 +53,11 @@
 - name: "Start chia full node"
   ansible.builtin.shell: |
     . {{ CHIA_SW_PATH }}/activate && chia start node
+- name: "Create hard link to chia logfile"
+  ansible.builtin.file:
+    src: "{{ OS_USER_HOME }}/.chia/mainnet/log/debug.log"
+    dest: "{{ ANSIBLE_LOG_CHIA_PATH }}/{{ CHIA_LOG_FILE_NAME }}_{{ TESTCASE }}.{{ ansible_loop.index }}.log"
+    state: hard
 - name: "Tail chia logfile to prevent trigger wait_for for old log entries"
   ansible.builtin.shell: |
     tail -n 1 {{ ANSIBLE_LOG_CHIA_PATH }}/{{ CHIA_LOG_FILE_NAME }}_{{ TESTCASE }}.{{ ansible_loop.index }}.log
