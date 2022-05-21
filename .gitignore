@@ -1,5 +1,4 @@
 /run_synctest.sh
 log/**
-config/testcase_definition.json
-config/active_testcases.json
-config/active_scenario.yml
+vars/ansible.yml
+vars/chia.yml
