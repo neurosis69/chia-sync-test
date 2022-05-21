@@ -141,6 +141,12 @@
     "CHANGE_PAGE_SIZE": false,
     "PAGE_SIZE": 4096
   },
+  "AUTOTEST15": {
+    "DESCRIPTION": "Use SQLITE_MAX_EXPR_DEPTH=0",
+    "CHIA_BRANCH": "main_scenario15",
+    "CHANGE_PAGE_SIZE": false,
+    "PAGE_SIZE": 4096
+  },
   "AUTOTEST0": {
     "DESCRIPTION": "Combination",
     "CHIA_BRANCH": "main_scenario0"
