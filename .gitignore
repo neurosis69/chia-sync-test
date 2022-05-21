@@ -2,3 +2,4 @@
 log/**
 vars/ansible.yml
 vars/chia.yml
+vars/active_testcases.json
