@@ -147,6 +147,12 @@
     "CHANGE_PAGE_SIZE": false,
     "PAGE_SIZE": 4096
   },
+  "AUTOTEST15": {
+    "DESCRIPTION": "Use SQLITE_OMIT_PROGRESS_CALLBACK",
+    "CHIA_BRANCH": "main_scenario16",
+    "CHANGE_PAGE_SIZE": false,
+    "PAGE_SIZE": 4096
+  },
   "AUTOTEST0": {
     "DESCRIPTION": "Combination",
     "CHIA_BRANCH": "main_scenario0"
