@@ -129,6 +129,18 @@
     "CHANGE_PAGE_SIZE": false,
     "PAGE_SIZE": 4096
   },
+  "AUTOTEST13": {
+    "DESCRIPTION": "Disable SQLITE_DEFAULT_MEMSTATUS",
+    "CHIA_BRANCH": "main_scenario13",
+    "CHANGE_PAGE_SIZE": false,
+    "PAGE_SIZE": 4096
+  },
+  "AUTOTEST14": {
+    "DESCRIPTION": "Use SQLITE_LIKE_DOESNT_MATCH_BLOBS",
+    "CHIA_BRANCH": "main_scenario14",
+    "CHANGE_PAGE_SIZE": false,
+    "PAGE_SIZE": 4096
+  },
   "AUTOTEST0": {
     "DESCRIPTION": "Combination",
     "CHIA_BRANCH": "main_scenario0"
