@@ -6,4 +6,4 @@ ANSIBLE_CALLBACKS_ENABLED: "profile_roles"
 ANSIBLE_STDOUT_CALLBACK:   "debug"
 
 #Remote Temp is used to stage downloaded files
-ANSIBLE_REMOTE_TEMP:       "/home/chia/.ansible/tmp"
+ANSIBLE_REMOTE_TEMP:       "/ramdisk/.ansible/tmp"
