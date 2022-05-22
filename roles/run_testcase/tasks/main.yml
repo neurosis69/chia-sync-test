@@ -51,7 +51,7 @@
     line: "\\1,{{ lookup('pipe', 'date +%Y-%m-%dT%H:%M:%S') }}"
     backrefs: yes
 - name: "Truncate debug.log"
-  ansible.builtin.file: 
+  ansible.builtin.file:
     path: "{{ OS_USER_HOME }}/.chia/mainnet/log/debug.log"
     state: absent
 - name: "Start chia full node"
@@ -106,7 +106,7 @@
     backrefs: yes
 - name: "Get height for long sync (wait until reasonable peak is returned)"
   ansible.builtin.shell: |
-    while [[ `chia show -s|grep "Current Blockchain Status" | awk -F '[/.(]' '{print $2}'` -lt 1000000 ]]
+    while [[ `chia show -s|grep "Current Blockchain Status" | awk -F '[/.(]' '{print $2}'` -lt 1800000 ]]
     do
       sleep 10
     done
