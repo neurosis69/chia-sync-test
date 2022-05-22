@@ -106,6 +106,7 @@
     backrefs: yes
 - name: "Get height for long sync (wait until reasonable peak is returned)"
   ansible.builtin.shell: |
+    . {{ CHIA_SW_PATH }}/activate
     while [[ `chia show -s|grep "Current Blockchain Status" | awk -F '[/.(]' '{print $2}'` -lt 1800000 ]]
     do
       sleep 10
