@@ -43,7 +43,7 @@
   become_user: root
   become_method: sudo
   ansible.builtin.shell: |
-    sync; echo 1 > /proc/sys/vm/drop_caches
+    sync; echo 3 > /proc/sys/vm/drop_caches
 - name: "Write Log: {{ TESTCASE }} initiate sync"
   ansible.builtin.lineinfile:
     path: "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
