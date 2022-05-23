@@ -37,6 +37,7 @@
       "Description": "Sync database from scratch to current peak - 400 (default sync_blocks_behind_threshold + 100)",
       "DB_BACKUP_NAME": "",
       "DB_BACKUP_URL": "",
+      "DB_BACKUP_MD5SUM": "",
       "SYNC_START_HEIGHT": "0",
       "DUST_START_HEIGHT": "225696",
       "DUST_STOP_HEIGHT": ""
