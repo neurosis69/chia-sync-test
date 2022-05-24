@@ -62,9 +62,9 @@
     "CHANGE_PAGE_SIZE": false,
     "PAGE_SIZE": 4096
   },
-  "AUTOTEST1": {
-    "DESCRIPTION": "Call _set_spent only if block has removals",
-    "CHIA_BRANCH": "main_scenario1",
+  "AUTOTEST0": {
+    "DESCRIPTION": "Combination",
+    "CHIA_BRANCH": "main_scenario0",
     "CHANGE_PAGE_SIZE": false,
     "PAGE_SIZE": 4096
   },
@@ -98,81 +98,9 @@
     "CHANGE_PAGE_SIZE": false,
     "PAGE_SIZE": 4096
   },
-  "AUTOTEST7": {
-    "DESCRIPTION": "Use mmap_size of 2G",
-    "CHIA_BRANCH": "main_scenario7",
-    "CHANGE_PAGE_SIZE": false,
-    "PAGE_SIZE": 4096
-  },
   "AUTOTEST8": {
     "DESCRIPTION": "Use cache_size of 500M",
     "CHIA_BRANCH": "main_scenario8",
-    "CHANGE_PAGE_SIZE": false,
-    "PAGE_SIZE": 4096
-  },
-  "AUTOTEST9": {
-    "DESCRIPTION": "Use page_size=8k for synctest",
-    "CHIA_BRANCH": "main",
-    "CHANGE_PAGE_SIZE": true,
-    "PAGE_SIZE": 8192
-  },
-  "AUTOTEST10": {
-    "DESCRIPTION": "Use page_size=16k for synctest",
-    "CHIA_BRANCH": "main",
-    "CHANGE_PAGE_SIZE": true,
-    "PAGE_SIZE": 16384
-  },
-  "AUTOTEST11": {
-    "DESCRIPTION": "Use atomic commit compile option",
-    "CHIA_BRANCH": "main_scenario11",
-    "CHANGE_PAGE_SIZE": false,
-    "PAGE_SIZE": 4096
-  },
-  "AUTOTEST12": {
-    "DESCRIPTION": "Use SQLITE_DIRECT_OVERFLOW_READ",
-    "CHIA_BRANCH": "main_scenario12",
-    "CHANGE_PAGE_SIZE": false,
-    "PAGE_SIZE": 4096
-  },
-  "AUTOTEST13": {
-    "DESCRIPTION": "Disable SQLITE_DEFAULT_MEMSTATUS",
-    "CHIA_BRANCH": "main_scenario13",
-    "CHANGE_PAGE_SIZE": false,
-    "PAGE_SIZE": 4096
-  },
-  "AUTOTEST14": {
-    "DESCRIPTION": "Use SQLITE_LIKE_DOESNT_MATCH_BLOBS",
-    "CHIA_BRANCH": "main_scenario14",
-    "CHANGE_PAGE_SIZE": false,
-    "PAGE_SIZE": 4096
-  },
-  "AUTOTEST15": {
-    "DESCRIPTION": "Use SQLITE_MAX_EXPR_DEPTH=0",
-    "CHIA_BRANCH": "main_scenario15",
-    "CHANGE_PAGE_SIZE": false,
-    "PAGE_SIZE": 4096
-  },
-  "AUTOTEST16": {
-    "DESCRIPTION": "Use SQLITE_OMIT_PROGRESS_CALLBACK",
-    "CHIA_BRANCH": "main_scenario16",
-    "CHANGE_PAGE_SIZE": false,
-    "PAGE_SIZE": 4096
-  },
-  "AUTOTEST17": {
-    "DESCRIPTION": "Use SQLITE_OMIT_SHARED_CACHE",
-    "CHIA_BRANCH": "main_scenario17",
-    "CHANGE_PAGE_SIZE": false,
-    "PAGE_SIZE": 4096
-  },
-  "AUTOTEST18": {
-    "DESCRIPTION": "Use SQLITE_USE_ALLOCA",
-    "CHIA_BRANCH": "main_scenario18",
-    "CHANGE_PAGE_SIZE": false,
-    "PAGE_SIZE": 4096
-  },
-  "AUTOTEST19": {
-    "DESCRIPTION": "Use all sqlite compile options together",
-    "CHIA_BRANCH": "sqlite3_build",
     "CHANGE_PAGE_SIZE": false,
     "PAGE_SIZE": 4096
   },
@@ -183,14 +111,105 @@
     "PAGE_SIZE": 4096
   },
   "AUTOTEST21": {
-    "DESCRIPTION": "Use scenarios 1+2+3+4+5+6+8, but no compile option",
+    "DESCRIPTION": "Use scenarios 2+3+4+5+6+8, but no compile option",
     "CHIA_BRANCH": "main_scenario21",
     "CHANGE_PAGE_SIZE": false,
     "PAGE_SIZE": 4096
   },
-  "AUTOTEST0": {
-    "DESCRIPTION": "Combination",
-    "CHIA_BRANCH": "main_scenario0",
+  "AUTOTEST22": {
+    "DESCRIPTION": "Use scenarios 2+3+4, but no compile option",
+    "CHIA_BRANCH": "main_scenario21",
+    "CHANGE_PAGE_SIZE": false,
+    "PAGE_SIZE": 4096
+  },
+  "AUTOTEST1": {
+    "_comment": "PR merged, branch deleted",
+    "DESCRIPTION": "Call _set_spent only if block has removals",
+    "CHIA_BRANCH": "main_scenario1",
+    "CHANGE_PAGE_SIZE": false,
+    "PAGE_SIZE": 4096
+  },
+  "AUTOTEST7": {
+    "_comment": "no improvement, paused",
+    "DESCRIPTION": "Use mmap_size of 2G",
+    "CHIA_BRANCH": "main_scenario7",
+    "CHANGE_PAGE_SIZE": false,
+    "PAGE_SIZE": 4096
+  },
+  "AUTOTEST9": {
+    "_comment": "no improvement, paused",
+    "DESCRIPTION": "Use page_size=8k for synctest",
+    "CHIA_BRANCH": "main",
+    "CHANGE_PAGE_SIZE": true,
+    "PAGE_SIZE": 8192
+  },
+  "AUTOTEST10": {
+    "_comment": "no improvement, paused",
+    "DESCRIPTION": "Use page_size=16k for synctest",
+    "CHIA_BRANCH": "main",
+    "CHANGE_PAGE_SIZE": true,
+    "PAGE_SIZE": 16384
+  },
+  "AUTOTEST11": {
+    "_comment": "sqlite compile change, paused",
+    "DESCRIPTION": "Use atomic commit compile option",
+    "CHIA_BRANCH": "main_scenario11",
+    "CHANGE_PAGE_SIZE": false,
+    "PAGE_SIZE": 4096
+  },
+  "AUTOTEST12": {
+    "_comment": "sqlite compile change, paused",
+    "DESCRIPTION": "Use SQLITE_DIRECT_OVERFLOW_READ",
+    "CHIA_BRANCH": "main_scenario12",
+    "CHANGE_PAGE_SIZE": false,
+    "PAGE_SIZE": 4096
+  },
+  "AUTOTEST13": {
+    "_comment": "sqlite compile change, paused",
+    "DESCRIPTION": "Disable SQLITE_DEFAULT_MEMSTATUS",
+    "CHIA_BRANCH": "main_scenario13",
+    "CHANGE_PAGE_SIZE": false,
+    "PAGE_SIZE": 4096
+  },
+  "AUTOTEST14": {
+    "_comment": "sqlite compile change, paused",
+    "DESCRIPTION": "Use SQLITE_LIKE_DOESNT_MATCH_BLOBS",
+    "CHIA_BRANCH": "main_scenario14",
+    "CHANGE_PAGE_SIZE": false,
+    "PAGE_SIZE": 4096
+  },
+  "AUTOTEST15": {
+    "_comment": "sqlite compile change, paused",
+    "DESCRIPTION": "Use SQLITE_MAX_EXPR_DEPTH=0",
+    "CHIA_BRANCH": "main_scenario15",
+    "CHANGE_PAGE_SIZE": false,
+    "PAGE_SIZE": 4096
+  },
+  "AUTOTEST16": {
+    "_comment": "sqlite compile change, paused",
+    "DESCRIPTION": "Use SQLITE_OMIT_PROGRESS_CALLBACK",
+    "CHIA_BRANCH": "main_scenario16",
+    "CHANGE_PAGE_SIZE": false,
+    "PAGE_SIZE": 4096
+  },
+  "AUTOTEST17": {
+    "_comment": "sqlite compile change, paused",
+    "DESCRIPTION": "Use SQLITE_OMIT_SHARED_CACHE",
+    "CHIA_BRANCH": "main_scenario17",
+    "CHANGE_PAGE_SIZE": false,
+    "PAGE_SIZE": 4096
+  },
+  "AUTOTEST18": {
+    "_comment": "sqlite compile change, paused",
+    "DESCRIPTION": "Use SQLITE_USE_ALLOCA",
+    "CHIA_BRANCH": "main_scenario18",
+    "CHANGE_PAGE_SIZE": false,
+    "PAGE_SIZE": 4096
+  },
+  "AUTOTEST19": {
+    "_comment": "sqlite compile change, paused",
+    "DESCRIPTION": "Use all sqlite compile options together",
+    "CHIA_BRANCH": "sqlite3_build",
     "CHANGE_PAGE_SIZE": false,
     "PAGE_SIZE": 4096
   }
