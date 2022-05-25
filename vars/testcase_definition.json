@@ -118,7 +118,19 @@
   },
   "AUTOTEST22": {
     "DESCRIPTION": "Use scenarios 2+3+4, but no compile option",
-    "CHIA_BRANCH": "main_scenario21",
+    "CHIA_BRANCH": "main_scenario22",
+    "CHANGE_PAGE_SIZE": false,
+    "PAGE_SIZE": 4096
+  },
+  "AUTOTEST23": {
+    "DESCRIPTION": "Not ready. SES attach test planned",
+    "CHIA_BRANCH": "main_scenario23",
+    "CHANGE_PAGE_SIZE": false,
+    "PAGE_SIZE": 4096
+  },
+  "AUTOTEST24": {
+    "DESCRIPTION": "Use batch coin_record inserts",
+    "CHIA_BRANCH": "main_scenario24",
     "CHANGE_PAGE_SIZE": false,
     "PAGE_SIZE": 4096
   },
