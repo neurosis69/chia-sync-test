@@ -113,11 +113,11 @@
     done
     echo $(echo $(echo $(chia show -s|grep "Current Blockchain Status" | awk -F '[/.(]' '{print $2}')-400 | bc)/32|bc)*32|bc
   register: long_sync_peak
-  when: SCENARIO == 'FULLSYNC'
+  when: SCENARIO == 'FULLSYNC' or SCENARIO == 'V2_DS_FULLSYNC'
 - name: "Set facts if Scenario is FULLSYNC"
   ansible.builtin.set_fact:
     DUST_STOP_HEIGHT: "{{ long_sync_peak.stdout }}"
-  when: SCENARIO == 'FULLSYNC'
+  when: SCENARIO == 'FULLSYNC' or SCENARIO == 'V2_DS_FULLSYNC'
 - name: "Sync until Height {{ DUST_START_HEIGHT }} is reached"
   ansible.builtin.wait_for:
     path: "{{ ANSIBLE_LOG_CHIA_PATH }}/{{ CHIA_LOG_FILE_NAME }}_{{ TESTCASE }}.{{ ansible_loop.index }}.log"
