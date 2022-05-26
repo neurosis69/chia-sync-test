@@ -161,9 +161,9 @@ Select which testcases to use for the restrun.
 
 ## Blockchain sqlite database
 
-For every Scenario, except for FULLSYNC, one initially fresh synced chia db was prepared as follows.
+For every Scenario, except for FULLSYNC, one initially fresh synced chia db is as dropbox download available.
 
-If you plan to use a db for production, please use Scenario FULLSYNC and get a self verified database.
+The used blockchain db is prepared as follows.
 
 ### Schema v1
 
@@ -180,7 +180,9 @@ If you plan to use a db for production, please use Scenario FULLSYNC and get a s
 * synced until mentioned "DB Height"
 * compressed using zip
 
-### Start Test
+If you plan to use a db for production, please use Scenario FULLSYNC and get a self verified database.
+
+## Start Test
 
 After completing setup and configuration start the test.
 
