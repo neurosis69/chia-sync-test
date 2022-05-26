@@ -55,6 +55,15 @@
       "DUST_START_HEIGHT": "1537152",
       "DUST_STOP_HEIGHT": "1556960"
     },
+    "V2_DUSTSTORM_EXT": {
+      "Description": "Database synced right before V2_Duststorm Dec 2020, extended",
+      "DB_BACKUP_NAME": "dbv2_before_duststorm_1528704.sqlite",
+      "DB_BACKUP_URL": "https://www.dropbox.com/s/vuora37rddksgkc/dbv2_before_duststorm_1528704.sqlite.zip?dl=1",
+      "DB_BACKUP_MD5SUM": "051925e295bfe34fa6449f41c3a3a07e",
+      "SYNC_START_HEIGHT": "1528704",
+      "DUST_START_HEIGHT": "1537152",
+      "DUST_STOP_HEIGHT": "1640000"
+    },
     "V2_DS_FULLSYNC": {
       "Description": "Database synced right before V2_Duststorm Dec 2020",
       "DB_BACKUP_NAME": "dbv2_before_duststorm_1528704.sqlite",
