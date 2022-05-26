@@ -2,7 +2,7 @@
 
 Ansible Roles to help automate blockchain syncs using real world peers.
 
-## Steps done
+## Steps executed
 
 1. Download a prepared sqlite db file for the chosen test scenario
 2. Start sar activity data collector to gather performance statistics
