@@ -100,7 +100,7 @@ DUSTSTORM1|1069664|First Duststorm|v1
 DUSTSTORM2|1303062|Second Duststorm|v1
 TRANSACTION_START|223648|Transaction Start|v1
 TRANSACTION_PEAK|739202|First Transaction Peak|v1
-FULLSYNC|0|Full sync from genesis block|v2
+FULLSYNC|0|Full sync from genesis block|v1,v2
 V2_DUSTSTORM|1528704|Persistent Duststorm|v2
 V2_DUSTSTORM_EXT|1528704|Persistent Duststorm extended|v2
 V2_DS_FULLSYNC|1528704|Persistent Duststorm up to peak|v2
