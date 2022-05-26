@@ -9,6 +9,7 @@
   vars:
     # Read Local configuration files
     TESTCASES:               "{{ lookup('file', 'vars/active_testcases.json') | from_json }}"
+    SCENARIO_CONFIG:         "{{ lookup('file', 'vars/scenario_definition.json') | from_json }}"
     BENCHMARK_CONFIG:        "{{ lookup('file', 'vars/testcase_definition.json') | from_json }}"
   vars_prompt:
     - name:    ansible_become_pass

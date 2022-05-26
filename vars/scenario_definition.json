@@ -1,0 +1,74 @@
+{
+  "DUSTSTORM1": {
+    "Description": "Database synced right before Duststorm1 Oct 2020",
+    "DB_BACKUP_NAME": "db_before_duststorm_1007000.sqlite",
+    "DB_BACKUP_URL": "https://www.dropbox.com/s/6jlfhdq5rmqa6kx/db_before_duststorm_1007000.sqlite.zip?dl=1",
+    "DB_BACKUP_MD5SUM": "",
+    "SYNC_START_HEIGHT": 1069664,
+    "DUST_START_HEIGHT": 1070016,
+    "DUST_STOP_HEIGHT": 1080000
+  },
+  "DUSTSTORM2": {
+    "Description": "Database synced right before Duststorm2 Dec 2020",
+    "DB_BACKUP_NAME": "db_before_duststorm_2.sqlite",
+    "DB_BACKUP_URL": "https://www.dropbox.com/s/f0r8nu55yik2xpu/db_before_duststorm_2.sqlite.zip?dl=1",
+    "DB_BACKUP_MD5SUM": "",
+    "SYNC_START_HEIGHT": "1303062",
+    "DUST_START_HEIGHT": "1304598",
+    "DUST_STOP_HEIGHT": "1316342"
+  },
+  "TRANSACTION_START": {
+    "Description": "Database synced right before Transaction Start in May 2020",
+    "DB_BACKUP_NAME": "db_before_transaction_start.sqlite",
+    "DB_BACKUP_URL": "https://www.dropbox.com/s/euj19ogfp597sfb/db_before_transaction_start.sqlite.zip?dl=1",
+    "DB_BACKUP_MD5SUM": "",
+    "SYNC_START_HEIGHT": "223648",
+    "DUST_START_HEIGHT": "225696",
+    "DUST_STOP_HEIGHT": "228000"
+  },
+  "TRANSACTION_PEAK": {
+    "Description": "Database synced right before Transaction Peak in August 2020",
+    "DB_BACKUP_NAME": "db_before_height_740000.sqlite",
+    "DB_BACKUP_URL": "https://www.dropbox.com/s/ydejz8t9923eb9r/db_before_height_740000.sqlite.zip?dl=1",
+    "DB_BACKUP_MD5SUM": "",
+    "SYNC_START_HEIGHT": "739202",
+    "DUST_START_HEIGHT": "740738",
+    "DUST_STOP_HEIGHT": "772930"
+  },
+  "FULLSYNC": {
+    "Description": "Sync database from scratch to current peak - 400 (default sync_blocks_behind_threshold + 100)",
+    "DB_BACKUP_NAME": "",
+    "DB_BACKUP_URL": "",
+    "DB_BACKUP_MD5SUM": "",
+    "SYNC_START_HEIGHT": "0",
+    "DUST_START_HEIGHT": "225696",
+    "DUST_STOP_HEIGHT": ""
+  },
+  "V2_DUSTSTORM": {
+    "Description": "Database synced right before V2_Duststorm Dec 2020",
+    "DB_BACKUP_NAME": "dbv2_before_duststorm_1528704.sqlite",
+    "DB_BACKUP_URL": "https://www.dropbox.com/s/vuora37rddksgkc/dbv2_before_duststorm_1528704.sqlite.zip?dl=1",
+    "DB_BACKUP_MD5SUM": "051925e295bfe34fa6449f41c3a3a07e",
+    "SYNC_START_HEIGHT": "1528704",
+    "DUST_START_HEIGHT": "1537152",
+    "DUST_STOP_HEIGHT": "1556960"
+  },
+  "V2_DUSTSTORM_EXT": {
+    "Description": "Database synced right before V2_Duststorm Dec 2020, extended",
+    "DB_BACKUP_NAME": "dbv2_before_duststorm_1528704.sqlite",
+    "DB_BACKUP_URL": "https://www.dropbox.com/s/vuora37rddksgkc/dbv2_before_duststorm_1528704.sqlite.zip?dl=1",
+    "DB_BACKUP_MD5SUM": "051925e295bfe34fa6449f41c3a3a07e",
+    "SYNC_START_HEIGHT": "1528704",
+    "DUST_START_HEIGHT": "1537152",
+    "DUST_STOP_HEIGHT": "1640000"
+  },
+  "V2_DS_FULLSYNC": {
+    "Description": "Database synced right before V2_Duststorm Dec 2020",
+    "DB_BACKUP_NAME": "dbv2_before_duststorm_1528704.sqlite",
+    "DB_BACKUP_URL": "https://www.dropbox.com/s/vuora37rddksgkc/dbv2_before_duststorm_1528704.sqlite.zip?dl=1",
+    "DB_BACKUP_MD5SUM": "051925e295bfe34fa6449f41c3a3a07e",
+    "SYNC_START_HEIGHT": "1528704",
+    "DUST_START_HEIGHT": "1537152",
+    "DUST_STOP_HEIGHT": ""
+  }
+}
