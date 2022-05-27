@@ -41,6 +41,8 @@
     line: "\\1,{{ lookup('pipe', 'date +%Y-%m-%dT%H:%M:%S') }}"
     backrefs: yes
 - name: "Start full sync simulation"
+  async: 86400
+  poll: 0
   ansible.builtin.shell: |
     . {{ CHIA_SW_PATH }}/activate && python {{ CHIA_SW_PATH }}/tools/test_full_sync.py run --test-constants "{{ BLOCKCHAIN_DB_PATH }}/simulation_{{ BLOCKCHAIN_DB_NAME }}"
   args:
