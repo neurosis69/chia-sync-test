@@ -77,9 +77,6 @@
     regexp: "^({{ ansible_hostname }},{{ SCENARIO }},{{ TESTCASE }}.*)$"
     line: "\\1,{{ lookup('pipe', 'date +%Y-%m-%dT%H:%M:%S') }}"
     backrefs: yes
-- name: "Stop chia processes"
-  ansible.builtin.shell: |
-    . {{ CHIA_SW_PATH }}/activate && chia stop all -d
 - name: "Get Simulation Run Time"
   ansible.builtin.shell: |
     grep duration {{ ANSIBLE_LOG_CHIA_PATH }}/test-full-sync.log | awk '{print $3}'
