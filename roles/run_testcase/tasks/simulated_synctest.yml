@@ -54,18 +54,6 @@
 - name: "Set fact for tail"
   ansible.builtin.set_fact:
     debug_log_since_test_start: "{{ tail_debug_log.stdout }}"
-- name: "Write Log: {{ TESTCASE }} simulated sync"
-  ansible.builtin.lineinfile:
-    path: "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
-    regexp: "^({{ ansible_hostname }},{{ SCENARIO }},{{ TESTCASE }}.*)$"
-    line: "\\1,{{ lookup('pipe', 'date +%Y-%m-%dT%H:%M:%S') }}"
-    backrefs: yes
-- name: "Write Log: {{ TESTCASE }} simulated start"
-  ansible.builtin.lineinfile:
-    path: "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
-    regexp: "^({{ ansible_hostname }},{{ SCENARIO }},{{ TESTCASE }}.*)$"
-    line: "\\1,{{ lookup('pipe', 'date +%Y-%m-%dT%H:%M:%S') }}"
-    backrefs: yes
 - name: "Sync until 'test completed' is reached"
   ansible.builtin.wait_for:
     path: "{{ ANSIBLE_LOG_CHIA_PATH }}/test-full-sync.log"

@@ -18,7 +18,14 @@
     dest:                     "{{ ANSIBLE_LOG_PATH }}/current"
     state:                    link
 - name:                       "Write logfile header"
+  when:                       ACTIVE_SCENARIO != 'CHIA_FULLSYNC_BENCHMARK'
   ansible.builtin.lineinfile:
     path:                     "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
     line:                     "HOSTNAME,SCENARIO,TESTCASE,START_RUN,LOG_INITIATE_SYNC,LOG_START_SYNC,LOG_DUST_START_SYNC,LOG_DUST_STOP_SYNC,SQLITE_DB_SIZE_BYTES,DESCRIPTION"
+    create:                   yes
+- name:                       "Write logfile header"
+  when:                       ACTIVE_SCENARIO == 'CHIA_FULLSYNC_BENCHMARK'
+  ansible.builtin.lineinfile:
+    path:                     "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
+    line:                     "HOSTNAME,SCENARIO,TESTCASE,START_RUN,START_BENCHMARK,END_BENDMARK,BENCHMARK_RUNTIME,DESCRIPTION"
     create:                   yes
