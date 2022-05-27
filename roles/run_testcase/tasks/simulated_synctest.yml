@@ -18,7 +18,7 @@
     - "{{ BLOCKCHAIN_DB_PATH }}/simulation_{{ BLOCKCHAIN_DB_NAME }}-wal"
     - "{{ BLOCKCHAIN_DB_PATH }}/simulation_{{ BLOCKCHAIN_DB_NAME }}-journal"
 - name: "Copy extracted sqlite db file {{ DB_BACKUP }} to {{ BLOCKCHAIN_DB_NAME }}"
-  ansible.builtin.command: "cp {{ BLOCKCHAIN_DB_PATH }}/{{ DB_BACKUP }} simulation_{{ BLOCKCHAIN_DB_PATH }}/{{ BLOCKCHAIN_DB_NAME }}"
+  ansible.builtin.command: "cp {{ BLOCKCHAIN_DB_PATH }}/{{ DB_BACKUP }} {{ BLOCKCHAIN_DB_PATH }}/simulation_{{ BLOCKCHAIN_DB_NAME }}"
 - name: "Setup chia using branch for given testcase"
   include_role:
     name: setup_chia
