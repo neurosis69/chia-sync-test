@@ -77,6 +77,12 @@
     "CHANGE_PAGE_SIZE": false,
     "PAGE_SIZE": 4096
   },
+  "AUTOTEST25": {
+    "DESCRIPTION": "Use scenarios 2+4, no wal to prevent locking issues",
+    "CHIA_BRANCH": "main_scenario25",
+    "CHANGE_PAGE_SIZE": false,
+    "PAGE_SIZE": 4096
+  },
   "AUTOTEST1": {
     "_comment": "PR merged, branch deleted",
     "DESCRIPTION": "Call _set_spent only if block has removals",
