@@ -70,5 +70,14 @@
     "SYNC_START_HEIGHT": "1528704",
     "DUST_START_HEIGHT": "1537152",
     "DUST_STOP_HEIGHT": ""
+  },
+  "CHIA_FULLSYNC_BENCHMARK": {
+    "Description": "Uses tools/test_full_sync.py benchmark delivered by chia",
+    "DB_BACKUP_NAME": "",
+    "DB_BACKUP_URL": "",
+    "DB_BACKUP_MD5SUM": "",
+    "SYNC_START_HEIGHT": "0",
+    "DUST_START_HEIGHT": "0",
+    "DUST_STOP_HEIGHT": "500"
   }
 }
