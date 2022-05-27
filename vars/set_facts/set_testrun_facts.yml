@@ -7,12 +7,12 @@
     SCENARIO:               "{{ ACTIVE_SCENARIO }}"
 - name:                     "Set Test Scenario Variables"
   ansible.builtin.set_fact:
-    DB_BACKUP:              "{{ SCENARIO_CONFIG.SCENARIO.DB_BACKUP_NAME }}"
-    DB_BACKUP_MD5SUM:       "{{ SCENARIO_CONFIG.SCENARIO.DB_BACKUP_MD5SUM }}"
-    DB_BACKUP_URL:          "{{ SCENARIO_CONFIG.SCENARIO.DB_BACKUP_URL }}"
-    SYNC_START_HEIGHT:      "{{ SCENARIO_CONFIG.SCENARIO.SYNC_START_HEIGHT }}"
-    DUST_START_HEIGHT:      "{{ SCENARIO_CONFIG.SCENARIO.DUST_START_HEIGHT }}"
-    DUST_STOP_HEIGHT:       "{{ SCENARIO_CONFIG.SCENARIO.DUST_STOP_HEIGHT }}"
+    DB_BACKUP:              "{{ SCENARIO_CONFIG[SCENARIO].DB_BACKUP_NAME }}"
+    DB_BACKUP_MD5SUM:       "{{ SCENARIO_CONFIG[SCENARIO].DB_BACKUP_MD5SUM }}"
+    DB_BACKUP_URL:          "{{ SCENARIO_CONFIG[SCENARIO].DB_BACKUP_URL }}"
+    SYNC_START_HEIGHT:      "{{ SCENARIO_CONFIG[SCENARIO].SYNC_START_HEIGHT }}"
+    DUST_START_HEIGHT:      "{{ SCENARIO_CONFIG[SCENARIO].DUST_START_HEIGHT }}"
+    DUST_STOP_HEIGHT:       "{{ SCENARIO_CONFIG[SCENARIO].DUST_STOP_HEIGHT }}"
 - name:                     "Set Log File Path variable as fact before using for other assignments"
   ansible.builtin.set_fact:
     ANSIBLE_LOG_FILE_PATH:  "{{ ANSIBLE_LOG_PATH }}/{{ timestamp_started.stdout }}"
