@@ -45,6 +45,13 @@
     . {{ CHIA_SW_PATH }}/activate && python {{ CHIA_SW_PATH }}/tools/test_full_sync.py run --test-constants "{{ BLOCKCHAIN_DB_PATH }}/simulation_{{ BLOCKCHAIN_DB_NAME }}"
   args:
     chdir: "{{ ANSIBLE_LOG_CHIA_PATH }}"
+- name: "Tail chia logfile to prevent trigger wait_for for old log entries"
+  ansible.builtin.shell: |
+    tail -n 1 {{ ANSIBLE_LOG_CHIA_PATH }}/test-full-sync.log
+  register: tail_debug_log
+- name: "Set fact for tail"
+  ansible.builtin.set_fact:
+    debug_log_since_test_start: "{{ tail_debug_log.stdout }}"
 - name: "Write Log: {{ TESTCASE }} simulated sync"
   ansible.builtin.lineinfile:
     path: "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
