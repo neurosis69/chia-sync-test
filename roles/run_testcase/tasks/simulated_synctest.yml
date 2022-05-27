@@ -24,6 +24,8 @@
   ignore_errors: yes
   ansible.builtin.shell: |
     . {{ CHIA_SW_PATH }}/activate && python {{ CHIA_SW_PATH }}/tools/generate_chain.py --length 500 --fill-rate 100 --output "{{ BLOCKCHAIN_DB_PATH }}/simulation_{{ BLOCKCHAIN_DB_NAME }}"
+  args:
+    chdir: "{{ BLOCKCHAIN_DB_PATH }}"
 - name: "Clear FS Caches to get comparable runtimes"
   become: yes
   become_user: root
@@ -41,13 +43,6 @@
     . {{ CHIA_SW_PATH }}/activate && python {{ CHIA_SW_PATH }}/tools/test_full_sync.py run --test-constants "{{ BLOCKCHAIN_DB_PATH }}/simulation_{{ BLOCKCHAIN_DB_NAME }}"
   args:
     chdir: "{{ ANSIBLE_LOG_CHIA_PATH }}"
-- name: "Tail chia logfile to prevent trigger wait_for for old log entries"
-  ansible.builtin.shell: |
-    tail -n 1 {{ ANSIBLE_LOG_CHIA_PATH }}/test-full-sync.log
-  register: tail_debug_log
-- name: "Set fact for tail"
-  ansible.builtin.set_fact:
-    debug_log_since_test_start: "{{ tail_debug_log.stdout }}"
 - name: "Write Log: {{ TESTCASE }} simulated sync"
   ansible.builtin.lineinfile:
     path: "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
@@ -62,9 +57,9 @@
     backrefs: yes
 - name: "Sync until 'test completed' is reached"
   ansible.builtin.wait_for:
-    path: "{{ ANSIBLE_LOG_CHIA_PATH }}/{{ CHIA_LOG_FILE_NAME }}_{{ TESTCASE }}.{{ ansible_loop.index }}.log"
+    path: "{{ ANSIBLE_LOG_CHIA_PATH }}/test-full-sync.log"
     search_regex: "{{ debug_log_since_test_start }}\r(.*\r)*.*test completed.*"
-    timeout: 86400
+    timeout: 7200
 - name: "Write Log: {{ TESTCASE }} simulated end"
   ansible.builtin.lineinfile:
     path: "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
@@ -84,3 +79,5 @@
     regexp: "^({{ ansible_hostname }},{{ SCENARIO }},{{ TESTCASE }}.*)$"
     line: "\\1,{{ simulation_run_time }},\"{{ DESCRIPTION }}\""
     backrefs: yes
+- name: "Move logfile to non-standard name"
+  ansible.builtin.command: "mv {{ ANSIBLE_LOG_CHIA_PATH }}/test-full-sync.log {{ ANSIBLE_LOG_CHIA_PATH }}/{{ CHIA_LOG_FILE_NAME }}_{{ TESTCASE }}.{{ ansible_loop.index }}.log"
