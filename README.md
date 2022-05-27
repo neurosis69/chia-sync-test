@@ -15,7 +15,7 @@ Ansible Roles to help automate blockchain syncs using real world peers.
 9. Stop chia
 10. Gather data and create reports (sar reports)
 
-**Reports with interesting findings are uploaded to 
+**Reports are uploaded to 
 [my other repo](https://github.com/neurosis69/chia-sync-data).**
 
 ## Get started
@@ -61,13 +61,13 @@ CHIA_PASSPHRASE_SUPPORT|false|Disable Chia Passphrase
 Variable|Default|Description
 ---|---|---
 ANSIBLE_REMOTE_TEMP|"/ramdisk/.ansible/tmp"|Ansible temp directory, size minimum 30G</br>used to stage downloaded files
-ANSIBLE_HOME_PATH|"/home/chia/chia-sync-test"|Ansible repo clone path
+ANSIBLE_HOME_PATH|"/home/chia/chia-sync-test"|Repo clone path
 ANSIBLE_LOG_PATH|"/home/chia/chia-sync-test/log"|Log dir Path
 ANSIBLE_LOG_FILENAME|"/home/chia/chia-sync-test/log/ansible_playbook.log"|Logfile Path
 ANSIBLE_CALLBACKS_ENABLED|"profile_roles"|Ansible Callbacks
 ANSIBLE_STDOUT_CALLBACK|"debug"|Ansible stdout
 
-### Setup chia-sync-test
+### Setup
 
 ```
 cd ~/chia-sync-test
@@ -87,56 +87,86 @@ export ANSIBLE_STDOUT_CALLBACK=debug
 ANSIBLE_REMOTE_TEMP=/ramdisk/.ansible/tmp ansible-playbook synctest.yml
 ```
 
-### Check Testcases/Scenarios
+## Scenarios and Testcases
 
-Available testcases and scenarios are defined in `config/testcase_definition.json`.
+### Scenario Configuration (vars/scenario_definition.json)
 
-Some testcases are only meant as baseline or for fun (like drop ALL indexes, or certain obscure page sizes).
+A scenario defines the scope in which the selected testcases are executed.
 
-JSON Section|Description
+<ins>Predefined Scenarios</ins>
+Name|Start Height|What is it?|Schema
+---|---|---|---
+DUSTSTORM1|1069664|First Duststorm|v1
+DUSTSTORM2|1303062|Second Duststorm|v1
+TRANSACTION_START|223648|Transaction Start|v1
+TRANSACTION_PEAK|739202|First Transaction Peak|v1
+FULLSYNC|0|Full sync from genesis block|v1,v2
+V2_DUSTSTORM|1528704|Persistent Duststorm|v2
+V2_DUSTSTORM_EXT|1528704|Persistent Duststorm extended|v2
+V2_DS_FULLSYNC|1528704|Persistent Duststorm up to peak|v2
+
+<ins>Scenario Parameters</ins>
+Parameter|Value
 ---|---
-.SCENARIO|Defintion of all available scenarios
-.DEFAULT|Default values from branch 1.2.11
-.AUTOTEST*|Changes per testcase to default
+DB_BACKUP_NAME|Filename of blockchain backup
+DB_BACKUP_URL|Dropbox URL to backup
+DB_BACKUP_MD5SUM|currently not in use
+SYNC_START_HEIGHT|Current height from backup file
+DUST_START_HEIGHT|Intermediate height to get timings
+DUST_END_HEIGHT|End height, abort sync
 
-### Configure Testcases
+### Configure Active Scenario (vars/active_scenario.yml)
 
-Open file `config/active_testcases.json` and create JSON list with testcases.
+Select which scenario to use for the testrun.
 
-e.g. if you want to test testcases AUTOTEST1, AUTOTEST3 and AUTOTEST45 then the config file should look like:
+```yaml
+---
+ACTIVE_SCENARIO: "V2_DS_FULLSYNC"
 ```
+
+### Testcase Configuration (vars/testcase_definition.json)
+
+A testcase defines which git branches will be used to sync in the selected scenario.
+
+<ins>Example testcase definition</ins>
+```json
 {
-  "ACTIVE_TESTCASES": [
-      "AUTOTEST1",
-      "AUTOTEST3",
-      "AUTOTEST45"
-    ]
+  "DEFAULT": {
+    "DESCRIPTION": "Main branch, no changes",
+    "CHIA_BRANCH": "main",
+    "CHANGE_PAGE_SIZE": false,
+    "PAGE_SIZE": 4096
+  },
+  "AUTOTEST4": {
+    "DESCRIPTION": "Drop all indexes except for height and main_chain on full_blocks",
+    "CHIA_BRANCH": "main_scenario4",
+    "CHANGE_PAGE_SIZE": false,
+    "PAGE_SIZE": 4096
+  }
 }
 ```
 
-### Configure Scenarios
+### Configure Active Scenario (vars/active_testcases.json)
 
-Open file `config/active_scenario.yml` and create yml variable entry.
+Select which testcases to use for the restrun.
 
-e.g. if you want to test scenario DUSTSTORM1 then the config file should look like:
+```json
+{
+  "ACTIVE_TESTCASES": [
+    "DEFAULT",
+    "AUTOTEST4"
+  ]
+}
 ```
----
-SCENARIO: "DUSTSTORM1"
-```
 
-##### Available Scenarios
+## Blockchain sqlite database
 
- Scenario | DB Height | Scenario Start Height | Scenario End Height | Description
- --- | --- | --- | --- | --- |
- FULLSYNC | 0 | 225696 | _dynamic_ | sync until first mainnet transaction and then until peak
- DUSTSTORM1 | 1069664 | 1070016 | 1080000 | First dust storm (end Oct 2021)
- DUSTSTORM2 | 1303062 | 1304608 | 1316352 | Second dust storm (mid Dec 2021)
- TRANSACTION_START | 223648 | 225696 | 228000 | Transaction start on mainnet
- TRANSACTION_PEAK | 739202 | 740738 | 772930 | Some transactions peaks in (Aug 2021)
+For every Scenario, except for FULLSYNC, one initially fresh synced chia db is as dropbox download available.
 
-##### SQLite Database
+The used blockchain db is prepared as follows.
 
-For every Scenario, except for FULLSYNC, one initially fresh synced chia db was prepared as follows:
+### Schema v1
+
 * synced until mentioned "DB Height"
 * droped all indexes, except the following:
   * peak on block_records(is_peak) where is_peak=1
@@ -145,16 +175,14 @@ For every Scenario, except for FULLSYNC, one initially fresh synced chia db was 
 * finally vacuumed the db
 * compressed using zip
 
-If you want to use a db for production, please use Scenario FULLSYNC.
+### Schema v2
 
-##### Necessary steps to use db after FULLSYNC
+* synced until mentioned "DB Height"
+* compressed using zip
 
-1. Shutdown all chia processes, if not already done
-2. If Device=RAMDISK, move DB to persistent storage
-3. Remove ~/chia-blockchain SW and reinstall using [chia install instructions](https://github.com/Chia-Network/chia-blockchain/wiki/INSTALL)
-4. Start node -> this will recreate all missing indexes
+If you plan to use a db for production, please use Scenario FULLSYNC and get a self verified database.
 
-### Start Test
+## Start Test
 
 After completing setup and configuration start the test.
 
@@ -162,32 +190,9 @@ After completing setup and configuration start the test.
 ./run_synctest.sh
 ```
 
-## Process Sequence
-
-1. Create Log Directories
-2. Download DB from dropbox
-3. Unpack DB
-4. Setup CHIA with given branch
-5. Run testcases for given scenario
-   - start sadc data gathering
-   - stop chia processes (`chia stop all -d`) and cleanup old db files
-   - copy unpacked db file
-   - change special sqlite parameters according to testcase and execute vacuum afterwards
-     - page_size
-     - auto_vacuum
-   - change SW files according to testcase and local configuration
-   - clear FS cache (echo 1)
-   - start chia full node
-   - actively reconnect to peers until a minimum of 15 is reached (loop until sadc process is killed)
-   - sync until defined end height is reached
-   - stop chia processes (`chia stop all -d`)
-   - get sqlite db size
-   - kill sadc process
-   - create sar csv and svg output files
-
 ## Logging
 
-The logfiles are located in **{{ ANSIBLE_LOG_PATH }}**
+The logfiles are located in **{{ ANSIBLE_LOG_PATH }}** (default: `/home/chia/chia-sync-test/log`)
 
 #### Directory Tree
 
@@ -230,32 +235,7 @@ plotter1,DUSTSTORM1,AUTOTEST33,2022-01-01T10:23:39,2022-01-01T10:23:48,2022-01-0
 - `log/YYYY-MM-DD_HH24:MI:SS/plotter1_ansible_run_AUTOTEST36.11.sa.csv` auto generated csv file from sar rawdata by predefined parameters
 - `log/YYYY-MM-DD_HH24:MI:SS/plotter1_ansible_run_AUTOTEST36.11.sa.svg` auto generated svg file from sar rawdata by predefined parameters
 
-## Testcase documentation
-
-The most reasonable testcases are
-
-Testcase|Description|Why?
----|---|---
-AUTOTEST1|No Changes from branch|Baseline
-AUTOTEST3|From Block Store, only use fullblocks height and peak index; Drop all coin store indexes|Best Index related sync performance
-AUTOTEST5|Only full blocks height + peak index; plus max num workers for block chain consensus|Best pre-validation times (important for RPi)
-AUTOTEST45|Only full blocks height + peak index; locking_mode=exclusive, synchronous=OFF, journal_mode=off, increase coin_records lru cache * 100, cache_spill=false, uncommited=true, max blockchain consensus threads|Best sync performance overall
 
 ## Other performance improvements
 
 - If applicable, place the blockchain db on ramdisk during fullsync
-
-# Possible further sync improvements
-
-- create separate `long sync` job
-  - `chia start node fullsync` to sync from scratch and sync using special connection pragmas
-  - only create the 2 needed indexes during fullsync
-  - [allow more than 32 blocks](https://github.com/Chia-Network/chia-blockchain/blob/13ff7489b606d38b8294ed8c256d0177d39eb4bb/chia/consensus/default_constants.py#L52) per request for `long sync` 
-- [remove cpu thread limitation](https://github.com/Chia-Network/chia-blockchain/pull/9709#issue-1092109095)
-- increase coin store cache size times 100, instead of [60000](https://github.com/Chia-Network/chia-blockchain/blob/13ff7489b606d38b8294ed8c256d0177d39eb4bb/chia/full_node/coin_store.py#L28) use 6000000. suggestion was not calculated but tested with signifcant improvement (at RPi as well).
-
-# Known Issues
-
-- The ansible [async task](https://github.com/neurosis69/chia-sync-test/blob/ad41a66e2a626e9aef92404602a4462143574c49/roles/execute_sync_tests/tasks/main.yml#L135) to keep enough valid peers connected is not working on my Ubuntu RPi Setup, but is working on Clear Linux Setup .. _still investigating_.
-
-  Workaround: Execute the shell commands separately.
