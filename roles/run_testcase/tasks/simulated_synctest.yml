@@ -76,4 +76,4 @@
     line: "\\1,{{ simulation_run_time.stdout }},\"{{ DESCRIPTION }}\""
     backrefs: yes
 - name: "Move logfile to non-standard name"
-  ansible.builtin.command: mv {{ ANSIBLE_LOG_CHIA_PATH }}/test-full-sync.log {{ ANSIBLE_LOG_CHIA_PATH }}/{{ CHIA_LOG_FILE_NAME }}_{{ TESTCASE }}.{{ ansible_loop.index }}.log
+  ansible.builtin.command: "mv {{ ANSIBLE_LOG_CHIA_PATH }}/test-full-sync.log {{ ANSIBLE_LOG_CHIA_PATH }}/{{ CHIA_LOG_FILE_NAME }}_{{ TESTCASE }}.{{ ansible_loop.index }}.log"
