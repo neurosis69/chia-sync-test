@@ -83,6 +83,24 @@
     "CHANGE_PAGE_SIZE": false,
     "PAGE_SIZE": 4096
   },
+  "AUTOTEST26": {
+    "DESCRIPTION": "Use cache_size of 100M",
+    "CHIA_BRANCH": "main_scenario26",
+    "CHANGE_PAGE_SIZE": false,
+    "PAGE_SIZE": 4096
+  },
+  "AUTOTEST27": {
+    "DESCRIPTION": "Use cache_size of 500M + AUTOTEST6",
+    "CHIA_BRANCH": "main_scenario27",
+    "CHANGE_PAGE_SIZE": false,
+    "PAGE_SIZE": 4096
+  },
+  "AUTOTEST28": {
+    "DESCRIPTION": "AUTOTEST4 + AUTOTEST6",
+    "CHIA_BRANCH": "main_scenario28",
+    "CHANGE_PAGE_SIZE": false,
+    "PAGE_SIZE": 4096
+  },
   "AUTOTEST1": {
     "_comment": "PR merged, branch deleted",
     "DESCRIPTION": "Call _set_spent only if block has removals",
