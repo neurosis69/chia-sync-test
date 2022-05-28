@@ -73,7 +73,7 @@
   },
   "CHIA_FULLSYNC_BENCHMARK": {
     "Description": "Uses tools/test_full_sync.py benchmark delivered by chia",
-    "DB_BACKUP_NAME": "simulation_backup_blockchain_v2_mainnet.sqlite",
+    "DB_BACKUP_NAME": "simulation_500_backup_blockchain_v2_mainnet.sqlite",
     "DB_BACKUP_URL": "",
     "DB_BACKUP_MD5SUM": "",
     "SYNC_START_HEIGHT": "0",
@@ -82,7 +82,7 @@
   },
   "CHIA_FULLSYNC_BENCHMARK_EXT": {
     "Description": "Uses tools/test_full_sync.py benchmark delivered by chia",
-    "DB_BACKUP_NAME": "simulation_backup_blockchain_v2_mainnet.sqlite",
+    "DB_BACKUP_NAME": "simulation_5000_backup_blockchain_v2_mainnet.sqlite",
     "DB_BACKUP_URL": "",
     "DB_BACKUP_MD5SUM": "",
     "SYNC_START_HEIGHT": "0",
