@@ -115,7 +115,13 @@
   },
   "AUTOTEST31": {
     "DESCRIPTION": "synchronous=off + Drop Indexs + 32700 bind + _set_spent + batch coin insert + 100M cache_size ",
-    "CHIA_BRANCH": "main_scenario30",
+    "CHIA_BRANCH": "main_scenario31",
+    "CHANGE_PAGE_SIZE": false,
+    "PAGE_SIZE": 4096
+  },
+  "AUTOTEST32": {
+    "DESCRIPTION": "Drop Indexes + Use batch coin_record inserts",
+    "CHIA_BRANCH": "main_scenario32",
     "CHANGE_PAGE_SIZE": false,
     "PAGE_SIZE": 4096
   },
