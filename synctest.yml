@@ -65,6 +65,7 @@
     - name:                   "Do testrun preparation, create directories, ..."
       import_tasks:           tasks/prepare_for_testrun.yml
     - name:                   "Download sqlite file for scenario"
+      when:                   "'CHIA_FULLSYNC_BENCHMARK' not in ACTIVE_SCENARIO"
       import_tasks:           tasks/download_sqlite_for_scenario.yml
   roles:
     # Add get device from blockchain, dir is known, use lsblk

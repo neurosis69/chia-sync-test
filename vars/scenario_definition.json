@@ -73,20 +73,14 @@
   },
   "CHIA_FULLSYNC_BENCHMARK": {
     "Description": "Uses tools/test_full_sync.py benchmark delivered by chia",
-    "DB_BACKUP_NAME": "simulation_500_backup_blockchain_v2_mainnet.sqlite",
-    "DB_BACKUP_URL": "",
-    "DB_BACKUP_MD5SUM": "",
-    "SYNC_START_HEIGHT": "0",
-    "DUST_START_HEIGHT": "0",
-    "DUST_STOP_HEIGHT": "500"
+    "DB_BACKUP_NAME": "simulation_500_100_backup_blockchain_v2_mainnet.sqlite",
+    "CHAIN_LENGTH": "500",
+    "FILL_RATE": "100"
   },
   "CHIA_FULLSYNC_BENCHMARK_EXT": {
     "Description": "Uses tools/test_full_sync.py benchmark delivered by chia",
-    "DB_BACKUP_NAME": "simulation_5000_backup_blockchain_v2_mainnet.sqlite",
-    "DB_BACKUP_URL": "",
-    "DB_BACKUP_MD5SUM": "",
-    "SYNC_START_HEIGHT": "0",
-    "DUST_START_HEIGHT": "0",
-    "DUST_STOP_HEIGHT": "5000"
+    "DB_BACKUP_NAME": "simulation_3000_100_backup_blockchain_v2_mainnet.sqlite",
+    "CHAIN_LENGTH": "3000",
+    "FILL_RATE": "100"
   }
 }

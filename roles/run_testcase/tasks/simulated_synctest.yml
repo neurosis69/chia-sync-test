@@ -13,19 +13,19 @@
     path: "{{ item }}"
     state: absent
   with_items:
-    - "{{ BLOCKCHAIN_DB_PATH }}/simulation_{{ DUST_STOP_HEIGHT }}_{{ BLOCKCHAIN_DB_NAME }}"
-    - "{{ BLOCKCHAIN_DB_PATH }}/simulation_{{ DUST_STOP_HEIGHT }}_{{ BLOCKCHAIN_DB_NAME }}-shm"
-    - "{{ BLOCKCHAIN_DB_PATH }}/simulation_{{ DUST_STOP_HEIGHT }}_{{ BLOCKCHAIN_DB_NAME }}-wal"
-    - "{{ BLOCKCHAIN_DB_PATH }}/simulation_{{ DUST_STOP_HEIGHT }}_{{ BLOCKCHAIN_DB_NAME }}-journal"
+    - "{{ BLOCKCHAIN_DB_PATH }}/simulation_{{ CHAIN_LENGTH }}_{{ FILL_RATE }}_{{ BLOCKCHAIN_DB_NAME }}"
+    - "{{ BLOCKCHAIN_DB_PATH }}/simulation_{{ CHAIN_LENGTH }}_{{ FILL_RATE }}_{{ BLOCKCHAIN_DB_NAME }}-shm"
+    - "{{ BLOCKCHAIN_DB_PATH }}/simulation_{{ CHAIN_LENGTH }}_{{ FILL_RATE }}_{{ BLOCKCHAIN_DB_NAME }}-wal"
+    - "{{ BLOCKCHAIN_DB_PATH }}/simulation_{{ CHAIN_LENGTH }}_{{ FILL_RATE }}_{{ BLOCKCHAIN_DB_NAME }}-journal"
 - name: "Copy extracted sqlite db file {{ DB_BACKUP }} to {{ BLOCKCHAIN_DB_NAME }}"
-  ansible.builtin.command: "cp {{ BLOCKCHAIN_DB_PATH }}/{{ DB_BACKUP }} {{ BLOCKCHAIN_DB_PATH }}/simulation_{{ DUST_STOP_HEIGHT }}_{{ BLOCKCHAIN_DB_NAME }}"
+  ansible.builtin.command: "cp {{ BLOCKCHAIN_DB_PATH }}/{{ DB_BACKUP }} {{ BLOCKCHAIN_DB_PATH }}/simulation_{{ CHAIN_LENGTH }}_{{ FILL_RATE }}_{{ BLOCKCHAIN_DB_NAME }}"
 - name: "Setup chia using branch for given testcase"
   include_role:
     name: setup_chia
 - name: "Create plots and generate chain"
   ignore_errors: yes
   ansible.builtin.shell: |
-    . {{ CHIA_SW_PATH }}/activate && python {{ CHIA_SW_PATH }}/tools/generate_chain.py --length {{ DUST_STOP_HEIGHT }} --fill-rate 100 --output "{{ BLOCKCHAIN_DB_PATH }}/simulation_{{ BLOCKCHAIN_DB_NAME }}"
+    . {{ CHIA_SW_PATH }}/activate && python {{ CHIA_SW_PATH }}/tools/generate_chain.py --length {{ CHAIN_LENGTH }} --fill-rate {{ FILL_RATE }} --output "{{ BLOCKCHAIN_DB_PATH }}/simulation_{{ CHAIN_LENGTH }}_{{ FILL_RATE }}_{{ BLOCKCHAIN_DB_NAME }}"
   args:
     chdir: "{{ BLOCKCHAIN_DB_PATH }}"
 - name: "Clear FS Caches to get comparable runtimes"
@@ -44,7 +44,7 @@
   async: 86400
   poll: 0
   ansible.builtin.shell: |
-    . {{ CHIA_SW_PATH }}/activate && python {{ CHIA_SW_PATH }}/tools/test_full_sync.py run --test-constants "{{ BLOCKCHAIN_DB_PATH }}/simulation_{{ DUST_STOP_HEIGHT }}_{{ BLOCKCHAIN_DB_NAME }}"
+    . {{ CHIA_SW_PATH }}/activate && python {{ CHIA_SW_PATH }}/tools/test_full_sync.py run --test-constants "{{ BLOCKCHAIN_DB_PATH }}/simulation_{{ CHAIN_LENGTH }}_{{ FILL_RATE }}_{{ BLOCKCHAIN_DB_NAME }}"
   args:
     chdir: "{{ ANSIBLE_LOG_CHIA_PATH }}"
 - name: "Tail chia logfile to prevent trigger wait_for for old log entries"

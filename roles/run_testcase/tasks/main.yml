@@ -2,8 +2,8 @@
 - name:           "Set ansible facts"
   import_tasks:   vars/set_facts/set_facts_for_testcase.yml
 - name:           "Run live mainnet peer sync tests"
-  when:           ACTIVE_SCENARIO != 'CHIA_FULLSYNC_BENCHMARK'
+  when:           "'CHIA_FULLSYNC_BENCHMARK' not in ACTIVE_SCENARIO"
   include_tasks:  peer2peer_synctest.yml
 - name:           "Run simulated sync tests"
-  when:           ACTIVE_SCENARIO == 'CHIA_FULLSYNC_BENCHMARK'
+  when:           "'CHIA_FULLSYNC_BENCHMARK' in ACTIVE_SCENARIO"
   include_tasks:  simulated_synctest.yml
