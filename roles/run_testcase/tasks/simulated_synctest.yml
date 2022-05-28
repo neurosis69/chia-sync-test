@@ -25,7 +25,7 @@
 - name: "Create plots and generate chain"
   ignore_errors: yes
   ansible.builtin.shell: |
-    . {{ CHIA_SW_PATH }}/activate && python {{ CHIA_SW_PATH }}/tools/generate_chain.py --length 500 --fill-rate 100 --output "{{ BLOCKCHAIN_DB_PATH }}/simulation_{{ BLOCKCHAIN_DB_NAME }}"
+    . {{ CHIA_SW_PATH }}/activate && python {{ CHIA_SW_PATH }}/tools/generate_chain.py --length {{ DUST_STOP_HEIGHT }} --fill-rate 100 --output "{{ BLOCKCHAIN_DB_PATH }}/simulation_{{ BLOCKCHAIN_DB_NAME }}"
   args:
     chdir: "{{ BLOCKCHAIN_DB_PATH }}"
 - name: "Clear FS Caches to get comparable runtimes"
