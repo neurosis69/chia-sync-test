@@ -1,9 +1,13 @@
 ---
-- name:           "Set ansible facts"
-  import_tasks:   vars/set_facts/set_facts_for_testcase.yml
-- name:           "Run live mainnet peer sync tests"
-  when:           "'CHIA_FULLSYNC_BENCHMARK' not in ACTIVE_SCENARIO"
-  include_tasks:  peer2peer_synctest.yml
-- name:           "Run simulated sync tests"
-  when:           "'CHIA_FULLSYNC_BENCHMARK' in ACTIVE_SCENARIO"
-  include_tasks:  simulated_synctest.yml
+- name:          "Set ansible facts"
+  import_tasks:  vars/set_facts/set_facts_for_testcase.yml
+- name:          "Run live mainnet peer sync tests"
+  when:          "'CHIA_FULLSYNC_BENCHMARK' not in ACTIVE_SCENARIO"
+  include_tasks: peer2peer_synctest.yml
+- name:          "Execute test for every chosen sqlite sync mode"
+  when:          "'CHIA_FULLSYNC_BENCHMARK' in ACTIVE_SCENARIO"
+  include_tasks: simulated_synctest.yml
+  loop:          "{{ SQLITE_SYNC_MODE }}"
+  loop_control:
+    loop_var:    SYNC_MODE
+    extended:    yes

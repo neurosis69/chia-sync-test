@@ -40,7 +40,7 @@
   async: 86400
   poll: 0
   ansible.builtin.shell: |
-    . {{ CHIA_SW_PATH }}/activate && python {{ CHIA_SW_PATH }}/tools/test_full_sync.py run --test-constants "{{ BLOCKCHAIN_DB_PATH }}/simulation_{{ CHAIN_LENGTH }}_{{ FILL_RATE }}_{{ BLOCKCHAIN_DB_NAME }}"
+    . {{ CHIA_SW_PATH }}/activate && python {{ CHIA_SW_PATH }}/tools/test_full_sync.py run --db-sync {{ SYNC_MODE }}--test-constants "{{ BLOCKCHAIN_DB_PATH }}/simulation_{{ CHAIN_LENGTH }}_{{ FILL_RATE }}_{{ BLOCKCHAIN_DB_NAME }}"
   args:
     chdir: "{{ ANSIBLE_LOG_CHIA_PATH }}"
 - name: "Tail chia logfile to prevent trigger wait_for for old log entries"
