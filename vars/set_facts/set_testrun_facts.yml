@@ -5,6 +5,9 @@
 - name:                     "Set Active Scenario"
   ansible.builtin.set_fact:
     SCENARIO:               "{{ ACTIVE_SCENARIO }}"
+- name:                     "Set Active SQLITE Sync Mode"
+  ansible.builtin.set_fact:
+    SQLITE_SYNC_MODES:       "{{ SQLITE_ENABLED_SYNC_MODES | default('') }}"
 - name:                     "Set Test Scenario Variables"
   ansible.builtin.set_fact:
     DB_BACKUP:              "{{ SCENARIO_CONFIG[SCENARIO].DB_BACKUP_NAME | default('') }}"
@@ -15,7 +18,6 @@
     DUST_STOP_HEIGHT:       "{{ SCENARIO_CONFIG[SCENARIO].DUST_STOP_HEIGHT | default('') }}"
     CHAIN_LENGTH:           "{{ SCENARIO_CONFIG[SCENARIO].CHAIN_LENGTH | default('') }}"
     FILL_RATE:              "{{ SCENARIO_CONFIG[SCENARIO].FILL_RATE | default('') }}"
-    SQLITE_SYNC_MODE:       "{{ SCENARIO_CONFIG[SCENARIO].SQLITE_SYNC_MODE | default('') }}"
 - name:                     "Set Log File Path variable as fact before using for other assignments"
   ansible.builtin.set_fact:
     ANSIBLE_LOG_FILE_PATH:  "{{ ANSIBLE_LOG_PATH }}/{{ timestamp_started.stdout }}"

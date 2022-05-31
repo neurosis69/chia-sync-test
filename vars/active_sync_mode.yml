@@ -1,0 +1,6 @@
+---
+# All of the following sync modes will be tested for every testcase in chia benchmarking mode
+SQLITE_ENABLED_SYNC_MODES:
+  - "off"
+  - "normal"
+  - "full"

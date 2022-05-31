@@ -6,6 +6,7 @@
     - vars/OS/{{ ansible_facts.os_family }}.yml
     - vars/chia.yml
     - vars/ansible.yml
+    - vars/active_sync_mode.yml
   vars:
     # Read Local configuration files
     TESTCASES:                "{{ lookup('file', 'vars/active_testcases.json') | from_json }}"
