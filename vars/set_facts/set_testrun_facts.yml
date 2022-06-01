@@ -7,7 +7,7 @@
     SCENARIO:               "{{ ACTIVE_SCENARIO }}"
 - name:                     "Set Active SQLITE Sync Mode"
   ansible.builtin.set_fact:
-    SQLITE_SYNC_MODES:       "{{ SQLITE_ENABLED_SYNC_MODES | default('') }}"
+    ACTIVE_SYNC_MODES:       "{{ SYNC_MODES.ACTIVE_SYNC_MODES | default('full') }}"
 - name:                     "Set Test Scenario Variables"
   ansible.builtin.set_fact:
     DB_BACKUP:              "{{ SCENARIO_CONFIG[SCENARIO].DB_BACKUP_NAME | default('') }}"

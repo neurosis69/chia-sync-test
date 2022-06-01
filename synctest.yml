@@ -6,10 +6,10 @@
     - vars/OS/{{ ansible_facts.os_family }}.yml
     - vars/chia.yml
     - vars/ansible.yml
-    - vars/active_sync_mode.yml
   vars:
     # Read Local configuration files
     TESTCASES:                "{{ lookup('file', 'vars/active_testcases.json') | from_json }}"
+    SYNC_MODES:               "{{ lookup('file', 'vars/active_sync_mode.json') | from_json }}"
     SCENARIO_CONFIG:          "{{ lookup('file', 'vars/scenario_definition.json') | from_json }}"
     BENCHMARK_CONFIG:         "{{ lookup('file', 'vars/testcase_definition.json') | from_json }}"
   vars_prompt:

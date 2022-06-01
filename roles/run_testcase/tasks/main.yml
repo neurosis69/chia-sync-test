@@ -7,7 +7,7 @@
 - name:          "Execute test for every chosen sqlite sync mode"
   when:          "'CHIA_FULLSYNC_BENCHMARK' in ACTIVE_SCENARIO"
   include_tasks: simulated_synctest.yml
-  loop:          "{{ SQLITE_SYNC_MODES }}"
+  loop:          "{{ ACTIVE_SYNC_MODES }}"
   loop_control:
     loop_var:    SYNC_MODE
     extended:    yes
