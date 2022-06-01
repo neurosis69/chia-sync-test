@@ -27,5 +27,5 @@
   when:                       "'CHIA_FULLSYNC_BENCHMARK' in ACTIVE_SCENARIO"
   ansible.builtin.lineinfile:
     path:                     "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
-    line:                     "HOSTNAME,SCENARIO,TESTCASE,START_RUN,START_BENCHMARK,END_BENDMARK,BENCHMARK_RUNTIME,DESCRIPTION"
+    line:                     "HOSTNAME,SCENARIO,TESTCASE,SYNC_MODE,START_RUN,START_BENCHMARK,END_BENDMARK,BENCHMARK_RUNTIME,DESCRIPTION"
     create:                   yes

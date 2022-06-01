@@ -1,9 +1,9 @@
 ---
 # Write header for logfile
-- name: "Test {{ TESTCASE }} start: {{ DESCRIPTION }}"
+- name: "Test {{ TESTCASE }} using {{ SYNC_MODE }} as sync mode, start: {{ DESCRIPTION }}"
   ansible.builtin.lineinfile:
     path: "{{ ANSIBLE_LOG_FILE_PATH }}/{{ ANSIBLE_LOG_FILE_NAME }}.csv"
-    line: "{{ ansible_hostname }},{{ SCENARIO }},{{ TESTCASE }},{{ lookup('pipe', 'date +%Y-%m-%dT%H:%M:%S') }}"
+    line: "{{ ansible_hostname }},{{ SCENARIO }},{{ TESTCASE }},{{ SYNC_MODE }},{{ lookup('pipe', 'date +%Y-%m-%dT%H:%M:%S') }}"
 - name: "Remove old sqlite db files (including shm + wal + journal)"
   ansible.builtin.file:
     path: "{{ item }}"
