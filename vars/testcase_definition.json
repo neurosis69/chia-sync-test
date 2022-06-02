@@ -131,9 +131,21 @@
     "CHANGE_PAGE_SIZE": false,
     "PAGE_SIZE": 4096
   },
+  "AUTOTEST33_MEM": {
+    "DESCRIPTION": "PR #11712 - 9588fb0c5202d58951f7fe1d18243872810ede1a + 100M cache size",
+    "CHIA_BRANCH": "main_scenario33_mem",
+    "CHANGE_PAGE_SIZE": false,
+    "PAGE_SIZE": 4096
+  },
   "AUTOTEST34": {
     "DESCRIPTION": "AUTOTEST6 + AUTOTEST24",
     "CHIA_BRANCH": "main_scenario34",
+    "CHANGE_PAGE_SIZE": false,
+    "PAGE_SIZE": 4096
+  },
+  "AUTOTEST34_MEM": {
+    "DESCRIPTION": "AUTOTEST6 + AUTOTEST24 + 100M cache size",
+    "CHIA_BRANCH": "main_scenario34_mem",
     "CHANGE_PAGE_SIZE": false,
     "PAGE_SIZE": 4096
   },
